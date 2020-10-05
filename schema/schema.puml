@@ -1,0 +1,124 @@
+@startuml
+
+title Krokodiliada application database design
+
+' skinparam linetype ortho
+
+class Participant {
+  Participant information
+  ==
+  #""id""
+  +""first_name""
+  +""last_name""
+  +""middle_name""
+  +""birthday""
+  +""phone""
+  +""email""
+}
+
+class Team {
+  Team information
+  ==
+  #""id""
+  +""participants"" - //""Array[Participant.id]""//
+  +""krok"" - //""Krok.id""//
+  +""category"" - //""Category.id""//
+  +""extra_map_required""
+}
+
+class Krok {
+  Information about the current event
+  ==
+  #""id""
+  +""number""
+  +""season""
+  +""start_date""
+  +""end_date""
+  +""categories"" - //""Array[Category.id]""//
+}
+
+class Category {
+  Category information
+  ==
+  #""id""
+  +""short_name""
+  +""long_name""
+  +""description""
+  +""min_participants""
+  +""max_participants""
+  +""notes""
+}
+
+class CheckPoint {
+  Check point information
+  ==
+  #""id""
+  +""latitude""
+  +""longitude""
+  +""description""
+}
+
+class CheckPointAssignment {
+  Relations between checkpoints,
+  stations and categories
+  ==
+  #""id""
+  +""krok"" - //""Krok.id""//
+  +""category"" - //""Category.id""//
+  +""checkpoint"" - //""Checkpoint.id""//
+  +""station"" - //""Station.id""//
+  +""order""
+  +""check_order"" - //If false, then it is a bonus CP//
+  +""cost"" - //If bonus CP, then how much it costs//
+}
+
+class Station {
+  Information about the station
+  ==
+  #""id""
+  +""enabled""
+}
+
+class Tag {
+  Information about the tag
+  ==
+  #""id""
+  +""enabled""
+}
+
+class TagAssignment {
+  Information about which tag
+  belongs to which participant
+  ==
+  #""id""
+  +""tag"" - //""Tag.id""//
+  +""participant"" - //""Participant.id""//
+  +""krok"" - //""Krok.id""//
+}
+
+class Route {
+  All stations scanned by each tag
+  ==
+  #""id""
+  +""tag"" - //""Tag.id""//
+  +""krok"" - //""Krok.id""//
+  +""punches"" - //""Array[~[Station.id, timestamp~]]""//
+  +""start"" - //Start date/time//
+  +""finish"" - //Finish date/time//
+}
+
+Team::participant *-right- Participant::id
+Team::krok -- Krok::id
+Team::category -down- Category::id
+Krok::categories *-left- Category::id
+CheckPointAssignment::krok -up- Krok::id
+CheckPointAssignment::category -left- Category::id
+CheckPointAssignment::checkpoint -left- CheckPoint::id
+CheckPointAssignment::station -right- Station::id
+TagAssignment::tag -right- Tag::id
+TagAssignment::krok -- Krok::id
+TagAssignment::participant -left- Participant::id
+Route::krok -left- Krok::id
+Route::punches *-[norank]- Station::id
+
+@enduml
