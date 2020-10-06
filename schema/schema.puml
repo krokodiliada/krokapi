@@ -34,7 +34,8 @@ class Krok {
   +""season""
   +""start_date""
   +""end_date""
-  +""categories"" - //""Array[Category.id]""//
+  +""location"" - //""Dict[latitude, longitude]""//
+  +""location_name""
 }
 
 class Category {
@@ -44,8 +45,13 @@ class Category {
   +""short_name""
   +""long_name""
   +""description""
+  +""krok"" - //""Krok.id""//
   +""min_participants""
   +""max_participants""
+  +""min_checkpoints"" -
+  //    Minimum number of CP to take//
+  //    Can be float (e.g. 0.5) or integer (e.g. 3).//
+  +""max_time"" - //Total time allowed to finish//
   +""notes""
 }
 
@@ -53,9 +59,11 @@ class CheckPoint {
   Check point information
   ==
   #""id""
-  +""latitude""
-  +""longitude""
+  +""short_name""
+  +""location"" - //""Dict[latitude, longitude]""//
+  +""water"" - //True if used for the water stage//
   +""description""
+  +""note"" - //Organizator's notes//
 }
 
 class CheckPointAssignment {
@@ -65,11 +73,12 @@ class CheckPointAssignment {
   #""id""
   +""krok"" - //""Krok.id""//
   +""category"" - //""Category.id""//
-  +""checkpoint"" - //""Checkpoint.id""//
+  +""checkpoint"" - //""CheckPoint.id""//
   +""station"" - //""Station.id""//
   +""order""
   +""check_order"" - //If false, then it is a bonus CP//
   +""cost"" - //If bonus CP, then how much it costs//
+  +""required"" - //True if check point has to be taken//
 }
 
 class Station {
@@ -102,15 +111,34 @@ class Route {
   #""id""
   +""tag"" - //""Tag.id""//
   +""krok"" - //""Krok.id""//
-  +""punches"" - //""Array[~[Station.id, timestamp~]]""//
-  +""start"" - //Start date/time//
-  +""finish"" - //Finish date/time//
+  +""start"" - //Start timestamp//
+  +""finish"" - //Finish timestamp//
+  +""actions"" - //""Array[""//
+    //""{""//
+    //    ""~"station~": Station.id,""//
+    //    ""~"timestamp~": timestamp,""//
+    //""}]""//
+}
+
+class RouteWater {
+  Information about the water stage
+  ==
+  #""id""
+  +""team"" - //""Team.id""//
+  +""start"" - //Start timestamp//
+  +""finish"" - //Finish timestamp//
+  +""actions"" - //""Array[""//
+    //""{""//
+    //    ""~"checkpoint~": CheckPoint.id,""//
+    //    ""~"timestamp~": timestamp,""//
+    //    ""~"touched~": true/false""//"
+    //""}]""//
 }
 
 Team::participant *-right- Participant::id
 Team::krok -- Krok::id
 Team::category -down- Category::id
-Krok::categories *-left- Category::id
+Krok::id -left- Category::krok
 CheckPointAssignment::krok -up- Krok::id
 CheckPointAssignment::category -left- Category::id
 CheckPointAssignment::checkpoint -left- CheckPoint::id
@@ -118,7 +146,10 @@ CheckPointAssignment::station -right- Station::id
 TagAssignment::tag -right- Tag::id
 TagAssignment::krok -- Krok::id
 TagAssignment::participant -left- Participant::id
+Route::tag -up- Tag::id
 Route::krok -left- Krok::id
 Route::punches *-[norank]- Station::id
+RouteWater::team -up- Team::id
+RouteWater::actions *-[norank]- CheckPoint::id
 
 @enduml
