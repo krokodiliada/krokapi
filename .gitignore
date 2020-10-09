@@ -1,6 +1,7 @@
 # Project specific files
 .vscode/
 out/
+globalConfig.json
 
 # Logs
 logs

@@ -6,7 +6,7 @@ dotenv.config();
 
 describe("User model", () => {
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URI ?? "", {
+    await mongoose.connect(process.env.MONGO_URL ?? "", {
       useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -40,7 +40,7 @@ describe("User model", () => {
   });
 
   it("Should create a user with name and birthday", async () => {
-    expect.assertions(5);
+    expect.assertions(9);
 
     const participant: IParticipant = new Participant({
       name: {
@@ -53,11 +53,11 @@ describe("User model", () => {
     const spy = jest.spyOn(participant, "save");
 
     // Should await so the teardown doesn't throw an exception
-    await participant.save();
+    const savedParticipant: IParticipant = await participant.save();
 
     expect(spy).toHaveBeenCalled();
 
-    expect(participant).toMatchObject({
+    expect(savedParticipant).toMatchObject({
       name: {
         first: expect.any(String),
         last: expect.any(String),
@@ -65,8 +65,12 @@ describe("User model", () => {
       birthday: expect.any(Date),
     });
 
-    expect(participant.birthday.getFullYear()).toBe(1992);
-    expect(participant.birthday.getMonth()).toBe(11);
-    expect(participant.birthday.getDate()).toBe(9);
+    expect(savedParticipant.birthday.getFullYear()).toBe(1992);
+    expect(savedParticipant.birthday.getMonth()).toBe(11);
+    expect(savedParticipant.birthday.getDate()).toBe(9);
+    expect(savedParticipant.email).toBeUndefined();
+    expect(savedParticipant.phone).toBeUndefined();
+    expect(savedParticipant.createdAt.getDate()).toBe(new Date().getDate());
+    expect(savedParticipant.updatedAt.getDate()).toBe(new Date().getDate());
   });
 });
