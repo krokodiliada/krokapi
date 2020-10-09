@@ -1,8 +1,14 @@
-import * as dotenv from "dotenv";
 import mongoose from "mongoose";
+import faker from "faker";
 import Participant, { IParticipant } from "model/Participant";
 
-dotenv.config();
+const validParticipant: IParticipant = new Participant({
+  name: {
+    first: "Ivan",
+    last: "Petrov",
+  },
+  birthday: new Date("Dec 9 1992"),
+});
 
 describe("User model", () => {
   beforeAll(async () => {
@@ -40,15 +46,9 @@ describe("User model", () => {
   });
 
   it("Should create a user with name and birthday", async () => {
-    expect.assertions(9);
+    expect.assertions(10);
 
-    const participant: IParticipant = new Participant({
-      name: {
-        first: "Ivan",
-        last: "Petrov",
-      },
-      birthday: new Date("Dec 9 1992"),
-    });
+    const participant: IParticipant = new Participant(validParticipant);
 
     const spy = jest.spyOn(participant, "save");
 
@@ -68,9 +68,72 @@ describe("User model", () => {
     expect(savedParticipant.birthday.getFullYear()).toBe(1992);
     expect(savedParticipant.birthday.getMonth()).toBe(11);
     expect(savedParticipant.birthday.getDate()).toBe(9);
+    expect(savedParticipant.name.middle).toBeUndefined();
     expect(savedParticipant.email).toBeUndefined();
     expect(savedParticipant.phone).toBeUndefined();
     expect(savedParticipant.createdAt.getDate()).toBe(new Date().getDate());
     expect(savedParticipant.updatedAt.getDate()).toBe(new Date().getDate());
+  });
+
+  it("Throws an error if phone is not in valid format", () => {
+    let participant: IParticipant = new Participant(validParticipant);
+
+    participant.phone = "433-927-5687";
+    expect(participant.validate).toThrow();
+
+    participant.phone = "+1 433-927-5687";
+    expect(participant.validate).toThrow();
+
+    participant.phone = "257-09-13";
+    expect(participant.validate).toThrow();
+
+    participant.phone = "2570913";
+    expect(participant.validate).toThrow();
+
+    participant.phone = "926-173-1919";
+    expect(participant.validate).toThrow();
+
+    participant.phone = "89261731919";
+    expect(participant.validate).toThrow();
+
+    participant.phone = "+7 (926) 173-1919";
+    expect(participant.validate).toThrow();
+  });
+
+  it("Throws an error if email is not in valid format", () => {
+    let participant: IParticipant = new Participant(validParticipant);
+
+    participant.email = "hello";
+    expect(participant.validate).toThrow();
+
+    participant.email = "hello@ca";
+    expect(participant.validate).toThrow();
+
+    participant.email = "hello@ca@ma";
+    expect(participant.validate).toThrow();
+
+    participant.email = "45354.com";
+    expect(participant.validate).toThrow();
+  });
+
+  it("Should validate a proper email correctly", () => {
+    let participant: IParticipant = new Participant(validParticipant);
+    const numAttempts = 100;
+
+    expect.assertions(numAttempts);
+
+    for (let i = 0; i < numAttempts; i++) {
+      participant.email = faker.internet.email();
+      const error = participant.validateSync();
+      expect(error).toBe(undefined);
+    }
+  });
+
+  it("Should validate a proper phone correctly", () => {
+    let participant: IParticipant = new Participant(validParticipant);
+
+    participant.phone = "+79261731919";
+    const error = participant.validateSync();
+    expect(error).toBe(undefined);
   });
 });
