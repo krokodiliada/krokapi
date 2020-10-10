@@ -16,30 +16,31 @@ export interface IParticipant extends Document {
   updatedAt: Date;
 }
 
+const ParticipantNameSchema: Schema = new Schema({
+  first: {
+    type: String,
+    required: true,
+  },
+  last: {
+    type: String,
+    required: true,
+  },
+  middle: {
+    type: String,
+    required: false,
+  },
+});
+
 export const ParticipantSchema: Schema = new Schema(
   {
     name: {
-      first: {
-        type: String,
-        required: true,
-      },
-
-      last: {
-        type: String,
-        required: true,
-      },
-
-      middle: {
-        type: String,
-        required: false,
-      },
+      type: ParticipantNameSchema,
+      required: true,
     },
-
     birthday: {
       type: Date,
       required: true,
     },
-
     phone: {
       type: String,
       unique: true,
@@ -51,7 +52,6 @@ export const ParticipantSchema: Schema = new Schema(
         message: (props) => `${props.value} is not a valid phone number`,
       },
     },
-
     email: {
       type: String,
       unique: true,

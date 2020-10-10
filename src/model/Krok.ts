@@ -1,10 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-
-export interface IKrokLocation extends Document {
-  name: string;
-  latitude: number;
-  longitude: number;
-}
+import { IGpsLocation } from "model/GpsLocation";
 
 export interface IKrokDate extends Document {
   start: Date;
@@ -15,10 +10,27 @@ export interface IKrok extends Document {
   number: number;
   season: string;
   date: IKrokDate;
-  location: IKrokLocation;
+  location: IGpsLocation;
   createdAt: Date;
   updatedAt: Date;
 }
+
+const KrokDateSchema: Schema = new Schema({
+  start: {
+    type: Date,
+    required: true,
+  },
+  end: {
+    type: Date,
+    required: true,
+    validate: {
+      validator: function (this: IKrok, value: Date) {
+        return value <= this.date.start;
+      },
+      message: () => "End date must be later or equal to start date",
+    },
+  },
+});
 
 export const KrokSchema: Schema = new Schema(
   {
@@ -35,34 +47,12 @@ export const KrokSchema: Schema = new Schema(
       },
     },
     date: {
-      start: {
-        type: Date,
-        required: true,
-      },
-      end: {
-        type: Date,
-        required: true,
-        validate: {
-          validator: function (this: IKrok, value: Date) {
-            return value <= this.date.start;
-          },
-          message: () => "End date must be later or equal to start date",
-        },
-      },
+      type: KrokDateSchema,
+      required: true,
     },
     location: {
-      name: {
-        type: String,
-        required: false,
-      },
-      latitude: {
-        type: Number,
-        required: false,
-      },
-      longitude: {
-        type: Number,
-        required: false,
-      },
+      type: Schema.Types.ObjectId,
+      required: false,
     },
   },
   { timestamps: true }
