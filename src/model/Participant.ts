@@ -1,14 +1,14 @@
 import mongoose, { Schema, Document } from "mongoose";
 import Validator from "validator";
 
-export interface Name extends Document {
+export interface IParticipantName extends Document {
   first: string;
   last: string;
   middle: string;
 }
 
 export interface IParticipant extends Document {
-  name: Name;
+  name: IParticipantName;
   birthday: Date;
   phone: string;
   email: string;
