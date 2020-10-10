@@ -34,7 +34,7 @@ class Krok {
   +""season""
   +""start_date""
   +""end_date""
-  +""location"" - //""Dict[latitude, longitude]""//
+  +""location"" - //""GpsLocation.id""//
   +""location_name""
 }
 
@@ -60,7 +60,7 @@ class CheckPoint {
   ==
   #""id""
   +""short_name""
-  +""location"" - //""Dict[latitude, longitude]""//
+  +""location"" - //""GpsLocation.id""//
   +""water"" - //True if used for the water stage//
   +""description""
   +""note"" - //Organizator's notes//
@@ -135,10 +135,21 @@ class RouteWater {
     //""}]""//
 }
 
+class GpsLocation {
+  Information about a particular point on the map
+  ==
+  #""id""
+  +""name"" - //Location short name//
+  +""latitude""
+  +""longitude""
+}
+
 Team::participant *-right- Participant::id
 Team::krok -- Krok::id
 Team::category -down- Category::id
 Krok::id -left- Category::krok
+Krok::location -- GpsLocation::id
+CheckPoint::location -- GpsLocation::id
 CheckPointAssignment::krok -up- Krok::id
 CheckPointAssignment::category -left- Category::id
 CheckPointAssignment::checkpoint -left- CheckPoint::id
@@ -150,6 +161,6 @@ Route::tag -up- Tag::id
 Route::krok -left- Krok::id
 Route::punches *-[norank]- Station::id
 RouteWater::team -up- Team::id
-RouteWater::actions *-[norank]- CheckPoint::id
+RouteWater::actions *-down- CheckPoint::id
 
 @enduml
