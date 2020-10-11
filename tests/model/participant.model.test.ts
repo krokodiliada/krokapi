@@ -125,7 +125,7 @@ describe("User model", () => {
     for (let i = 0; i < numAttempts; i++) {
       participant.email = faker.internet.email();
       const error = participant.validateSync();
-      expect(error).toBe(undefined);
+      expect(error).toBeUndefined();
     }
   });
 
@@ -134,6 +134,6 @@ describe("User model", () => {
 
     participant.phone = "+79261731919";
     const error = participant.validateSync();
-    expect(error).toBe(undefined);
+    expect(error).toBeUndefined();
   });
 });
