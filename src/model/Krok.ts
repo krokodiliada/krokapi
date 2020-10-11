@@ -24,8 +24,8 @@ const KrokDateSchema: Schema = new Schema({
     type: Date,
     required: true,
     validate: {
-      validator: function (this: IKrok, value: Date) {
-        return value <= this.date.start;
+      validator: function (this: IKrokDate, value: Date) {
+        return value >= this.start;
       },
       message: () => "End date must be later or equal to start date",
     },
