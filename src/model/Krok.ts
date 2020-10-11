@@ -19,10 +19,12 @@ const KrokDateSchema: Schema = new Schema({
   start: {
     type: Date,
     required: true,
+    unique: true,
   },
   end: {
     type: Date,
     required: true,
+    unique: true,
     validate: {
       validator: function (this: IKrokDate, value: Date) {
         return value >= this.start;
@@ -49,6 +51,7 @@ export const KrokSchema: Schema = new Schema(
     date: {
       type: KrokDateSchema,
       required: true,
+      unique: true,
     },
     location: {
       type: Schema.Types.ObjectId,

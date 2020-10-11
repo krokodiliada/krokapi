@@ -10,7 +10,7 @@ const validKrok: IKrok = new Krok({
   },
 });
 
-describe("User model", () => {
+describe("Krok model", () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URL ?? "", {
       useCreateIndex: true,
@@ -21,6 +21,10 @@ describe("User model", () => {
 
   afterAll(async () => {
     mongoose.connection.close();
+  });
+
+  afterEach(async () => {
+    await Krok.deleteMany({});
   });
 
   it("Throws an error if krok is created without parameters", () => {
@@ -80,5 +84,38 @@ describe("User model", () => {
       expect(krok.season).toBe(expectedSeason);
       expect(error).toBeUndefined();
     }
+  });
+
+  it("Throws an error when two Kroks have the same number", async () => {
+    const krok: IKrok = new Krok(validKrok);
+
+    const spy = jest.spyOn(krok, "save");
+    await krok.save();
+    expect(spy).toHaveBeenCalled();
+
+    const secondKrok: IKrok = new Krok({
+      number: validKrok.number,
+      date: validKrok.date,
+    });
+
+    await expect(Krok.create(secondKrok)).rejects.toThrowError();
+  });
+
+  it("Throws an error when two Kroks have the same date", async () => {
+    const krok: IKrok = new Krok(validKrok);
+
+    const spy = jest.spyOn(krok, "save");
+    await krok.save();
+    expect(spy).toHaveBeenCalled();
+
+    const secondKrok: IKrok = new Krok({
+      number: validKrok.number + 1,
+      date: {
+        start: validKrok.date.start,
+        end: validKrok.date.end,
+      },
+    });
+
+    await expect(Krok.create(secondKrok)).rejects.toThrowError();
   });
 });

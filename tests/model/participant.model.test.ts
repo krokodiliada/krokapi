@@ -7,10 +7,10 @@ const validParticipant: IParticipant = new Participant({
     first: "Ivan",
     last: "Petrov",
   },
-  birthday: new Date("Dec 9 1992"),
+  birthday: new Date("Oct 13 1985"),
 });
 
-describe("User model", () => {
+describe("Participant model", () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URL ?? "", {
       useCreateIndex: true,
@@ -21,6 +21,10 @@ describe("User model", () => {
 
   afterAll(async () => {
     mongoose.connection.close();
+  });
+
+  afterEach(async () => {
+    await Participant.deleteMany({});
   });
 
   it("Throws an error if participant is created without parameters", () => {
@@ -65,9 +69,9 @@ describe("User model", () => {
       birthday: expect.any(Date),
     });
 
-    expect(savedParticipant.birthday.getFullYear()).toBe(1992);
-    expect(savedParticipant.birthday.getMonth()).toBe(11);
-    expect(savedParticipant.birthday.getDate()).toBe(9);
+    expect(savedParticipant.birthday.getFullYear()).toBe(1985);
+    expect(savedParticipant.birthday.getMonth()).toBe(9);
+    expect(savedParticipant.birthday.getDate()).toBe(13);
     expect(savedParticipant.name.middle).toBeUndefined();
     expect(savedParticipant.email).toBeUndefined();
     expect(savedParticipant.phone).toBeUndefined();
@@ -135,5 +139,29 @@ describe("User model", () => {
     participant.phone = "+79261731919";
     const error = participant.validateSync();
     expect(error).toBeUndefined();
+  });
+
+  it("Throws an error if two people have the same name and bday", async () => {
+    const participant: IParticipant = new Participant({
+      name: {
+        first: "Mihail",
+        last: "Ponchikov",
+      },
+      birthday: new Date("Nov 23 1993"),
+    });
+
+    const spy = jest.spyOn(participant, "save");
+    await participant.save();
+    expect(spy).toHaveBeenCalled();
+
+    const secondParticipant: IParticipant = new Participant({
+      name: {
+        first: participant.name.first,
+        last: participant.name.last,
+      },
+      birthday: participant.birthday,
+    });
+
+    await expect(Participant.create(secondParticipant)).rejects.toThrowError();
   });
 });

@@ -19,7 +19,7 @@ const validCategory: ICategory = new Category({
   krok: validKrok._id,
 });
 
-describe("User model", () => {
+describe("Category model", () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URL ?? "", {
       useCreateIndex: true,
@@ -30,6 +30,10 @@ describe("User model", () => {
 
   afterAll(async () => {
     mongoose.connection.close();
+  });
+
+  afterEach(async () => {
+    await Category.deleteMany({});
   });
 
   it("Throws an error if category is created without parameters", () => {
