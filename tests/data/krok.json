@@ -1,0 +1,26 @@
+[
+  {
+    "number": 48,
+    "categories": ["S", "Che", "V", "DV", "L", "VL", "B", "E"],
+    "date": {
+      "start": "Sep 20, 2019",
+      "end": "Sep 22, 2019"
+    }
+  },
+  {
+    "number": 49,
+    "categories": ["S", "Che", "V", "DV", "L", "VL", "B"],
+    "date": {
+      "start": "May 23, 2020",
+      "end": "May 25, 2020"
+    }
+  },
+  {
+    "number": 50,
+    "categories": ["S", "Che", "V", "DV", "L", "VL", "B"],
+    "date": {
+      "start": "Sep 25, 2020",
+      "end": "Sep 27, 2020"
+    }
+  }
+]
