@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { IGpsLocation } from "model/GpsLocation";
+import { ICategory } from "model/Category";
 
 export interface IKrokDate extends Document {
   start: Date;
@@ -8,6 +9,7 @@ export interface IKrokDate extends Document {
 
 export interface IKrok extends Document {
   number: number;
+  categories: Array<ICategory["_id"]>;
   season: string;
   date: IKrokDate;
   location: IGpsLocation;
@@ -41,12 +43,18 @@ export const KrokSchema: Schema = new Schema(
       required: true,
       unique: true,
     },
+    categories: {
+      type: [Schema.Types.ObjectId],
+      ref: "Category",
+      required: false,
+    },
     season: {
       type: String,
       required: false,
       default: function (this: IKrok) {
         return this.number % 2 == 0 ? "fall" : "spring";
       },
+      enum: ["fall", "spring"],
     },
     date: {
       type: KrokDateSchema,
@@ -55,6 +63,7 @@ export const KrokSchema: Schema = new Schema(
     },
     location: {
       type: Schema.Types.ObjectId,
+      ref: "GpsLocation",
       required: false,
     },
   },

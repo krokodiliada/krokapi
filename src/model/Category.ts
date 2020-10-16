@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IKrok } from "./Krok";
 
 export interface ICategoryName extends Document {
   short: string;
@@ -14,7 +13,6 @@ export interface ICategoryParticipantsNumber extends Document {
 export interface ICategory extends Document {
   name: ICategoryName;
   description: string;
-  krok: IKrok["_id"];
   participantsNumber: ICategoryParticipantsNumber;
   /**
    * @brief Minimum number of checkpoints required to take.
@@ -51,10 +49,6 @@ export const CategorySchema: Schema = new Schema(
     description: {
       type: String,
       required: false,
-    },
-    krok: {
-      type: Schema.Types.ObjectId,
-      required: true,
     },
     participantsNumber: {
       min: {
