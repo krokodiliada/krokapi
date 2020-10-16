@@ -21,13 +21,18 @@ export interface IRouteWater extends Document {
 }
 
 const RouteWaterActionSchema: Schema = new Schema({
-  station: {
+  checkpoint: {
     type: Schema.Types.ObjectId,
+    ref: "Checkpoint",
     required: true,
   },
   timestamp: {
     type: Date,
     required: true,
+  },
+  touched: {
+    type: Boolean,
+    required: false,
   },
 });
 
@@ -35,6 +40,7 @@ export const RouteWaterSchema: Schema = new Schema(
   {
     team: {
       type: Schema.Types.ObjectId,
+      ref: "Team",
       required: true,
     },
     start: {

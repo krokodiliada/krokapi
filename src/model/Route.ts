@@ -21,6 +21,7 @@ export interface IRoute extends Document {
 const RouteActionSchema: Schema = new Schema({
   station: {
     type: Schema.Types.ObjectId,
+    ref: "Station",
     required: true,
   },
   timestamp: {
@@ -33,10 +34,12 @@ export const RouteSchema: Schema = new Schema(
   {
     tag: {
       type: Schema.Types.ObjectId,
+      ref: "Tag",
       required: true,
     },
     krok: {
       type: Schema.Types.ObjectId,
+      ref: "Krok",
       required: true,
     },
     start: {

@@ -28,6 +28,7 @@ export const CheckpointSchema: Schema = new Schema(
     },
     location: {
       type: Schema.Types.ObjectId,
+      ref: "GpsLocation",
       required: false,
     },
     description: {

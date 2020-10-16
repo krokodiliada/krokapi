@@ -4,6 +4,7 @@ import { IKrok } from "model/Krok";
 import { ICategory } from "model/Category";
 
 export interface ITeam extends Document {
+  name: string;
   participants: IParticipant["_id"];
   krok: IKrok["_id"];
   category: ICategory["_id"];
@@ -14,16 +15,23 @@ export interface ITeam extends Document {
 
 export const TeamSchema: Schema = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     participants: {
       type: [Schema.Types.ObjectId],
+      ref: "Participant",
       required: true,
     },
     krok: {
       type: Schema.Types.ObjectId,
+      ref: "Krok",
       required: true,
     },
     category: {
       type: Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
     extraMapRequired: {

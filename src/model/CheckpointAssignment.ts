@@ -45,18 +45,22 @@ export const CheckpointAssignmentSchema: Schema = new Schema(
   {
     krok: {
       type: Schema.Types.ObjectId,
+      ref: "Krok",
       required: true,
     },
     category: {
       type: Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
     checkpoint: {
       type: Schema.Types.ObjectId,
+      ref: "Checkpoint",
       required: true,
     },
     station: {
       type: Schema.Types.ObjectId,
+      ref: "Station",
       required: false,
     },
     rquired: {

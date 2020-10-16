@@ -15,14 +15,17 @@ export const TagAssignmentSchema: Schema = new Schema(
   {
     tag: {
       type: Schema.Types.ObjectId,
+      ref: "Tag",
       required: true,
     },
     participant: {
       type: Schema.Types.ObjectId,
+      ref: "Participant",
       required: true,
     },
     krok: {
       type: Schema.Types.ObjectId,
+      ref: "Krok",
       required: true,
     },
   },
