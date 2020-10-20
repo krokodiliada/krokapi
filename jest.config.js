@@ -5,4 +5,5 @@ module.exports = {
   modulePaths: ["<rootDir>/src/"],
   testEnvironment: "node",
   testPathIgnorePatterns: ["/node_modules/"],
+  testTimeout: 15000,
 };
