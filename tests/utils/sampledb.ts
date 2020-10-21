@@ -17,6 +17,11 @@ import participantData from "../data/participants";
 import tagData from "../data/tags";
 import tagAssignmentData from "../data/tagAssignment";
 import teamData from "../data/teams";
+import stationData from "../data/stations";
+import gpsLocationData from "../data/gpsLocations";
+import checkpointData from "../data/checkpoints";
+import checkpointAssignmentData from "../data/checkpointAssignment";
+import routeWaterData from "../data/routesWater";
 
 const createCategoryCollection = async () => {
   await Category.insertMany(categoryData);
@@ -41,6 +46,28 @@ const createTagAssignmentCollection = async () => {
 const createTeamCollection = async () => {
   await Team.insertMany(teamData);
 };
+
+const createStationCollection = async () => {
+  await Station.insertMany(stationData);
+};
+
+const createGpsLocationCollection = async () => {
+  await GpsLocation.insertMany(gpsLocationData);
+};
+
+const createCheckpointCollection = async () => {
+  await Checkpoint.insertMany(checkpointData);
+};
+
+const createCheckpointAssignmentCollection = async () => {
+  await CheckpointAssignment.insertMany(checkpointAssignmentData);
+};
+
+const createRouteWaterCollection = async () => {
+  await RouteWater.insertMany(routeWaterData);
+};
+
+const createRouteCollection = async () => {};
 
 export const populateSampleDatabase = async () => {
   await createCategoryCollection();
@@ -71,6 +98,36 @@ export const populateSampleDatabase = async () => {
   await createTeamCollection();
   await Team.countDocuments({}, (_, count) => {
     console.log("Number of teams: ", count);
+  });
+
+  await createStationCollection();
+  await Station.countDocuments({}, (_, count) => {
+    console.log("Number of stations: ", count);
+  });
+
+  await createGpsLocationCollection();
+  await GpsLocation.countDocuments({}, (_, count) => {
+    console.log("Number of loctions: ", count);
+  });
+
+  await createCheckpointCollection();
+  await Checkpoint.countDocuments({}, (_, count) => {
+    console.log("Number of checkpoints: ", count);
+  });
+
+  await createCheckpointAssignmentCollection();
+  await CheckpointAssignment.countDocuments({}, (_, count) => {
+    console.log("Number of checkpoint assignments: ", count);
+  });
+
+  await createRouteWaterCollection();
+  await RouteWater.countDocuments({}, (_, count) => {
+    console.log("Number of water routes: ", count);
+  });
+
+  await createRouteCollection();
+  await Route.countDocuments({}, (_, count) => {
+    console.log("Number of forest routes: ", count);
   });
 };
 

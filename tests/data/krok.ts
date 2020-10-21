@@ -50,5 +50,6 @@ export default [
       start: new Date("Sep 25, 2020"),
       end: new Date("Sep 27, 2020"),
     },
+    location: "5f8f7daab54764421b715ee9",
   },
 ];
