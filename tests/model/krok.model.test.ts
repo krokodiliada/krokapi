@@ -51,7 +51,7 @@ describe("Krok model", () => {
 
     expect(spy).toHaveBeenCalled();
 
-    expect(krok).toMatchObject({
+    expect(savedKrok).toMatchObject({
       number: expect.any(Number),
       date: {
         start: expect.any(Date),

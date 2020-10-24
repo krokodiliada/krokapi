@@ -1,22 +1,12 @@
 import mongoose from "mongoose";
 import faker from "faker";
 import Category, { ICategory } from "model/Category";
-import Krok, { IKrok } from "model/Krok";
-
-const validKrok: IKrok = new Krok({
-  number: 50,
-  date: {
-    start: new Date("Sep 25, 2020"),
-    end: new Date("Sep 27, 2020"),
-  },
-});
 
 const validCategory: ICategory = new Category({
   name: {
     short: faker.name.firstName(),
     long: faker.name.lastName(),
   },
-  krok: validKrok._id,
 });
 
 describe("Category model", () => {
@@ -50,14 +40,7 @@ describe("Category model", () => {
     expect(category.validate).toThrow();
   });
 
-  it("Throws an error if category is created with krok id only", () => {
-    const category: ICategory = new Category({
-      krok: validCategory.krok,
-    });
-    expect(category.validate).toThrow();
-  });
-
-  it("Should create a new category with name and krok id", async () => {
+  it("Should create a new category with the name", async () => {
     expect.assertions(7);
 
     const category: ICategory = new Category(validCategory);
@@ -74,7 +57,6 @@ describe("Category model", () => {
         short: expect.any(String),
         long: expect.any(String),
       },
-      krok: expect.any(Object),
       participantsNumber: {
         min: expect.any(Number),
         max: expect.any(Number),
