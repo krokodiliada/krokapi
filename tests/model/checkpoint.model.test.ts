@@ -31,9 +31,7 @@ describe("Checkpoint model", () => {
     expect.assertions(6);
 
     const checkpoint: ICheckpoint = new Checkpoint(validCheckpoint);
-
     const spy = jest.spyOn(checkpoint, "save");
-
     const savedCheckpoint: ICheckpoint = await checkpoint.save();
 
     expect(spy).toHaveBeenCalled();

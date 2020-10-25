@@ -40,9 +40,7 @@ describe("GpsLocation model", () => {
     expect.assertions(5);
 
     const location: IGpsLocation = new GpsLocation(validLocation);
-
     const spy = jest.spyOn(location, "save");
-
     const savedLocation: IGpsLocation = await location.save();
 
     expect(spy).toHaveBeenCalled();

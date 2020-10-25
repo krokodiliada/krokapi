@@ -3,7 +3,7 @@ import { ITag } from "model/Tag";
 import { IKrok } from "model/Krok";
 import { IStation } from "model/Station";
 
-interface IRouteAction extends Document {
+export interface IRouteAction extends Document {
   station: IStation["_id"];
   timestamp: Date;
 }
@@ -49,11 +49,16 @@ export const RouteSchema: Schema = new Schema(
     finish: {
       type: Date,
       required: true,
+      validate: {
+        validator: function (this: IRoute, value: Date) {
+          return value >= this.start;
+        },
+        message: () => "Finish timestamp must be later or equal to start one",
+      },
     },
     actions: {
       type: [RouteActionSchema],
-      required: true,
-      default: [],
+      required: false,
     },
   },
   { timestamps: true }

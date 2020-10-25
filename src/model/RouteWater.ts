@@ -33,6 +33,7 @@ const RouteWaterActionSchema: Schema = new Schema({
   touched: {
     type: Boolean,
     required: false,
+    default: false,
   },
 });
 
@@ -54,7 +55,6 @@ export const RouteWaterSchema: Schema = new Schema(
     actions: {
       type: [RouteWaterActionSchema],
       required: false,
-      default: [],
     },
   },
   { timestamps: true }

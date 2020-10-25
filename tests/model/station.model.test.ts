@@ -31,9 +31,7 @@ describe("Station model", () => {
     expect.assertions(5);
 
     const station: IStation = new Station(validStation);
-
     const spy = jest.spyOn(station, "save");
-
     const savedStation: IStation = await station.save();
 
     expect(spy).toHaveBeenCalled();

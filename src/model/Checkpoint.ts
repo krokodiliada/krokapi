@@ -38,6 +38,7 @@ export const CheckpointSchema: Schema = new Schema(
     water: {
       type: Boolean,
       required: false,
+      default: false,
     },
     note: {
       type: String,

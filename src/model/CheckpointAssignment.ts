@@ -4,11 +4,11 @@ import { ICategory } from "model/Category";
 import { ICheckpoint } from "model/CheckPoint";
 import { IStation } from "model/Station";
 
-enum CheckpointCostMetric {
-  Points = 0,
-  Seconds,
-  Minutes,
-  Hours,
+export enum CheckpointCostMetric {
+  Points = "points",
+  Seconds = "seconds",
+  Minutes = "minutes",
+  Hours = "hours",
 }
 
 export interface ICheckpointAssignment extends Document {
@@ -63,7 +63,7 @@ export const CheckpointAssignmentSchema: Schema = new Schema(
       ref: "Station",
       required: false,
     },
-    rquired: {
+    required: {
       type: Boolean,
       required: false,
       default: true,
@@ -82,9 +82,9 @@ export const CheckpointAssignmentSchema: Schema = new Schema(
       required: false,
     },
     costMetric: {
-      type: Number,
-      default: 1,
-      enum: [0, 1, 2, 3],
+      type: String,
+      default: CheckpointCostMetric.Seconds,
+      enum: Object.values(CheckpointCostMetric),
     },
   },
   { timestamps: true }

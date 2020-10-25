@@ -82,7 +82,6 @@ describe("CheckpointAssignment model", () => {
     );
 
     const spy = jest.spyOn(assignment, "save");
-
     const savedAssignment: ICheckpointAssignment = await assignment.save();
 
     expect(spy).toHaveBeenCalled();

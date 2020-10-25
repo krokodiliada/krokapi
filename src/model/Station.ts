@@ -1,8 +1,16 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export enum StationType {
+  Regular = "regular",
+  Clear = "clear",
+  Start = "start",
+  Finish = "finish",
+}
+
 export interface IStation extends Document {
   number: number;
   enabled: boolean;
+  stationType: StationType;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -18,6 +26,12 @@ export const StationSchema: Schema = new Schema(
       type: Boolean,
       required: false,
       default: true,
+    },
+    stationType: {
+      type: String,
+      required: false,
+      default: StationType.Regular,
+      enum: Object.values(StationType),
     },
   },
   { timestamps: true }
