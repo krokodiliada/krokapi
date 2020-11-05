@@ -23,6 +23,17 @@ module.exports = {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     "no-console": "off",
-    allowForLoopAfterthoughts: true,
+    "no-plusplus": [
+      "error",
+      {
+        allowForLoopAfterthoughts: true,
+      },
+    ],
+    "no-underscore-dangle": [
+      "error",
+      {
+        allow: ["_id"],
+      },
+    ],
   },
 };

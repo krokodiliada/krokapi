@@ -50,7 +50,7 @@ export const RouteSchema: Schema = new Schema(
       type: Date,
       required: true,
       validate: {
-        validator: function (this: IRoute, value: Date) {
+        validator(this: IRoute, value: Date) {
           return value >= this.start;
         },
         message: () => "Finish timestamp must be later or equal to start one",

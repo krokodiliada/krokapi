@@ -28,7 +28,7 @@ const KrokDateSchema: Schema = new Schema({
     required: true,
     unique: true,
     validate: {
-      validator: function (this: IKrokDate, value: Date) {
+      validator(this: IKrokDate, value: Date) {
         return value >= this.start;
       },
       message: () => "End date must be later or equal to start date",
@@ -51,8 +51,8 @@ export const KrokSchema: Schema = new Schema(
     season: {
       type: String,
       required: false,
-      default: function (this: IKrok) {
-        return this.number % 2 == 0 ? "fall" : "spring";
+      default(this: IKrok) {
+        return this.number % 2 === 0 ? "fall" : "spring";
       },
       enum: ["fall", "spring"],
     },

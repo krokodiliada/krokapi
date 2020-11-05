@@ -80,7 +80,7 @@ describe("Participant model", () => {
   });
 
   it("Throws an error if phone is not in valid format", () => {
-    let participant: IParticipant = new Participant(validParticipant);
+    const participant: IParticipant = new Participant(validParticipant);
 
     participant.phone = "433-927-5687";
     expect(participant.validate).toThrow();
@@ -105,7 +105,7 @@ describe("Participant model", () => {
   });
 
   it("Throws an error if email is not in valid format", () => {
-    let participant: IParticipant = new Participant(validParticipant);
+    const participant: IParticipant = new Participant(validParticipant);
 
     participant.email = "hello";
     expect(participant.validate).toThrow();
@@ -121,7 +121,7 @@ describe("Participant model", () => {
   });
 
   it("Should validate a proper email correctly", () => {
-    let participant: IParticipant = new Participant(validParticipant);
+    const participant: IParticipant = new Participant(validParticipant);
     const numAttempts = 100;
 
     expect.assertions(numAttempts);
@@ -134,7 +134,7 @@ describe("Participant model", () => {
   });
 
   it("Should validate a proper phone correctly", () => {
-    let participant: IParticipant = new Participant(validParticipant);
+    const participant: IParticipant = new Participant(validParticipant);
 
     participant.phone = "+79261731919";
     const error = participant.validateSync();

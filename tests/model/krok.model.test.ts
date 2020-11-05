@@ -80,7 +80,7 @@ describe("Krok model", () => {
 
       const error = krok.validateSync();
 
-      const expectedSeason = krokNumber % 2 == 0 ? "fall" : "spring";
+      const expectedSeason = krokNumber % 2 === 0 ? "fall" : "spring";
       expect(krok.season).toBe(expectedSeason);
       expect(error).toBeUndefined();
     }

@@ -71,64 +71,17 @@ const createRouteCollection = async () => {};
 
 export const populateSampleDatabase = async () => {
   await createCategoryCollection();
-  await Category.countDocuments({}, (_, count) => {
-    console.log("Number of categories: ", count);
-  });
-
   await createKrokCollection();
-  await Krok.countDocuments({}, (_, count) => {
-    console.log("Number of krok objects: ", count);
-  });
-
   await createParticipantCollection();
-  await Participant.countDocuments({}, (_, count) => {
-    console.log("Number of participants: ", count);
-  });
-
   await createTagCollection();
-  await Tag.countDocuments({}, (_, count) => {
-    console.log("Number of tags: ", count);
-  });
-
   await createTagAssignmentCollection();
-  await TagAssignment.countDocuments({}, (_, count) => {
-    console.log("Number of tag assignments: ", count);
-  });
-
   await createTeamCollection();
-  await Team.countDocuments({}, (_, count) => {
-    console.log("Number of teams: ", count);
-  });
-
   await createStationCollection();
-  await Station.countDocuments({}, (_, count) => {
-    console.log("Number of stations: ", count);
-  });
-
   await createGpsLocationCollection();
-  await GpsLocation.countDocuments({}, (_, count) => {
-    console.log("Number of loctions: ", count);
-  });
-
   await createCheckpointCollection();
-  await Checkpoint.countDocuments({}, (_, count) => {
-    console.log("Number of checkpoints: ", count);
-  });
-
   await createCheckpointAssignmentCollection();
-  await CheckpointAssignment.countDocuments({}, (_, count) => {
-    console.log("Number of checkpoint assignments: ", count);
-  });
-
   await createRouteWaterCollection();
-  await RouteWater.countDocuments({}, (_, count) => {
-    console.log("Number of water routes: ", count);
-  });
-
   await createRouteCollection();
-  await Route.countDocuments({}, (_, count) => {
-    console.log("Number of forest routes: ", count);
-  });
 };
 
 export const eraseSampleDatabase = async () => {
