@@ -17,7 +17,7 @@
     "tsc": "tsc",
     "build": "npm-run-all clean lint tsc",
     "dev": "nodemon --watch src -e ts,ejs --exec ts-node -r tsconfig-paths/register src/index.ts",
-    "prod:start": "node ./dist/src/index.js",
+    "prod:start": "NODE_PATH=dist/src node ./dist/src/index.js",
     "prod": "npm-run-all build prod:start",
     "start": "npm run prod",
     "test": "jest"
