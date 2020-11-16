@@ -64,9 +64,6 @@ export const ParticipantSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-ParticipantSchema.index(
-  { birthday: 1, name: { last: 1, first: 1 } },
-  { unique: true }
-);
+ParticipantSchema.index({ birthday: 1, name: { last: 1, first: 1 } }, { unique: true });
 
 export default mongoose.model<IParticipant>("Participant", ParticipantSchema);
