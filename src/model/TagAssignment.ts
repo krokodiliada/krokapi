@@ -32,4 +32,7 @@ export const TagAssignmentSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<ITagAssignment>("TagAssignment", TagAssignmentSchema);
+export default mongoose.model<ITagAssignment>(
+  "TagAssignment",
+  TagAssignmentSchema
+);
