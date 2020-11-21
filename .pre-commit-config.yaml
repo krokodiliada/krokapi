@@ -18,6 +18,8 @@ repos:
         additional_dependencies:
           - "typescript-eslint"
           - "jest"
+        files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
+        types: [file]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.2.0
