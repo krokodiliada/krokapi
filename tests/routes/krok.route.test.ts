@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import request from "supertest";
-import app from "index";
+import app from "server";
 import { populateSampleDatabase, eraseSampleDatabase } from "../utils/sampledb";
 
 describe("Krok endpoints", () => {
@@ -91,7 +91,7 @@ describe("Krok endpoints", () => {
 
     expect(res.status).toEqual(201);
     expect(res.body).toHaveProperty("post");
-    expect(res.headers["location"]).toMatch("/.*(/?kroks/(d+))$");
+    expect(res.headers.location).toMatch("/.*(/?kroks/(d+))$");
   });
 
   it("Should return 400 if krok with the same number exists", async () => {

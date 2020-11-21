@@ -13,11 +13,11 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "format": "prettier --write src/**/*.ts{,x}",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
     "tsc": "tsc",
     "build": "npm-run-all clean lint tsc",
-    "dev": "nodemon --watch src -e ts,ejs --exec ts-node src/index.ts",
-    "prod:start": "node ./dist/src/index.js",
+    "dev": "nodemon src/index.ts",
+    "prod:start": "NODE_PATH=dist/src node ./dist/src/index.js",
     "prod": "npm-run-all build prod:start",
     "start": "npm run prod",
     "test": "jest"
@@ -59,6 +59,7 @@
     "supertest": "^5.0.0",
     "ts-jest": "^26.4.1",
     "ts-node": "^9.0.0",
+    "tsconfig-paths": "3.9.0",
     "typescript": "^4.0.3"
   }
 }
