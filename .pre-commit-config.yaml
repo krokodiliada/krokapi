@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v3.3.0
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
@@ -11,7 +11,15 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
 
-  - repo: https://github.com/prettier/prettier
-    rev: "2.1.2" # Use the sha or tag you want to point at
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v7.14.0
+    hooks:
+      - id: eslint
+        additional_dependencies:
+          - "typescript-eslint"
+          - "jest"
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.2.0
     hooks:
       - id: prettier
