@@ -41,7 +41,7 @@ describe("Krok endpoints", () => {
   it("Should return a krok object for krok with number 50", async () => {
     const res = await request(app).get("/kroks/50");
     expect(res.status).toEqual(200);
-    expect(res.body).toHaveProperty("get");
+    expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
       _id: "5f8d04b3b54764421b7156dc",
       number: 50,
@@ -56,8 +56,8 @@ describe("Krok endpoints", () => {
         "5f8d04f7b54764421b7156e1",
       ],
       date: {
-        start: "Sep 25, 2020",
-        end: "Sep 27, 2020",
+        start: new Date("Sep 25, 2020").toISOString(),
+        end: new Date("Sep 27, 2020").toISOString(),
       },
       location: "5f8f7daab54764421b715ee9",
     });

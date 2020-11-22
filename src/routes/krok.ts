@@ -1,14 +1,11 @@
 import express from "express";
 import * as KrokController from "controller/Krok";
 
+// Router for /kroks/ api
 const router = express.Router();
 
-// router.get("/kroks/:number", KrokController.getByNumber);
-router.get("/kroks/:number", (_, res) => {
-  console.log("Trying to get by number!");
-  res.status(200).json({ answer: 42 });
-});
-router.post("/kroks/", KrokController.create);
-router.delete("/kroks/:number", KrokController.deleteByNumber);
+router.get("/:number", KrokController.getByNumber);
+router.post("/", KrokController.create);
+router.delete("/:number", KrokController.deleteByNumber);
 
 export default router;

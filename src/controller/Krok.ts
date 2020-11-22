@@ -1,20 +1,38 @@
-import { Request, Response, NextFunction } from "express";
-import Krok from "model/Krok";
+import { Request, Response, NextFunction, RequestHandler } from "express";
+import Krok, { IKrok } from "model/Krok";
 
-const create = (req: Request, res: Response, next: NextFunction) => {
+const create: RequestHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   Krok.create(req.body)
     .then((krok) => res.json(krok))
     .catch(next);
 };
 
-const getByNumber = (req: Request, res: Response, next: NextFunction) => {
+// GET /kroks/:number
+const getByNumber: RequestHandler = async (req: Request, res: Response) => {
   console.log("Trying to get the krok by number!");
-  Krok.find(req.body)
-    .then((krok) => res.status(200).json(krok))
-    .catch(next);
+
+  const query = {
+    number: Number(req.params.number),
+  };
+
+  const krok: IKrok | null = await Krok.findOne(query);
+
+  if (krok) {
+    res.status(200).json(krok);
+  } else {
+    res.status(404).json({});
+  }
 };
 
-const deleteByNumber = (req: Request, res: Response, next: NextFunction) => {
+const deleteByNumber: RequestHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   Krok.find(req.body)
     .then((krok) => res.json(krok))
     .catch(next);

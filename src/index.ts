@@ -1,9 +1,23 @@
 import app from "server";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+
+dotenv.config();
 
 const port = 8080; // default port to listen
 
 // start the Express server
-app.listen(port, () => {
-  // tslint:disable-next-line:no-console
-  console.log(`server started at http://localhost:${port}`);
-});
+mongoose
+  .connect(process.env.MONGO_URL ?? "", {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`server started at http://localhost:${port}`);
+    });
+  })
+  .catch(() => {
+    console.log("Cannot connect to mongodb. Won't be listening to API.");
+  });

@@ -16,9 +16,14 @@ repos:
     hooks:
       - id: eslint
         additional_dependencies:
-          - "typescript-eslint"
-          - "jest"
-        files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
+          - eslint@7.14.0
+          - eslint-config-airbnb
+          - eslint-config-airbnb-typescript
+          - eslint-config-prettier
+          - jest
+          - prettier
+          - "@typescript-eslint/eslint-plugin"
+        files: \.[t]sx?$ # *.ts and *.tsx
         types: [file]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
