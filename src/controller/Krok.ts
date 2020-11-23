@@ -3,24 +3,31 @@ import { StatusCodes } from "http-status-codes";
 
 import Krok, { IKrok } from "model/Krok";
 
+// Validate krok :number parameter
+const validateKrokNumber: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const requestedKrokNumber = Number(req.params.number);
+
+  if (Number.isNaN(requestedKrokNumber)) {
+    return res.status(StatusCodes.BAD_REQUEST).json({});
+  }
+
+  return next();
+};
+
 // GET /kroks/
-export const getAll: RequestHandler = async (_: Request, res: Response) => {
+const getAll: RequestHandler = async (_: Request, res: Response) => {
   const kroks: Array<IKrok> = await Krok.find();
 
   res.status(StatusCodes.OK).json(kroks);
 };
 
 // GET /kroks/:number
-export const getByNumber: RequestHandler = async (
-  req: Request,
-  res: Response
-) => {
+const getByNumber: RequestHandler = async (req: Request, res: Response) => {
   const requestedKrokNumber = Number(req.params.number);
-
-  if (Number.isNaN(requestedKrokNumber)) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
-    return;
-  }
 
   const query = {
     number: requestedKrokNumber,
@@ -35,13 +42,9 @@ export const getByNumber: RequestHandler = async (
   }
 };
 
-export const create: RequestHandler = async (req: Request, res: Response) => {
+// PUT /kroks/:number
+const create: RequestHandler = async (req: Request, res: Response) => {
   const requestedKrokNumber = Number(req.params.number);
-
-  if (Number.isNaN(requestedKrokNumber)) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
-    return;
-  }
 
   const query = req.body;
   query.number = requestedKrokNumber;
@@ -71,24 +74,76 @@ export const create: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const update: RequestHandler = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  Krok.create(req.body)
-    .then((krok) => res.json(krok))
-    .catch(next);
+// PATCH /kroks/:number
+const update: RequestHandler = async (req: Request, res: Response) => {
+  const requestedKrokNumber = Number(req.params.number);
+
+  if (Object.keys(req.body).length === 0) {
+    res.status(StatusCodes.BAD_REQUEST).json({});
+    return;
+  }
+
+  const query = {
+    number: requestedKrokNumber,
+  };
+
+  const krok: IKrok | null = await Krok.findOne(query);
+
+  if (krok) {
+    krok
+      .set(req.body)
+      .save()
+      .then(() => res.status(StatusCodes.OK).json())
+      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+  } else {
+    res.status(StatusCodes.NOT_FOUND).json({});
+  }
 };
 
-export const deleteByNumber: RequestHandler = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  Krok.find(req.body)
-    .then((krok) => res.json(krok))
-    .catch(next);
+// DELETE /kroks/:number
+const deleteByNumber: RequestHandler = async (req: Request, res: Response) => {
+  const requestedKrokNumber = Number(req.params.number);
+
+  const krok: IKrok | null = await Krok.findOne({
+    number: requestedKrokNumber,
+  });
+
+  if (!krok) {
+    res.status(StatusCodes.NOT_FOUND).json({});
+    return;
+  }
+
+  Krok.deleteOne(krok)
+    .then(() => res.status(StatusCodes.OK).json(krok))
+    .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
 };
 
-export default { getAll, getByNumber, create, update, deleteByNumber };
+// GET /kroks/:number/categories
+const getAllCategories: RequestHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const requestedKrokNumber = Number(req.params.number);
+
+  const krok: IKrok | null = await Krok.findOne({
+    number: requestedKrokNumber,
+  });
+
+  if (krok) {
+    res.status(StatusCodes.OK).json({
+      categories: krok.categories,
+    });
+  } else {
+    res.status(StatusCodes.NOT_FOUND).json({});
+  }
+};
+
+export default {
+  getAll,
+  getByNumber,
+  create,
+  update,
+  deleteByNumber,
+  getAllCategories,
+  validateKrokNumber,
+};

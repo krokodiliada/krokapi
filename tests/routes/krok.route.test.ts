@@ -209,19 +209,35 @@ describe("Krok endpoints", () => {
     const res = await request(app)
       .patch("/kroks/48")
       .send({
-        date: {
-          end: new Date("Sep 24, 2019"),
-        },
+        "date.end": new Date("Sep 24, 2019"),
       });
     expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if updating krok with invalid data", async () => {
+    const res = await request(app)
+      .patch("/kroks/48")
+      .send({
+        date: {
+          end: 13,
+        },
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   // GET /kroks/{number}/categories
 
   it("Should return 404 if trying to get data of inexistent krok", async () => {
-    const res = await request(app).get("/kroks/512").send({});
+    const res = await request(app).get("/kroks/512/categories").send({});
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if trying to access krok by invalid number", async () => {
+    const res = await request(app).get("/kroks/53what/categories").send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
