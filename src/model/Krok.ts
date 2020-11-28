@@ -12,7 +12,7 @@ export interface IKrok extends Document {
   categories: Array<ICategory["_id"]>;
   season: string;
   date: IKrokDate;
-  location: IGpsLocation;
+  location?: IGpsLocation["_id"];
   createdAt: Date;
   updatedAt: Date;
 }

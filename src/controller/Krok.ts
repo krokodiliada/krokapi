@@ -1,10 +1,15 @@
+import mongoose from "mongoose";
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
+import Category, { ICategory } from "model/Category";
 import Krok, { IKrok } from "model/Krok";
+import GpsLocation, { IGpsLocation } from "model/GpsLocation";
 
-// Validate krok :number parameter
-const validateKrokNumber: RequestHandler = async (
+/**
+ * Validate krok :number parameter
+ */
+const validateKrokIsNumber: RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -13,6 +18,92 @@ const validateKrokNumber: RequestHandler = async (
 
   if (Number.isNaN(requestedKrokNumber)) {
     return res.status(StatusCodes.BAD_REQUEST).json({});
+  }
+
+  return next();
+};
+
+const validateKrokExists: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const requestedKrokNumber = Number(req.params.number);
+
+  const krok: IKrok | null = await Krok.findOne({
+    number: requestedKrokNumber,
+  });
+
+  // If inserting inexisting krok, then PUT should be allowed.
+  // For PUT methods, also check the number of parameters in the request.
+  // Number > 1 means that the route is nested, e.g.
+  // /kroks/:number/categories/:categoryId
+  if (!krok && req.method !== "PUT") {
+    return res.status(StatusCodes.NOT_FOUND).json({});
+  }
+
+  return next();
+};
+
+/**
+ * Validate krok category :categoryId parameter
+ */
+const validateCategory: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const requestedKrokNumber = Number(req.params.number);
+  const requestedCategoryId = req.params.categoryId;
+
+  const { ObjectId } = mongoose.Types;
+  if (!ObjectId.isValid(requestedCategoryId)) {
+    return res.status(StatusCodes.BAD_REQUEST).json({});
+  }
+
+  const krok: IKrok | null = await Krok.findOne({
+    number: requestedKrokNumber,
+  });
+
+  if (req.method !== "PUT" && !krok?.categories.includes(requestedCategoryId)) {
+    return res.status(StatusCodes.NOT_FOUND).json({});
+  }
+
+  if (req.method === "PUT" || req.method === "POST") {
+    const category: ICategory | null = await Category.findById(
+      requestedCategoryId
+    );
+
+    if (!category) {
+      return res.status(StatusCodes.NOT_FOUND).json({});
+    }
+  }
+
+  return next();
+};
+
+/**
+ * Validate krok location :locationId parameter
+ * locationId is only specified for PUT method
+ */
+const validateLocation: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const requestedLocationId = req.params.locationId;
+
+  const { ObjectId } = mongoose.Types;
+  if (!ObjectId.isValid(requestedLocationId)) {
+    return res.status(StatusCodes.BAD_REQUEST).json({});
+  }
+
+  const location: IGpsLocation | null = await GpsLocation.findById(
+    requestedLocationId
+  );
+
+  if (!location) {
+    return res.status(StatusCodes.NOT_FOUND).json({});
   }
 
   return next();
@@ -37,8 +128,6 @@ const getByNumber: RequestHandler = async (req: Request, res: Response) => {
 
   if (krok) {
     res.status(StatusCodes.OK).json(krok);
-  } else {
-    res.status(StatusCodes.NOT_FOUND).json({});
   }
 };
 
@@ -95,8 +184,6 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .save()
       .then(() => res.status(StatusCodes.OK).json())
       .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
-  } else {
-    res.status(StatusCodes.NOT_FOUND).json({});
   }
 };
 
@@ -108,14 +195,11 @@ const deleteByNumber: RequestHandler = async (req: Request, res: Response) => {
     number: requestedKrokNumber,
   });
 
-  if (!krok) {
-    res.status(StatusCodes.NOT_FOUND).json({});
-    return;
+  if (krok) {
+    Krok.deleteOne(krok)
+      .then(() => res.status(StatusCodes.OK).json(krok))
+      .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
-
-  Krok.deleteOne(krok)
-    .then(() => res.status(StatusCodes.OK).json(krok))
-    .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
 };
 
 // GET /kroks/:number/categories
@@ -133,17 +217,158 @@ const getAllCategories: RequestHandler = async (
     res.status(StatusCodes.OK).json({
       categories: krok.categories,
     });
+  }
+};
+
+// DELETE /kroks/:number/categories/:categoryId
+const deleteCategory: RequestHandler = async (req: Request, res: Response) => {
+  const requestedKrokNumber = Number(req.params.number);
+  const requestedCategoryId: string = req.params.categoryId;
+
+  const krok: IKrok | null = await Krok.findOne({
+    number: requestedKrokNumber,
+  });
+
+  if (krok) {
+    const categoryIndex = krok.categories.indexOf(requestedCategoryId, 0);
+    if (categoryIndex > -1) {
+      krok.categories.splice(categoryIndex, 1);
+    }
+
+    krok
+      .save()
+      .then(() => {
+        res.status(StatusCodes.OK).json({});
+      })
+      .catch(() => {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+      });
+  }
+};
+
+// PUT /kroks/:number/categories/:categoryId
+const addCategory: RequestHandler = async (req: Request, res: Response) => {
+  const requestedKrokNumber = Number(req.params.number);
+  const requestedCategoryId: string = req.params.categoryId;
+
+  const krok: IKrok | null = await Krok.findOne({
+    number: requestedKrokNumber,
+  });
+
+  if (!krok) {
+    res.status(StatusCodes.NOT_FOUND).json({});
+    return;
+  }
+
+  if (!krok.categories.includes(requestedCategoryId)) {
+    krok.categories.push(requestedCategoryId);
+  }
+
+  krok
+    .save()
+    .then(() => {
+      res.status(StatusCodes.OK).json({});
+    })
+    .catch(() => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+    });
+};
+
+// GET /kroks/:number/location
+const getLocation: RequestHandler = async (req: Request, res: Response) => {
+  const requestedKrokNumber = Number(req.params.number);
+
+  const krok: IKrok | null = await Krok.findOne({
+    number: requestedKrokNumber,
+  });
+
+  if (!krok) {
+    return;
+  }
+
+  if (krok.location) {
+    const location: IGpsLocation | null = await GpsLocation.findById(
+      krok.location._id
+    );
+
+    if (location) {
+      res.status(StatusCodes.OK).json(location);
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+    }
   } else {
     res.status(StatusCodes.NOT_FOUND).json({});
   }
 };
 
+// DELETE /kroks/:number/location
+const deleteLocation: RequestHandler = async (req: Request, res: Response) => {
+  const requestedKrokNumber = Number(req.params.number);
+
+  const krok: IKrok | null = await Krok.findOne({
+    number: requestedKrokNumber,
+  });
+
+  if (!krok) {
+    return;
+  }
+
+  if (!krok.location) {
+    res.status(StatusCodes.NOT_FOUND).json({});
+    return;
+  }
+
+  delete krok.location;
+
+  krok
+    .save()
+    .then(() => {
+      res.status(StatusCodes.OK).json({});
+    })
+    .catch(() => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+    });
+};
+
+// PUT /kroks/:number/location/:locationId
+const addLocation: RequestHandler = async (req: Request, res: Response) => {
+  const requestedKrokNumber = Number(req.params.number);
+  const requestedLocationId = req.params.locationId;
+
+  const krok: IKrok | null = await Krok.findOne({
+    number: requestedKrokNumber,
+  });
+
+  if (!krok) {
+    return;
+  }
+
+  krok.location = requestedLocationId;
+
+  krok
+    .save()
+    .then(() => {
+      res.status(StatusCodes.OK).json({});
+    })
+    .catch(() => {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+    });
+};
+
 export default {
+  validateKrokIsNumber,
+  validateKrokExists,
+  validateCategory,
+  validateLocation,
   getAll,
   getByNumber,
   create,
   update,
   deleteByNumber,
   getAllCategories,
-  validateKrokNumber,
+  deleteCategory,
+  addCategory,
+  getLocation,
+  deleteLocation,
+  addLocation,
 };

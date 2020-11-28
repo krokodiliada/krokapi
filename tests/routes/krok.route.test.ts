@@ -270,9 +270,17 @@ describe("Krok endpoints", () => {
 
   it("Should return 404 if trying to delete inexistent category", async () => {
     const res = await request(app)
-      .delete("/kroks/48/categories/5f8d04f7b54764421b")
+      .delete("/kroks/48/categories/5f8d04f1b54764421b7156df")
       .send({});
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if trying to delete invalid category", async () => {
+    const res = await request(app)
+      .delete("/kroks/48/categories/5f8d04f7b54764421b")
+      .send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
@@ -288,7 +296,7 @@ describe("Krok endpoints", () => {
 
   it("Should return 404 if inserting category to inexistent krok", async () => {
     const res = await request(app)
-      .put("/kroks/512/categories/5f8d04f7b54764421b")
+      .put("/kroks/512/categories/5f8d04f7b54764421b7156e3")
       .send({});
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -296,15 +304,23 @@ describe("Krok endpoints", () => {
 
   it("Should return 404 if trying to add inexistent category", async () => {
     const res = await request(app)
-      .put("/kroks/48/categories/5f8d04f7b54764421b7156e434")
+      .put("/kroks/48/categories/5f8d02f7b54764421b7156e3")
       .send({});
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
+  it("Should return 400 if trying to add invalid category", async () => {
+    const res = await request(app)
+      .put("/kroks/48/categories/5f8d02f7b54764421b7156e3aa3b")
+      .send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
   it("Should return 200 if successfully replaced a category", async () => {
     const res = await request(app)
-      .put("/kroks/48/categories/5f8d04f7b54764421b7156e4")
+      .put("/kroks/48/categories/5f8d04f7b54764421b7156e3")
       .send({});
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -326,12 +342,21 @@ describe("Krok endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
+  it("Should return 404 if krok does not have location", async () => {
+    const res = await request(app).get("/kroks/512/location").send({});
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
   it("Should return 200 if getting location of existent krok", async () => {
     const res = await request(app).get("/kroks/50/location").send({});
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      location: "5f8f7daab54764421b715ee9",
+      _id: "5f8f7daab54764421b715ee9",
+      name: "Pokrov",
+      latitude: 55.866277,
+      longitude: 39.219146,
     });
   });
 
@@ -343,9 +368,12 @@ describe("Krok endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 200 if deleted location that did not exist", async () => {
+  it("Should return 404 if deleted location that did not exist", async () => {
+    // Calling the endpoint twice just in case if the location existed
+    await request(app).delete("/kroks/48/location").send({});
+
     const res = await request(app).delete("/kroks/48/location").send({});
-    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
@@ -362,8 +390,20 @@ describe("Krok endpoints", () => {
   // PUT /kroks/{number}/location/{id}
 
   it("Should return 404 if creating location of inexistent krok", async () => {
-    const res = await request(app).put("/kroks/512/location").send({});
+    const res = await request(app)
+      .put("/kroks/512/location/5f8f83f6b21764421b715ef7")
+      .send({});
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if assigning invalid location", async () => {
+    let res = await request(app).delete("/kroks/48/location").send({});
+
+    res = await request(app)
+      .put("/kroks/48/location/5f8f83f6b547b715efc")
+      .send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
@@ -371,7 +411,7 @@ describe("Krok endpoints", () => {
     let res = await request(app).delete("/kroks/48/location").send({});
 
     res = await request(app)
-      .put("/kroks/48/location/5f8f83f6b547b715efc")
+      .put("/kroks/48/location/5f8f83f6b21764421b715ef7")
       .send({});
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
