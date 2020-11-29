@@ -67,4 +67,260 @@ describe("Participant endpoints", () => {
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
+
+  // DELETE /participants/:id
+  it("Should return 400 if deleting participant by invalid id", async () => {
+    const res = await request(app).delete("/participant/5f8d0d554421b715d8d");
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 if deleting inexistent participant", async () => {
+    const res = await request(app).delete(
+      "/participant/5f8d0d55b53264421b615d5e"
+    );
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 200 if successfully deleted participant", async () => {
+    const res = await request(app).delete(
+      "/participant/5f8d0d55b54764421b715d5e"
+    );
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 if deleting same participant twice", async () => {
+    await request(app).delete("/participant/5f8d0d55b54764421b715d5d");
+    const res = await request(app).delete(
+      "/participant/5f8d0d55b54764421b715d5d"
+    );
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  // POST /participants/
+  it("Should return 405 if post is not allowed to update participant", async () => {
+    const res = await request(app).post(
+      "/participant/5f8d0d55b54764421b715d5d"
+    );
+    expect(res.status).toEqual(StatusCodes.METHOD_NOT_ALLOWED);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if creating participant without data", async () => {
+    const res = await request(app).post("/participant/").send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if creating participant with name only", async () => {
+    const res = await request(app)
+      .post("/participant/")
+      .send({
+        name: {
+          first: "Ivan",
+          last: "Petrov",
+        },
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if creating participant with birthday only", async () => {
+    const res = await request(app)
+      .post("/participant/")
+      .send({
+        birthday: new Date("Dec 13, 1994"),
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 201 if successfully created a participant", async () => {
+    const res = await request(app)
+      .post("/participant/")
+      .send({
+        name: {
+          first: "Ivan",
+          last: "Petrov",
+        },
+        birthday: new Date("Dec 13, 1994"),
+      });
+    expect(res.status).toEqual(StatusCodes.CREATED);
+    expect(res.type).toBe("application/json");
+    // regex for response like /participants/5f8d0d55b54764421b715d5d
+    expect(res.headers.location).toMatch("/.*(/participants/(.+))$");
+  });
+
+  /**
+   * For narticipants, pair {name, birthday} is unique across the collection,
+   * so duplicating the same value should throw an error.
+   */
+  it("Should return 400 if creating participant that already exists", async () => {
+    await request(app)
+      .post("/participant/")
+      .send({
+        name: {
+          first: "Petr",
+          last: "Ivanov",
+        },
+        birthday: new Date("Sep 13, 1985"),
+      });
+
+    const res = await request(app)
+      .post("/participant/")
+      .send({
+        name: {
+          first: "Petr",
+          last: "Ivanov",
+        },
+        birthday: new Date("Sep 13, 1985"),
+      });
+
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  // PATCH /participants/:id
+  it("Should return 400 if updating participant by invalid id", async () => {
+    const res = await request(app).patch("/participant/5f8d0d554421b715d8d");
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 if updating participant by inexistent id", async () => {
+    const res = await request(app).patch(
+      "/participant/5f8d0d43b54764421b715d8d"
+    );
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if updating participant with empty data", async () => {
+    const res = await request(app)
+      .patch("/participant/5f8d0d554421b715d8d")
+      .send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 200 if updating participant's full name", async () => {
+    const res = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        name: {
+          first: "Ivan",
+          last: "Petrov",
+        },
+      });
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 200 if updating participant's birthday", async () => {
+    const res = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        birthday: new Date("Oct 8, 1958"),
+      });
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+  });
+
+  /**
+   * Updating a single field of a nested object should be allowed
+   */
+  it("Should return 200 if updating participant's first name", async () => {
+    const res = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        "name.first": "Ivan",
+      });
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+  });
+
+  /**
+   * Both first and last name are required for the name object
+   */
+  it("Should return 400 if updating participant's name with incomplete data", async () => {
+    const res = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        name: {
+          first: "Ivan",
+        },
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if updating participant's birthday with invalid data", async () => {
+    const res = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        birthday: "Pssss",
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if updating participant's email with invalid data", async () => {
+    const res1 = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        email: "Haha",
+      });
+    expect(res1.status).toEqual(StatusCodes.BAD_REQUEST);
+
+    const res2 = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        email: "moo@mail",
+      });
+    expect(res2.status).toEqual(StatusCodes.BAD_REQUEST);
+
+    const res3 = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        email: 13,
+      });
+    expect(res3.status).toEqual(StatusCodes.BAD_REQUEST);
+  });
+
+  it("Should return 400 if updating participant's phone with invalid data", async () => {
+    const res1 = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        phone: "-7-916-438-1356",
+      });
+    expect(res1.status).toEqual(StatusCodes.BAD_REQUEST);
+
+    const res2 = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        phone: "Haha",
+      });
+    expect(res2.status).toEqual(StatusCodes.BAD_REQUEST);
+
+    const res3 = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4a")
+      .send({
+        phone: 89096847263,
+      });
+    expect(res3.status).toEqual(StatusCodes.BAD_REQUEST);
+  });
+
+  it("Should return 200 if successfully updated phone and email", async () => {
+    const res = await request(app)
+      .patch("/participant/5f8d0d55b54764421b715d4c")
+      .send({
+        phone: "+79152786543",
+        email: "mama@yandex.ru",
+      });
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+  });
 });
