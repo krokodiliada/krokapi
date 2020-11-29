@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import * as KrokRouter from "routes/krok";
+import * as KrokRouter from "routes/kroks";
 
 const app = express();
 
