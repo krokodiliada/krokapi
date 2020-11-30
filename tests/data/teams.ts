@@ -1946,4 +1946,11 @@ export default [
     category: "5f8d04f7b54764421b7156de",
     _id: "5f90acf8b54764421b716190",
   },
+  {
+    name: "Sample Old",
+    participants: ["5f8d0d55b54764421b715d99"],
+    krok: "5f8d0401b54764421b7156da",
+    category: "5f8d04f7b54764421b7156de",
+    _id: "5f90acf8b54764421a729193",
+  },
 ];

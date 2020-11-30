@@ -43,4 +43,6 @@ export const TeamSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+TeamSchema.index({ name: 1, krok: 1 }, { unique: true });
+
 export default mongoose.model<ITeam>("Team", TeamSchema);
