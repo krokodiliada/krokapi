@@ -106,7 +106,7 @@ describe("Team endpoints", () => {
   });
 
   // GET /teams/:id
-  it("Should successfully return a teams by id", async () => {
+  it("Should successfully return a team by id", async () => {
     const res = await request(app).get("/teams/5f90acf8b54764421b7160d7");
 
     expect(res.status).toEqual(StatusCodes.OK);

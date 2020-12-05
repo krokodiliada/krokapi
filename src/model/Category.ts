@@ -21,7 +21,7 @@ export interface ICategory extends Document {
    * as a total number of checkpoints in this category multiplied by
    * @p minCheckpoints.
    */
-  minCheckpoints: any;
+  minCheckpoints: number;
   /**
    * @brief Maximum number of hours allowed to finish the race in this category.
    * @details For example, when @p maxTime is set to 10, then all teams
@@ -79,5 +79,7 @@ export const CategorySchema: Schema = new Schema(
   },
   { timestamps: true }
 );
+
+CategorySchema.index({ name: { short: 1, long: 1 } }, { unique: true });
 
 export default mongoose.model<ICategory>("Category", CategorySchema);

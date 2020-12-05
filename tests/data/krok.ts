@@ -1,5 +1,14 @@
 export default [
   {
+    _id: "5f8d0401b54764421b7155ff",
+    number: 40,
+    categories: ["5f8d04f7b54764421b7156e8"],
+    date: {
+      start: new Date("Sep 20, 2015"),
+      end: new Date("Sep 22, 2015"),
+    },
+  },
+  {
     _id: "5f8d0401b54764421b7156da",
     number: 48,
     categories: [
