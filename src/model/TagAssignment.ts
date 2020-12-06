@@ -32,6 +32,12 @@ export const TagAssignmentSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+// Single tag cannot be assigned to multiple people
+TagAssignmentSchema.index({ tag: 1, krok: 1 }, { unique: true });
+
+// Multiple tags cannot be assigned to one participant
+TagAssignmentSchema.index({ participant: 1, krok: 1 }, { unique: true });
+
 export default mongoose.model<ITagAssignment>(
   "TagAssignment",
   TagAssignmentSchema
