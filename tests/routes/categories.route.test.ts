@@ -22,9 +22,11 @@ describe("Category endpoints", () => {
 
   // GET methods
 
-  // GET /categories/?krok=:number
+  // GET /categories/?krok=:id
   it("Should return a list of all categories for specific krok", async () => {
-    const res = await request(app).get("/categproes/?krok=50");
+    const res = await request(app).get(
+      "/categories/?krok=505f8d04b3b54764421b7156dc"
+    );
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -46,9 +48,9 @@ describe("Category endpoints", () => {
     });
   });
 
-  // GET /categories/?krok=:number
+  // GET /categories/
   it("Should return a list of all categories", async () => {
-    const res = await request(app).get("/categproes");
+    const res = await request(app).get("/categories");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -71,13 +73,15 @@ describe("Category endpoints", () => {
   });
 
   it("Should return 400 if krok filter is invalid", async () => {
-    const res = await request(app).get("/categories/?krok=ababa");
+    const res = await request(app).get("/categories/?krok=5f8d04b3b54721b76dc");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 if krok number does not exist", async () => {
-    const res = await request(app).get("/categories/?krok=99");
+    const res = await request(app).get(
+      "/categories/?krok=5f8d04a3b54664421b2156dc"
+    );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
     expect(res.body.length).toBe(0);

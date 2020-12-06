@@ -22,9 +22,9 @@ describe("Team endpoints", () => {
 
   // GET methods
 
-  // GET /teams/?krok=:number
+  // GET /teams/?krok=:id
   it("Should return a list of all teams for specific krok", async () => {
-    const res = await request(app).get("/teams/?krok=48");
+    const res = await request(app).get("/teams/?krok=5f8d0401b54764421b7156da");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -40,13 +40,13 @@ describe("Team endpoints", () => {
   });
 
   it("Should return 400 if krok filter is invalid", async () => {
-    const res = await request(app).get("/teams/?krok=ababa");
+    const res = await request(app).get("/teams/?krok=5f8d0401b547641b71da");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 if krok number does not exist", async () => {
-    const res = await request(app).get("/teams/?krok=99");
+    const res = await request(app).get("/teams/?krok=5f8d0401b54764421a7136da");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
     expect(res.body.length).toBe(0);
