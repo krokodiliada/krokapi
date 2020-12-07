@@ -197,7 +197,7 @@ const deleteByNumber: RequestHandler = async (req: Request, res: Response) => {
 
   if (krok) {
     Krok.deleteOne(krok)
-      .then(() => res.status(StatusCodes.OK).json(krok))
+      .then(() => res.status(StatusCodes.OK).json({}))
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };

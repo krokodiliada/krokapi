@@ -10,12 +10,14 @@ const locationRouter = express.Router({ mergeParams: true });
 router.param("number", KrokController.validateKrokIsNumber);
 router.param("number", KrokController.validateKrokExists);
 
-router.get("/", KrokController.getAll);
-router.get("/:number", KrokController.getByNumber);
-
+// Disallow the following methods
 router.post("/", GenericController.disallowMethod);
 router.post("/:number", GenericController.disallowMethod);
+router.put("/", GenericController.disallowMethod);
+router.delete("/", GenericController.disallowMethod);
 
+router.get("/", KrokController.getAll);
+router.get("/:number", KrokController.getByNumber);
 router.put("/:number", KrokController.create);
 router.patch("/:number", KrokController.update);
 router.delete("/:number", KrokController.deleteByNumber);

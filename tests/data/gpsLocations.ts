@@ -218,7 +218,7 @@ export default [
   {
     _id: "5f8f83f6b54764421b715f0d",
     name: "Extra location",
-    latitude: 55.822349,
-    longitude: 39.191911,
+    latitude: 55.823349,
+    longitude: 39.192911,
   },
 ];

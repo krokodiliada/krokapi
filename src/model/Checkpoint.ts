@@ -48,6 +48,4 @@ export const CheckpointSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-CheckpointSchema.index({ location: 1 }, { unique: true });
-
 export default mongoose.model<ICheckpoint>("Checkpoint", CheckpointSchema);

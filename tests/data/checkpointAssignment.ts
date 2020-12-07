@@ -820,7 +820,7 @@ export default [
     order: 12,
   },
   {
-    _id: "5f907c38b54764421b716064",
+    _id: "5f907c38b54764421b7160ad",
     krok: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e7",
     checkpoint: "5f8f8720b54764421b715f0e",
