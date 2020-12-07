@@ -466,4 +466,111 @@ describe("Team endpoints", () => {
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
+
+  // GET /teams/:id/participants
+  it("Should return 400 when requesting participants of a team with invalid id", async () => {
+    const res = await request(app).get("/teams/5f90a51b716138/participants");
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 when requesting participants of a team with inexistent id", async () => {
+    const res = await request(app).get(
+      "/teams/5f90acf8b54764321b726738/participants"
+    );
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return a list of participants for team", async () => {
+    const res = await request(app).get(
+      "/teams/5f90acf8b54764421b716138/participants"
+    );
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+    expect(res.body.length).toBe(2);
+    expect(res.body).toMatchObject({
+      participants: [
+        {
+          _id: "5f8d0d55b54764421b715cbb",
+          name: { first: "Brandon", last: "Hernandez" },
+          birthday: new Date("2018-11-25").toISOString(),
+          phone: "+79472875350",
+          email: "evandoyle@brown-mcknight.biz",
+        },
+        {
+          _id: "5f8d0d55b54764421b715cbc",
+          name: { first: "Sara", last: "Hunt" },
+          birthday: new Date("1970-06-22").toISOString(),
+          phone: "+79145264011",
+          email: "lauralyons@joseph-barnett.com",
+        },
+      ],
+    });
+  });
+
+  it("Should return 400 when requesting team's route by invalid id", async () => {
+    const res = await request(app).get("/teams/5f90a51b716138/route");
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 when requesting team's water route by invalid id", async () => {
+    const res = await request(app).get("/teams/5f90a51b716138/route-water");
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 when requesting team's route by inexistent id", async () => {
+    const res = await request(app).get("/teams/5f90acf8b54764321b616142/route");
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 when requesting team's water route by inexistent id", async () => {
+    const res = await request(app).get(
+      "/teams/5f90acf8b54764321b616142/route-water"
+    );
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 200 when requesting a team's route", async () => {
+    const res = await request(app).get("/teams/5f90acf8b54764421b71612f/route");
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+    expect(res.body.length).toBe(2);
+    expect(res.body).toMatchObject({
+      route: [
+        {
+          tag: "",
+          krok: "",
+          start: new Date("Sep 26, 2020 10:36:58").toISOString(),
+          finish: new Date("Sep 26, 2020 18:36:58").toISOString(),
+          actions: [],
+        },
+        {},
+      ],
+    });
+  });
+
+  it("Should return 200 when requesting a team's water route", async () => {
+    const res = await request(app).get(
+      "/teams/5f90acf8b54764421b71612f/route-water"
+    );
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+    expect(res.body.length).toBe(2);
+    expect(res.body).toMatchObject({
+      route: [
+        {
+          tag: "",
+          krok: "",
+          start: new Date("Sep 27, 2020 10:36:58").toISOString(),
+          finish: new Date("Sep 27, 2020 10:38:58").toISOString(),
+          actions: [],
+        },
+      ],
+    });
+  });
 });
