@@ -162,7 +162,7 @@ describe("Team endpoints", () => {
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
     // regex for response like /teams/5f8d0d55b54764421b715d5d
-    expect(res.headers.location).toMatch("/.*(/teams/(.+))$");
+    expect(res.headers.location).toMatch(/.*(\/teams\/)([a-f\d]{24})$/);
   });
 
   it("Should return 400 if team with the same name already exists for this krok", async () => {

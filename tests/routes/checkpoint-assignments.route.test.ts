@@ -116,7 +116,9 @@ describe("Checkpoint Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
-    expect(res.headers.location).toMatch("/.*(/checkpoint-assignments/(.+))$");
+    expect(res.headers.location).toMatch(
+      /.*(\/checkpoint-assignments\/)([a-f\d]{24})$/
+    );
   });
 
   // DELETE /checkpoint-assignments/:id

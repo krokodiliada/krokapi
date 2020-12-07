@@ -239,7 +239,9 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.headers.location).toMatch("/.*(/tag-assignments/(.+))$");
+    expect(res.headers.location).toMatch(
+      /.*(\/tag-assignments\/)([a-f\d]{24})$/
+    );
   });
 
   // DELETE /tag-assignments/:id

@@ -141,7 +141,7 @@ describe("Location endpoints", () => {
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     // regex for response like /participants/5f8d0d55b54764421b715d5d
-    expect(res.headers.location).toMatch("/.*(/locations/(.+))$");
+    expect(res.headers.location).toMatch(/.*(\/locations\/)([a-f\d]{24})$/);
   });
 
   it("Should return 400 if creating location with existent lat/long", async () => {

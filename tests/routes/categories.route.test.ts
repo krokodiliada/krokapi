@@ -182,7 +182,7 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
-    expect(res.headers.location).toMatch("/.*(/categories/(.+))$");
+    expect(res.headers.location).toMatch(/.*(\/categories\/)([a-f\d]{24})$/);
   });
 
   // DELETE /categories/:id

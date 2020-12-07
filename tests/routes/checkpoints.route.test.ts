@@ -95,7 +95,7 @@ describe("Checkpoint endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
-    expect(res.headers.location).toMatch("/.*(/checkpoints/(.+))$");
+    expect(res.headers.location).toMatch(/.*(\/checkpoints\/)([a-f\d]{24})$/);
   });
 
   // DELETE /checkpoints/:id
