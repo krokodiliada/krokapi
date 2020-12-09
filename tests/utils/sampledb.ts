@@ -7,14 +7,12 @@ import Participant from "model/Participant";
 import Route from "model/Route";
 import RouteWater from "model/RouteWater";
 import Station from "model/Station";
-import Tag from "model/Tag";
 import TagAssignment from "model/TagAssignment";
 import Team from "model/Team";
 
 import categoryData from "../data/categories";
 import krokData from "../data/krok";
 import participantData from "../data/participants";
-import tagData from "../data/tags";
 import tagAssignmentData from "../data/tagAssignment";
 import teamData from "../data/teams";
 import stationData from "../data/stations";
@@ -33,10 +31,6 @@ const createKrokCollection = async () => {
 
 const createParticipantCollection = async () => {
   await Participant.insertMany(participantData);
-};
-
-const createTagCollection = async () => {
-  await Tag.insertMany(tagData);
 };
 
 const createTagAssignmentCollection = async () => {
@@ -73,7 +67,6 @@ export const populateSampleDatabase = async () => {
   await createCategoryCollection();
   await createKrokCollection();
   await createParticipantCollection();
-  await createTagCollection();
   await createTagAssignmentCollection();
   await createTeamCollection();
   await createStationCollection();
@@ -94,7 +87,6 @@ export const eraseSampleDatabase = async () => {
   Route.deleteMany({});
   RouteWater.deleteMany({});
   Station.deleteMany({});
-  Tag.deleteMany({});
   TagAssignment.deleteMany({});
   Team.deleteMany({});
 };

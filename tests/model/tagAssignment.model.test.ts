@@ -2,12 +2,9 @@ import mongoose from "mongoose";
 
 import Krok, { IKrok } from "model/Krok";
 import Participant, { IParticipant } from "model/Participant";
-import Tag, { ITag } from "model/Tag";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 
-const tag: ITag = new Tag({
-  number: 111,
-});
+const tag = 111;
 
 const participant: IParticipant = new Participant({
   name: {
@@ -26,7 +23,7 @@ const krok: IKrok = new Krok({
 });
 
 const validAssignment: ITagAssignment = new TagAssignment({
-  tag: tag._id,
+  tag,
   participant: participant._id,
   krok: krok._id,
 });
@@ -45,7 +42,6 @@ describe("TagAssignment model", () => {
   });
 
   afterEach(async () => {
-    await Tag.deleteMany({});
     await Krok.deleteMany({});
     await Participant.deleteMany({});
     await TagAssignment.deleteMany({});
@@ -66,7 +62,7 @@ describe("TagAssignment model", () => {
 
   it("Throws an error if tag assignment is created without krok", () => {
     const assignment: ITagAssignment = new TagAssignment({
-      tag: tag._id,
+      tag,
       participant: participant._id,
     });
     expect(assignment.validate).toThrow();
@@ -74,7 +70,7 @@ describe("TagAssignment model", () => {
 
   it("Throws an error if tag assignment is created without participant", () => {
     const assignment: ITagAssignment = new TagAssignment({
-      tag: tag._id,
+      tag,
       krok: krok._id,
     });
     expect(assignment.validate).toThrow();
@@ -90,12 +86,12 @@ describe("TagAssignment model", () => {
     expect(spy).toHaveBeenCalled();
 
     expect(savedAssignment).toMatchObject({
-      tag: expect.any(Object),
+      tag: expect.any(Number),
       krok: expect.any(Object),
       participant: expect.any(Object),
     });
 
-    expect(savedAssignment.tag).toBe(tag._id);
+    expect(savedAssignment.tag).toBe(tag);
     expect(savedAssignment.krok).toBe(krok._id);
     expect(savedAssignment.participant).toBe(participant._id);
   });

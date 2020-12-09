@@ -2,11 +2,8 @@ import mongoose from "mongoose";
 
 import Krok, { IKrok } from "model/Krok";
 import Route, { IRoute } from "model/Route";
-import Tag, { ITag } from "model/Tag";
 
-const tag: ITag = new Tag({
-  number: 111,
-});
+const tag = 44;
 
 const krok: IKrok = new Krok({
   number: 50,
@@ -17,7 +14,7 @@ const krok: IKrok = new Krok({
 });
 
 const validRoute: IRoute = new Route({
-  tag: tag._id,
+  tag,
   krok: krok._id,
   start: new Date("2020-09-25T10:13:00"),
   finish: new Date("2020-09-25T10:14:00"),
@@ -37,7 +34,6 @@ describe("Route model", () => {
   });
 
   afterEach(async () => {
-    await Tag.deleteMany({});
     await Krok.deleteMany({});
     await Route.deleteMany({});
   });
@@ -58,7 +54,7 @@ describe("Route model", () => {
 
   it("Throws an error if route is created without krok", () => {
     const route: IRoute = new Route({
-      tag: tag._id,
+      tag,
       start: new Date("2020-09-25T10:13:00"),
       finish: new Date("2020-09-25T10:14:00"),
     });
@@ -67,7 +63,7 @@ describe("Route model", () => {
 
   it("Throws an error if finish date is prior to the start date", () => {
     const route: IRoute = new Route({
-      tag: tag._id,
+      tag,
       krok: krok._id,
       start: new Date("2020-09-25T10:14:00"),
       finish: new Date("2020-09-25T10:13:00"),
@@ -85,7 +81,7 @@ describe("Route model", () => {
     expect(spy).toHaveBeenCalled();
 
     expect(savedRoute).toMatchObject({
-      tag: expect.any(Object),
+      tag: expect.any(Number),
       krok: expect.any(Object),
       start: expect.any(Date),
       finish: expect.any(Date),

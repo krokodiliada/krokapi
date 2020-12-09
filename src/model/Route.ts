@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { ITag } from "model/Tag";
 import { IKrok } from "model/Krok";
 import { IStation } from "model/Station";
 
@@ -9,7 +8,7 @@ export interface IRouteAction extends Document {
 }
 
 export interface IRoute extends Document {
-  tag: ITag["_id"];
+  tag: number;
   krok: IKrok["_id"];
   start: Date;
   finish: Date;
@@ -33,8 +32,7 @@ const RouteActionSchema: Schema = new Schema({
 export const RouteSchema: Schema = new Schema(
   {
     tag: {
-      type: Schema.Types.ObjectId,
-      ref: "Tag",
+      type: Number,
       required: true,
     },
     krok: {
@@ -48,7 +46,7 @@ export const RouteSchema: Schema = new Schema(
     },
     finish: {
       type: Date,
-      required: true,
+      required: false,
       validate: {
         validator(this: IRoute, value: Date) {
           return value >= this.start;
@@ -63,5 +61,7 @@ export const RouteSchema: Schema = new Schema(
   },
   { timestamps: true }
 );
+
+RouteSchema.index({ tag: 1, krok: 1 }, { unique: true });
 
 export default mongoose.model<IRoute>("Route", RouteSchema);

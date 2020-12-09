@@ -1,10 +1,9 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { IParticipant } from "model/Participant";
 import { IKrok } from "model/Krok";
-import { ITag } from "model/Tag";
 
 export interface ITagAssignment extends Document {
-  tag: ITag["_id"];
+  tag: number;
   participant: IParticipant["_id"];
   krok: IKrok["_id"];
   createdAt: Date;
@@ -14,8 +13,7 @@ export interface ITagAssignment extends Document {
 export const TagAssignmentSchema: Schema = new Schema(
   {
     tag: {
-      type: Schema.Types.ObjectId,
-      ref: "Tag",
+      type: Number,
       required: true,
     },
     participant: {
