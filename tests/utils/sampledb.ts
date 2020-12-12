@@ -20,6 +20,7 @@ import gpsLocationData from "../data/gpsLocations";
 import checkpointData from "../data/checkpoints";
 import checkpointAssignmentData from "../data/checkpointAssignment";
 import routeWaterData from "../data/routesWater";
+import routeData from "../data/routes";
 
 const createCategoryCollection = async () => {
   await Category.insertMany(categoryData);
@@ -61,7 +62,9 @@ const createRouteWaterCollection = async () => {
   await RouteWater.insertMany(routeWaterData);
 };
 
-const createRouteCollection = async () => {};
+const createRouteCollection = async () => {
+  await Route.insertMany(routeData);
+};
 
 export const populateSampleDatabase = async () => {
   await createCategoryCollection();
