@@ -2,7 +2,7 @@ import express from "express";
 import KrokController from "controller/Krok";
 import GenericController from "controller/Common";
 
-// Router for /kroks/ api
+// Krok Router
 const router = express.Router();
 const categoriesRouter = express.Router({ mergeParams: true });
 const locationRouter = express.Router({ mergeParams: true });
@@ -16,6 +16,7 @@ router.post("/:number", GenericController.disallowMethod);
 router.put("/", GenericController.disallowMethod);
 router.delete("/", GenericController.disallowMethod);
 
+// Router for /kroks/
 router.get("/", KrokController.getAll);
 router.get("/:number", KrokController.getByNumber);
 router.put("/:number", KrokController.create);
