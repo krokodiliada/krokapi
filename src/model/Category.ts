@@ -34,33 +34,44 @@ export interface ICategory extends Document {
   updatedAt: Date;
 }
 
+const CategoryNameSchema: Schema = new Schema({
+  short: {
+    type: String,
+    required: true,
+  },
+  long: {
+    type: String,
+    required: true,
+  },
+});
+
+const ParticipantsNumberSchema: Schema = new Schema({
+  min: {
+    type: Number,
+    required: false,
+    default: 1,
+  },
+  max: {
+    type: Number,
+    required: false,
+    default: 5,
+  },
+});
+
 export const CategorySchema: Schema = new Schema(
   {
     name: {
-      short: {
-        type: String,
-        required: true,
-      },
-      long: {
-        type: String,
-        required: true,
-      },
+      type: CategoryNameSchema,
+      required: true,
+      unique: true,
     },
     description: {
       type: String,
       required: false,
     },
     participantsNumber: {
-      min: {
-        type: Number,
-        required: false,
-        default: 1,
-      },
-      max: {
-        type: Number,
-        required: false,
-        default: 5,
-      },
+      type: ParticipantsNumberSchema,
+      required: false,
     },
     minCheckpoints: {
       type: Number,
@@ -80,6 +91,6 @@ export const CategorySchema: Schema = new Schema(
   { timestamps: true }
 );
 
-CategorySchema.index({ name: { short: 1, long: 1 } }, { unique: true });
+CategoryNameSchema.index({ short: 1, long: 1 }, { unique: true });
 
 export default mongoose.model<ICategory>("Category", CategorySchema);

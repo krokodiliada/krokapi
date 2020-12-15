@@ -25,7 +25,7 @@ describe("Category endpoints", () => {
   // GET /categories/?krok=:id
   it("Should return a list of all categories for specific krok", async () => {
     const res = await request(app).get(
-      "/categories/?krok=505f8d04b3b54764421b7156dc"
+      "/categories/?krok=5f8d04b3b54764421b7156dc"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
@@ -37,14 +37,12 @@ describe("Category endpoints", () => {
         short: expect.any(String),
         long: expect.any(String),
       },
-      description: expect.any(String),
       participantsNumber: {
         min: expect.any(Number),
         max: expect.any(Number),
       },
       minCheckpoints: expect.any(Number),
       maxTime: expect.any(Number),
-      notes: expect.any(String),
     });
   });
 
@@ -54,21 +52,19 @@ describe("Category endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(8);
+    expect(res.body.length).toBe(13);
     expect(res.body[0]).toMatchObject({
       _id: expect.any(String),
       name: {
         short: expect.any(String),
         long: expect.any(String),
       },
-      description: expect.any(String),
       participantsNumber: {
         min: expect.any(Number),
         max: expect.any(Number),
       },
       minCheckpoints: expect.any(Number),
       maxTime: expect.any(Number),
-      notes: expect.any(String),
     });
   });
 
@@ -84,7 +80,6 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(0);
   });
 
   // GET /categories/:id
@@ -93,7 +88,7 @@ describe("Category endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body[0]).toMatchObject({
+    expect(res.body).toMatchObject({
       _id: "5f8d04f7b54764421b7156de",
       name: {
         short: "V",
@@ -152,19 +147,6 @@ describe("Category endpoints", () => {
         name: {
           short: "Che",
           long: "Chempionskaya",
-        },
-      });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 if creating a category with invalid name", async () => {
-    const res = await request(app)
-      .post("/categories/")
-      .send({
-        name: {
-          short: 15,
-          long: 289,
         },
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
