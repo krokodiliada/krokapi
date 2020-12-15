@@ -11,10 +11,34 @@ const validateObjectId: RequestHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  const requestedParticipantId = req.params.id;
+  const requestedId = req.params.id;
 
   const { ObjectId } = mongoose.Types;
-  if (!ObjectId.isValid(requestedParticipantId)) {
+  if (!ObjectId.isValid(requestedId)) {
+    return res.status(StatusCodes.BAD_REQUEST).json({});
+  }
+
+  return next();
+};
+
+const isValidObjectId = (id: string): boolean => {
+  const { ObjectId } = mongoose.Types;
+
+  if (!ObjectId.isValid(id)) {
+    return false;
+  }
+
+  return true;
+};
+
+const validateNumber: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const requestedNumber = Number(req.params.number);
+
+  if (Number.isNaN(requestedNumber)) {
     return res.status(StatusCodes.BAD_REQUEST).json({});
   }
 
@@ -25,4 +49,9 @@ const disallowMethod: RequestHandler = async (_: Request, res: Response) => {
   res.status(StatusCodes.METHOD_NOT_ALLOWED).json({});
 };
 
-export default { validateObjectId, disallowMethod };
+export default {
+  validateObjectId,
+  isValidObjectId,
+  validateNumber,
+  disallowMethod,
+};

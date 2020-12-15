@@ -7,7 +7,7 @@ const router = express.Router();
 const categoriesRouter = express.Router({ mergeParams: true });
 const locationRouter = express.Router({ mergeParams: true });
 
-router.param("number", KrokController.validateKrokIsNumber);
+router.param("number", GenericController.validateNumber);
 router.param("number", KrokController.validateKrokExists);
 
 // Disallow the following methods

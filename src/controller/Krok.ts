@@ -9,18 +9,14 @@ import GpsLocation, { IGpsLocation } from "model/GpsLocation";
 /**
  * Validate krok :number parameter
  */
-const validateKrokIsNumber: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const requestedKrokNumber = Number(req.params.number);
+const krokIdExists = async (id: string): Promise<boolean> => {
+  const krok: IKrok | null = await Krok.findById(id);
 
-  if (Number.isNaN(requestedKrokNumber)) {
-    return res.status(StatusCodes.BAD_REQUEST).json({});
+  if (!krok) {
+    return false;
   }
 
-  return next();
+  return true;
 };
 
 const validateKrokExists: RequestHandler = async (
@@ -356,7 +352,7 @@ const addLocation: RequestHandler = async (req: Request, res: Response) => {
 };
 
 export default {
-  validateKrokIsNumber,
+  krokIdExists,
   validateKrokExists,
   validateCategory,
   validateLocation,
