@@ -851,7 +851,7 @@ export default [
     phone: "+79933727723",
     email: "ronald95@mills.com",
     _id: "5f8d0d55b54764421b715bd9",
-    name: { first: "Mr.", last: "Troy Tate" },
+    name: { first: "Mr", last: "Troy Tate" },
   },
   {
     birthday: new Date("1913-09-22"),
@@ -1124,7 +1124,7 @@ export default [
     phone: "+79396860993",
     email: "charlesortiz@hotmail.com",
     _id: "5f8d0d55b54764421b715c00",
-    name: { first: "Mr.", last: "Russell Brown" },
+    name: { first: "Mr", last: "Russell Brown" },
   },
   {
     birthday: new Date("1916-07-11"),
@@ -1271,7 +1271,7 @@ export default [
     phone: "+79283747112",
     email: "theresagonzalez@yahoo.com",
     _id: "5f8d0d55b54764421b715c15",
-    name: { first: "Daniel", last: "Hansen Jr." },
+    name: { first: "Daniel", last: "Hansen Jr" },
   },
   {
     birthday: new Date("1960-04-06"),
@@ -1495,7 +1495,7 @@ export default [
     phone: "+79049164876",
     email: "tanner37@hotmail.com",
     _id: "5f8d0d55b54764421b715c35",
-    name: { first: "Jesse", last: "Smith Jr." },
+    name: { first: "Jesse", last: "Smith Jr" },
   },
   {
     birthday: new Date("2008-05-02"),
@@ -2468,7 +2468,7 @@ export default [
     phone: "+79075528609",
     email: "kelseybrown@gmail.com",
     _id: "5f8d0d55b54764421b715cc0",
-    name: { first: "Mr.", last: "Adam Edwards Jr." },
+    name: { first: "Mr", last: "Adam Edwards Jr" },
   },
   {
     birthday: new Date("2004-06-26"),
@@ -2762,7 +2762,7 @@ export default [
     phone: "+79515430751",
     email: "anthony30@gmail.com",
     _id: "5f8d0d55b54764421b715cea",
-    name: { first: "Mr.", last: "Russell Newman" },
+    name: { first: "Mr", last: "Russell Newman" },
   },
   {
     birthday: new Date("2000-03-29"),
@@ -2972,7 +2972,7 @@ export default [
     phone: "+79056797169",
     email: "bauerwilliam@hotmail.com",
     _id: "5f8d0d55b54764421b715d08",
-    name: { first: "Mr.", last: "Mark Vaughn" },
+    name: { first: "Mr", last: "Mark Vaughn" },
   },
   {
     birthday: new Date("1959-04-26"),

@@ -142,6 +142,34 @@ describe("Participant endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
+  it("Should return 400 if creating participant with invalid name", async () => {
+    const res = await request(app)
+      .post("/participants/")
+      .send({
+        name: {
+          first: "15Names",
+          last: 58.9,
+        },
+        birthday: new Date("Dec 13, 1994"),
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if creating participant with invalid birthday", async () => {
+    const res = await request(app)
+      .post("/participants/")
+      .send({
+        name: {
+          first: "Ivan",
+          last: "Petrov",
+        },
+        birthday: "That's not a date variable",
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
   it("Should return 201 if successfully created a participant", async () => {
     const res = await request(app)
       .post("/participants/")
@@ -158,12 +186,28 @@ describe("Participant endpoints", () => {
     expect(res.headers.location).toMatch(/.*(\/participants\/)([a-f\d]{24})$/);
   });
 
+  it("Should return 201 if successfully created a participant with russian name", async () => {
+    const res = await request(app)
+      .post("/participants/")
+      .send({
+        name: {
+          first: "Иван",
+          last: "Петров",
+        },
+        birthday: new Date("Dec 10, 1985"),
+      });
+    expect(res.status).toEqual(StatusCodes.CREATED);
+    expect(res.type).toBe("application/json");
+    // regex for response like /participants/5f8d0d55b54764421b715d5d
+    expect(res.headers.location).toMatch(/.*(\/participants\/)([a-f\d]{24})$/);
+  });
+
   /**
    * For narticipants, pair {name, birthday} is unique across the collection,
    * so duplicating the same value should throw an error.
    */
   it("Should return 400 if creating participant that already exists", async () => {
-    await request(app)
+    const firstCreationRes = await request(app)
       .post("/participants/")
       .send({
         name: {
@@ -172,6 +216,7 @@ describe("Participant endpoints", () => {
         },
         birthday: new Date("Sep 13, 1985"),
       });
+    expect(firstCreationRes.status).toEqual(StatusCodes.CREATED);
 
     const res = await request(app)
       .post("/participants/")

@@ -16,18 +16,32 @@ export interface IParticipant extends Document {
   updatedAt: Date;
 }
 
+const nameValidator = {
+  validator(value: string) {
+    if (/[\d`!@#$%^&*()_+=[\]{};:"|,<>/?~]/.test(value)) {
+      return false;
+    }
+
+    return true;
+  },
+  message: () => "Name must not contain digits or special characters",
+};
+
 const ParticipantNameSchema: Schema = new Schema({
   first: {
     type: String,
     required: true,
+    validate: nameValidator,
   },
   last: {
     type: String,
     required: true,
+    validate: nameValidator,
   },
   middle: {
     type: String,
     required: false,
+    validate: nameValidator,
   },
 });
 
@@ -43,7 +57,6 @@ export const ParticipantSchema: Schema = new Schema(
     },
     phone: {
       type: String,
-      unique: true,
       required: false,
       validate: {
         validator: (value: string) => {
@@ -54,7 +67,6 @@ export const ParticipantSchema: Schema = new Schema(
     },
     email: {
       type: String,
-      unique: true,
       required: false,
       trim: true,
       lowercase: true,
@@ -65,7 +77,7 @@ export const ParticipantSchema: Schema = new Schema(
 );
 
 ParticipantSchema.index(
-  { birthday: 1, name: { last: 1, first: 1 } },
+  { birthday: 1, "name.last": 1, "name.first": 1 },
   { unique: true }
 );
 
