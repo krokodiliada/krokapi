@@ -132,13 +132,13 @@ describe("Location endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 200 if successfully created location", async () => {
+  it("Should return 201 if successfully created location", async () => {
     const res = await request(app).post("/locations/").send({
       name: "Test location name",
       latitude: 55.855072,
       longitude: 39.242487,
     });
-    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
     // regex for response like /participants/5f8d0d55b54764421b715d5d
     expect(res.headers.location).toMatch(/.*(\/locations\/)([a-f\d]{24})$/);
@@ -192,16 +192,6 @@ describe("Location endpoints", () => {
       .patch("/locations/5f8f83f6b54764421b715eff")
       .send({
         longitude: "Hoo-hoo!",
-      });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 when updating location with invalid name", async () => {
-    const res = await request(app)
-      .patch("/locations/5f8f83f6b54764421b715eff")
-      .send({
-        name: 13567,
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
