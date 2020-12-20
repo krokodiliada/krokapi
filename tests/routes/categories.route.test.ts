@@ -216,10 +216,10 @@ describe("Category endpoints", () => {
   });
 
   it("Should also unassign a cateogry from krok when it gets deleted", async () => {
-    const krokRes = await request(app).get("/kroks/5f8d0401b54764421b7155ff");
+    const krokRes = await request(app).get("/kroks/40");
     expect(krokRes.status).toEqual(StatusCodes.OK);
     expect(krokRes.type).toBe("application/json");
-    expect(krokRes.body.categories).toBe(["5f8d04f7b54764421b7156e8"]);
+    expect(krokRes.body.categories).toMatchObject(["5f8d04f7b54764421b7156e8"]);
 
     const res = await request(app).delete(
       "/categories/5f8d04f7b54764421b7156e8"
@@ -227,10 +227,10 @@ describe("Category endpoints", () => {
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
 
-    const krokRes2 = await request(app).get("/kroks/5f8d0401b54764421b7155ff");
+    const krokRes2 = await request(app).get("/kroks/40");
     expect(krokRes2.status).toEqual(StatusCodes.OK);
     expect(krokRes2.type).toBe("application/json");
-    expect(krokRes2.body.categories).toBe([]);
+    expect(krokRes2.body.categories).toMatchObject([]);
   });
 
   // PATCH /categories/:id
@@ -259,7 +259,7 @@ describe("Category endpoints", () => {
     const res = await request(app)
       .patch("/categories/5f8d04f7b54764421b7156e2")
       .send({
-        "participantsNumber.min": 2,
+        "participantsNumber.min": 4,
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -327,7 +327,7 @@ describe("Category endpoints", () => {
   });
 
   /**
-   * Same rules apply as for the minCheckpoints
+   * Same rules apply for maxTime as for the minCheckpoints
    */
   it("Should return 400 if not allowed to change the maximum time", async () => {
     const res = await request(app)

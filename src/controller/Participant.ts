@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Participant, { IParticipant } from "model/Participant";
+import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 
 const validateParticipantExists: RequestHandler = async (
   req: Request,
@@ -38,6 +39,30 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
   if (participant) {
     res.status(StatusCodes.OK).json(participant);
   }
+};
+
+interface GetByTagAndKrokParameters {
+  tag: number;
+  krok: string;
+}
+
+const getByTagAndKrok = async ({
+  tag,
+  krok,
+}: GetByTagAndKrokParameters): Promise<IParticipant | null> => {
+  const tagAssignments: Array<ITagAssignment> = await TagAssignment.find()
+    .where({ tag })
+    .where({ krok });
+
+  if (tagAssignments.length === 0) {
+    return null;
+  }
+
+  const participant: IParticipant | null = await Participant.findById(
+    tagAssignments[0].participant
+  );
+
+  return participant;
 };
 
 // PUT /participants/
@@ -92,6 +117,7 @@ export default {
   validateParticipantExists,
   getAll,
   getById,
+  getByTagAndKrok,
   create,
   update,
   deleteById,
