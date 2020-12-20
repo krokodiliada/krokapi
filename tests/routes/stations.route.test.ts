@@ -38,13 +38,12 @@ describe("Station endpoints", () => {
   });
 
   // GET /stations/:station
-  it("Should return a station by number and status 200", async () => {
+  it("Should return 200 when requesting a station by number", async () => {
     const res = await request(app).get("/stations/19");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBeGreaterThan(1);
-    expect(res.body[0]).toMatchObject({
+    expect(res.body).toMatchObject({
       _id: "5f8f8c44b54764421b715f4f",
       number: 19,
       enabled: true,
@@ -97,10 +96,10 @@ describe("Station endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 200 when adding station with number only", async () => {
+  it("Should return 201 when adding station with number only", async () => {
     const res = await request(app).put("/stations/515");
 
-    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
       _id: expect.any(String),
@@ -109,12 +108,12 @@ describe("Station endpoints", () => {
     });
   });
 
-  it("Should return 200 when adding station with number and data", async () => {
+  it("Should return 201 when adding station with number and data", async () => {
     const res = await request(app).put("/stations/516").send({
       stationType: StationType.Start,
     });
 
-    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
       _id: expect.any(String),
@@ -127,12 +126,6 @@ describe("Station endpoints", () => {
   // PATCH /stations/:station
   it("Should return 400 when updating station with invalid number", async () => {
     const res = await request(app).patch("/stations/515Aab");
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 when updating stations without data", async () => {
-    const res = await request(app).patch("/stations/29").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
