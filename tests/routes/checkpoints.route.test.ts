@@ -106,7 +106,9 @@ describe("Checkpoint endpoints", () => {
   });
 
   it("Should return 404 if deleting checkpoint by inexistent id", async () => {
-    const res = await request(app).delete("/checkpoints/5f8f80b547644215f33");
+    const res = await request(app).delete(
+      "/checkpoints/5f8f8720a54763421b714f33"
+    );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
@@ -136,7 +138,9 @@ describe("Checkpoint endpoints", () => {
   });
 
   it("Should return 404 if updating checkpoint by inexistent id", async () => {
-    const res = await request(app).patch("/checkpoints/5f8f80b547644215f33");
+    const res = await request(app).patch(
+      "/checkpoints/5f8f8710b54764321b415f33"
+    );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
