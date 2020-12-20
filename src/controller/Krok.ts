@@ -31,9 +31,6 @@ const validateKrokExists: RequestHandler = async (
   });
 
   // If inserting inexisting krok, then PUT should be allowed.
-  // For PUT methods, also check the number of parameters in the request.
-  // Number > 1 means that the route is nested, e.g.
-  // /kroks/:number/categories/:categoryId
   if (!krok && req.method !== "PUT") {
     return res.status(StatusCodes.NOT_FOUND).json({});
   }
