@@ -21,6 +21,22 @@ describe("Team endpoints", () => {
   });
 
   // GET methods
+  it("Should return a list of all teams", async () => {
+    const res = await request(app).get("/teams/");
+
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+    expect(res.body.length).toBeGreaterThan(225);
+    expect(res.body.length).toBeLessThan(235);
+    expect(res.body[0]).toMatchObject({
+      _id: expect.any(String),
+      name: expect.any(String),
+      participants: expect.any(Array),
+      krok: expect.any(String),
+      category: expect.any(String),
+      extraMapRequired: expect.any(Boolean),
+    });
+  });
 
   // GET /teams/?krok=:id
   it("Should return a list of all teams for specific krok", async () => {
@@ -49,7 +65,6 @@ describe("Team endpoints", () => {
     const res = await request(app).get("/teams/?krok=5f8d0401b54764421a7136da");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(0);
   });
 
   // GET /teams/?category=:categoryId
@@ -83,13 +98,12 @@ describe("Team endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(0);
   });
 
-  // GET /teams/?krok=:number&category=:categoryId
+  // GET /teams/?krok=:krokId&category=:categoryId
   it("Should return a list of teams for krok and category", async () => {
     const res = await request(app).get(
-      "/teams/?krok=50&category=5f8d04f7b54764421b7156dd"
+      "/teams/?krok=5f8d04b3b54764421b7156dc&category=5f8d04f7b54764421b7156dd"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
@@ -111,7 +125,7 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body[0]).toMatchObject({
+    expect(res.body).toMatchObject({
       _id: "5f90acf8b54764421b7160d7",
       name: "Deep fast argue",
       participants: [
@@ -157,7 +171,7 @@ describe("Team endpoints", () => {
         name: "Huge Rainbow",
         participants: ["5f8d0d55b54764421b715bed", "5f8d0d55b54764421b715bee"],
         krok: "5f8d0401b54764421b7156da",
-        category: "5f8d04f7b54764421b7156e2",
+        category: "5f8d04f7b54764421b7156e1",
       });
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
@@ -358,17 +372,6 @@ describe("Team endpoints", () => {
       .patch("/teams/5f90acf8b54764421b716102")
       .send({
         category: "5f8d04b5476441b7156e2",
-      });
-
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 when updating team with invalid name", async () => {
-    const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
-      .send({
-        name: 15,
       });
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
