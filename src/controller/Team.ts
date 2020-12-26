@@ -6,6 +6,10 @@ import GenericController from "controller/Common";
 import Team, { ITeam } from "model/Team";
 import Krok, { IKrok } from "model/Krok";
 import Category, { ICategory } from "model/Category";
+import Participant, { IParticipant } from "model/Participant";
+import TagAssignment, { ITagAssignment } from "model/TagAssignment";
+import Route, { IRoute } from "model/Route";
+import RouteWater, { IRouteWater } from "model/RouteWater";
 
 const validateTeamExists: RequestHandler = async (
   req: Request,
@@ -226,6 +230,67 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
+// GET /teams/:id/participants
+const getParticipants: RequestHandler = async (req: Request, res: Response) => {
+  const requestedTeamId = req.params.id;
+
+  const team: ITeam | null = await Team.findById(requestedTeamId);
+
+  if (!team) {
+    return;
+  }
+
+  const participantIds = team.participants;
+
+  const participants: Array<IParticipant> = await Participant.find().where({
+    _id: { $in: participantIds },
+  });
+
+  res.status(StatusCodes.OK).json(participants);
+};
+
+// GET /teams/:id/route
+const getRoute: RequestHandler = async (req: Request, res: Response) => {
+  const requestedTeamId = req.params.id;
+
+  const team: ITeam | null = await Team.findById(requestedTeamId);
+
+  if (!team) {
+    return;
+  }
+
+  const participantIds = team.participants;
+
+  const assignments: Array<ITagAssignment> = await TagAssignment.find().where({
+    participant: { $in: participantIds },
+  });
+
+  const tagIds = assignments.map((assignment) => assignment.tag);
+
+  const routes: Array<IRoute> = await Route.find().where({
+    tag: { $in: tagIds },
+  });
+
+  res.status(StatusCodes.OK).json({ route: routes });
+};
+
+// GET /teams/:id/route-water
+const getWaterRoute: RequestHandler = async (req: Request, res: Response) => {
+  const requestedTeamId = req.params.id;
+
+  const team: ITeam | null = await Team.findById(requestedTeamId);
+
+  if (!team) {
+    return;
+  }
+
+  const routeWater: IRouteWater | null = await RouteWater.findOne().where({
+    team: team._id,
+  });
+
+  res.status(StatusCodes.OK).json({ route: routeWater });
+};
+
 export default {
   validateTeamExists,
   getAll,
@@ -234,4 +299,7 @@ export default {
   create,
   update,
   deleteById,
+  getParticipants,
+  getRoute,
+  getWaterRoute,
 };

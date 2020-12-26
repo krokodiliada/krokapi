@@ -492,24 +492,22 @@ describe("Team endpoints", () => {
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body.length).toBe(2);
-    expect(res.body).toMatchObject({
-      participants: [
-        {
-          _id: "5f8d0d55b54764421b715cbb",
-          name: { first: "Brandon", last: "Hernandez" },
-          birthday: new Date("2018-11-25").toISOString(),
-          phone: "+79472875350",
-          email: "evandoyle@brown-mcknight.biz",
-        },
-        {
-          _id: "5f8d0d55b54764421b715cbc",
-          name: { first: "Sara", last: "Hunt" },
-          birthday: new Date("1970-06-22").toISOString(),
-          phone: "+79145264011",
-          email: "lauralyons@joseph-barnett.com",
-        },
-      ],
-    });
+    expect(res.body).toMatchObject([
+      {
+        _id: "5f8d0d55b54764421b715cbb",
+        name: { first: "Brandon", last: "Hernandez" },
+        birthday: new Date("2018-11-25").toISOString(),
+        phone: "+79472875350",
+        email: "evandoyle@brown-mcknight.biz",
+      },
+      {
+        _id: "5f8d0d55b54764421b715cbc",
+        name: { first: "Sara", last: "Hunt" },
+        birthday: new Date("1970-06-22").toISOString(),
+        phone: "+79145264011",
+        email: "lauralyons@joseph-barnett.com",
+      },
+    ]);
   });
 
   it("Should return 400 when requesting team's route by invalid id", async () => {
@@ -542,38 +540,41 @@ describe("Team endpoints", () => {
     const res = await request(app).get("/teams/5f90acf8b54764421b71612f/route");
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(2);
     expect(res.body).toMatchObject({
       route: [
         {
-          tag: "",
-          krok: "",
-          start: new Date("Sep 26, 2020 10:36:58").toISOString(),
-          finish: new Date("Sep 26, 2020 18:36:58").toISOString(),
-          actions: [],
+          _id: "5fd550a7b547649dd7e3777a",
+          tag: 257,
+          krok: "5f8d04b3b54764421b7156dc",
+          actions: expect.any(Array),
+          start: new Date(1601104871000).toISOString(),
+          finish: new Date(1601132881000).toISOString(),
         },
-        {},
+        {
+          _id: "5fd550a7b547649dd7e37779",
+          tag: 269,
+          krok: "5f8d04b3b54764421b7156dc",
+          actions: expect.any(Array),
+          start: new Date(1601104882000).toISOString(),
+          finish: new Date(1601132884000).toISOString(),
+        },
       ],
     });
   });
 
   it("Should return 200 when requesting a team's water route", async () => {
     const res = await request(app).get(
-      "/teams/5f90acf8b54764421b71612f/route-water"
+      "/teams/5f90acf8b54764421b71610f/route-water"
     );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(2);
     expect(res.body).toMatchObject({
-      route: [
-        {
-          tag: "",
-          krok: "",
-          start: new Date("Sep 27, 2020 10:36:58").toISOString(),
-          finish: new Date("Sep 27, 2020 10:38:58").toISOString(),
-          actions: [],
-        },
-      ],
+      route: {
+        _id: "5fcc1e2fb547648511118544",
+        team: "5f90acf8b54764421b71610f",
+        start: new Date("2020-09-27T11:33:00").toISOString(),
+        actions: expect.any(Array),
+      },
     });
   });
 });
