@@ -23,6 +23,81 @@ const validateTeamExists: RequestHandler = async (
   return next();
 };
 
+/**
+ * Check that the team size is valid for the category it is registered in.
+ * @param team Team to check
+ */
+const isValidTeamSize = async (team: ITeam): Promise<boolean> => {
+  const teamSize: number = team.participants.length;
+  const categoryId: string = team.category;
+
+  const category: ICategory | null = await Category.findById(categoryId);
+
+  if (
+    !category ||
+    teamSize < category.participantsNumber.min ||
+    teamSize > category.participantsNumber.max
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
+/**
+ * Check if participants assigned to the team are unique among the same krok.
+ * One participant cannot be assigned to multiple teams.
+ * @param team Team to check
+ */
+const areParticipantsUniqueForTeam = async (team: ITeam): Promise<boolean> => {
+  const { participants } = team;
+
+  const teams: Array<ITeam> = await Team.find()
+    .where({
+      krok: team.krok,
+    })
+    .where({
+      participants: { $in: participants },
+    })
+    .where({
+      _id: { $ne: team._id },
+    });
+
+  return teams.length === 0;
+};
+
+const isTeamValid = async (team: ITeam): Promise<boolean> => {
+  return team
+    .validate()
+    .then(async () => {
+      const teamSizeValid: boolean = await isValidTeamSize(team);
+
+      if (!teamSizeValid) {
+        throw new Error("The team does not have a valid size");
+      }
+
+      const teamHasUniqueParticipants: boolean = await areParticipantsUniqueForTeam(
+        team
+      );
+
+      if (!teamHasUniqueParticipants) {
+        throw new Error("The team shares participants with another team");
+      }
+
+      const krok: IKrok | null = await Krok.findById(team.krok);
+      const category: ICategory | null = await Category.findById(team.category);
+
+      if (!krok || !category) {
+        throw new Error("Either krok or category id does not exist");
+      }
+
+      return true;
+    })
+    .catch(() => {
+      return false;
+    });
+};
+
 interface ParticipantAndKrokParameters {
   participant: string;
   krok: string;
@@ -92,65 +167,14 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * Check that the team size is valid for the category it is registered in.
- * @param team Team to check
- */
-const isValidTeamSize = async (team: ITeam): Promise<boolean> => {
-  const teamSize: number = team.participants.length;
-  const categoryId: string = team.category;
-
-  const category: ICategory | null = await Category.findById(categoryId);
-
-  if (
-    !category ||
-    teamSize < category.participantsNumber.min ||
-    teamSize > category.participantsNumber.max
-  ) {
-    return false;
-  }
-
-  return true;
-};
-
-/**
- * Check if participants assigned to the team are unique among the same krok.
- * One participant cannot be assigned to multiple teams.
- * @param team Team to check
- */
-const areParticipantsUniqueForTeam = async (team: ITeam): Promise<boolean> => {
-  const { participants } = team;
-
-  const teams: Array<ITeam> = await Team.find()
-    .where({
-      krok: team.krok,
-    })
-    .where({
-      participants: { $in: participants },
-    });
-
-  return teams.length === 0;
-};
-
 // PUT /teams/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
 
   const newTeam: ITeam = new Team(data);
-  const teamSizeValid: boolean = await isValidTeamSize(newTeam);
+  const isValid: boolean = await isTeamValid(newTeam);
 
-  if (!teamSizeValid) {
-    console.log("The team does not have a valid size");
-    res.status(StatusCodes.BAD_REQUEST).json({});
-    return;
-  }
-
-  const teamHasUniqueParticipants: boolean = await areParticipantsUniqueForTeam(
-    newTeam
-  );
-
-  if (!teamHasUniqueParticipants) {
-    console.log("The team shares participants with another team");
+  if (!isValid) {
     res.status(StatusCodes.BAD_REQUEST).json({});
     return;
   }
@@ -171,13 +195,22 @@ const update: RequestHandler = async (req: Request, res: Response) => {
 
   const team: ITeam | null = await Team.findById(requestedTeamId);
 
-  if (team) {
-    team
-      .set(req.body)
-      .save()
-      .then(() => res.status(StatusCodes.OK).json())
-      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+  if (!team) {
+    return;
   }
+
+  team.set(req.body);
+  const isValid: boolean = await isTeamValid(team);
+
+  if (!isValid) {
+    res.status(StatusCodes.BAD_REQUEST).json({});
+    return;
+  }
+
+  team
+    .save()
+    .then(() => res.status(StatusCodes.OK).json())
+    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
 };
 
 // DELETE /teams/:id

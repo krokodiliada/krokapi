@@ -336,7 +336,7 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when successfully updated team krok", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/teams/5f90acf8b54764421b7160fb")
       .send({
         krok: "5f8d0401b54764421b7156da",
       });
@@ -347,7 +347,7 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when successfully updated team category", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/teams/5f90acf8b54764421b7160fa")
       .send({
         category: "5f8d04f7b54764421b7156e2",
       });
