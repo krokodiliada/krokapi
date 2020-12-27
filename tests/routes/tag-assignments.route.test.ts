@@ -54,16 +54,16 @@ describe("Tag Assignment endpoints", () => {
 
   it("Should return 200 if successfully got assignments by id", async () => {
     const res = await request(app).get(
-      "/tag-assignments/5f8e2d30b54764421b715e6b"
+      "/tag-assignments/5fcc1bd5b5476485111184f8"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      _id: expect.any(String),
-      tag: expect.any(Number),
-      participant: expect.any(String),
-      krok: expect.any(String),
+      _id: "5fcc1bd5b5476485111184f8",
+      tag: 35,
+      participant: "5f8d0d55b54764421b715d59",
+      krok: "5f8d04b3b54764421b7156dc",
     });
   });
 
@@ -77,11 +77,10 @@ describe("Tag Assignment endpoints", () => {
 
   it("Should return 404 if requesting assignment with inexistent krok filter", async () => {
     const res = await request(app).get(
-      "/tag-assignments/?krok=5f8d0401b54762121b7136da&participant=5f8d0d55b54764421b715d98"
+      "/tag-assignments/?krok=5f8d0401b54524421b7136da&participant=5f8d0d55b54764421b715d98"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(0);
   });
 
   it("Should return 400 if requesting assignment with invalid participant filter", async () => {
@@ -98,7 +97,6 @@ describe("Tag Assignment endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(0);
   });
 
   it("Should return 200 if requesting assignment by krok and participant", async () => {
@@ -108,13 +106,15 @@ describe("Tag Assignment endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(0);
-    expect(res.body).toMatchObject({
-      _id: "5fcc1bd5b54764851111852f",
-      tag: 9417,
-      participant: "5f8d0d55b54764421b715d98",
-      krok: "5f8d0401b54764421b7156da",
-    });
+    expect(res.body.length).toBe(1);
+    expect(res.body).toMatchObject([
+      {
+        _id: "5fcc1bd5b54764851111852f",
+        tag: 339,
+        participant: "5f8d0d55b54764421b715d98",
+        krok: "5f8d0401b54764421b7156da",
+      },
+    ]);
   });
 
   // POST /tag-assignments/
@@ -128,6 +128,7 @@ describe("Tag Assignment endpoints", () => {
     const res = await request(app).post("/tag-assignments/").send({
       participant: "5f8d0d55b54764421b715d66",
       krok: "5f8d04b3b54764421b7156dc",
+      tag: 339,
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -146,6 +147,7 @@ describe("Tag Assignment endpoints", () => {
     const res = await request(app).post("/tag-assignments/").send({
       participant: "5f8d0d55b54764421b715d66",
       krok: "5f8d0401b54764421b7156da",
+      tag: "notEvenANumber",
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -257,14 +259,6 @@ describe("Tag Assignment endpoints", () => {
   });
 
   // PATCH /tag-assignment/:id
-  it("Should return 400 if updating assignment with empty body", async () => {
-    const res = await request(app)
-      .patch("/tag-assignments/5fcc1bd5b5476485111183e7")
-      .send({});
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
   it("Should return 400 if updating assignment with invalid id", async () => {
     const res = await request(app)
       .patch("/tag-assignments/5fcc1b5b5685118e3")
@@ -315,11 +309,11 @@ describe("Tag Assignment endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if updating assignment with inexistent tag", async () => {
+  it("Should return 400 if updating assignment with tag that is already used", async () => {
     const res = await request(app)
       .patch("/tag-assignments/5fcc1bd5b5476485111183e0")
       .send({
-        tag: 2875,
+        tag: 113,
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -340,16 +334,6 @@ describe("Tag Assignment endpoints", () => {
       .patch("/tag-assignments/5fcc1bd5b5476485111183e0")
       .send({
         krok: "5f8e2d30b54764321b615ef0",
-      });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 if updating assignment's tag fails because pair tag-krok already exists", async () => {
-    const res = await request(app)
-      .patch("/tag-assignments/5fcc1bd5b5476485111183e0")
-      .send({
-        tag: 9809,
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
