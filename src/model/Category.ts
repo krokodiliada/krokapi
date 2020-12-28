@@ -58,6 +58,11 @@ const ParticipantsNumberSchema: Schema = new Schema({
   },
 });
 
+const ParticipantsNumber = mongoose.model<ICategoryParticipantsNumber>(
+  "CategoryParticipantsNumber",
+  ParticipantsNumberSchema
+);
+
 export const CategorySchema: Schema = new Schema(
   {
     name: {
@@ -72,6 +77,7 @@ export const CategorySchema: Schema = new Schema(
     participantsNumber: {
       type: ParticipantsNumberSchema,
       required: false,
+      default: new ParticipantsNumber(),
     },
     minCheckpoints: {
       type: Number,
