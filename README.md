@@ -1,6 +1,6 @@
 # krokapi
 
-REST API for krokodiliada.ru contests system.
+REST API for [krokodiliada.ru](https://krokodiliada.ru) contests system.
 
 ## Installation
 
@@ -52,7 +52,9 @@ This will install TypeScript, ExpressJS and other software required for the serv
 
 ### MongoDB
 
-Before running the server itself, make sure to run the database service first. For example, on OSX/Linux - based systems that would be the following command:
+Before running the server itself, make sure to run the database service first.
+
+For example, on OSX/Linux - based systems that would be the following command:
 
 ```
 $ mongod
