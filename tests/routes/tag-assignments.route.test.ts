@@ -17,7 +17,7 @@ describe("Tag Assignment endpoints", () => {
 
   afterAll(async () => {
     await eraseSampleDatabase();
-    mongoose.connection.close();
+    await mongoose.connection.close();
   });
 
   // GET methods

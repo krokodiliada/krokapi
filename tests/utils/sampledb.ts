@@ -66,7 +66,7 @@ const createRouteCollection = async () => {
   await Route.insertMany(routeData);
 };
 
-export const populateSampleDatabase = async () => {
+export const populateSampleDatabase = async (): Promise<void> => {
   await createCategoryCollection();
   await createKrokCollection();
   await createParticipantCollection();
@@ -80,16 +80,16 @@ export const populateSampleDatabase = async () => {
   await createRouteCollection();
 };
 
-export const eraseSampleDatabase = async () => {
-  Category.deleteMany({});
-  Checkpoint.deleteMany({});
-  CheckpointAssignment.deleteMany({});
-  GpsLocation.deleteMany({});
-  Krok.deleteMany({});
-  Participant.deleteMany({});
-  Route.deleteMany({});
-  RouteWater.deleteMany({});
-  Station.deleteMany({});
-  TagAssignment.deleteMany({});
-  Team.deleteMany({});
+export const eraseSampleDatabase = async (): Promise<void> => {
+  await Category.deleteMany({});
+  await Checkpoint.deleteMany({});
+  await CheckpointAssignment.deleteMany({});
+  await GpsLocation.deleteMany({});
+  await Krok.deleteMany({});
+  await Participant.deleteMany({});
+  await Route.deleteMany({});
+  await RouteWater.deleteMany({});
+  await Station.deleteMany({});
+  await TagAssignment.deleteMany({});
+  await Team.deleteMany({});
 };

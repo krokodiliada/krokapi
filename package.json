@@ -20,7 +20,7 @@
     "prod:start": "NODE_PATH=dist/src node ./dist/src/index.js",
     "prod": "npm-run-all build prod:start",
     "start": "npm run prod",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
