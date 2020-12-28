@@ -264,11 +264,12 @@ const getRoute: RequestHandler = async (req: Request, res: Response) => {
   const assignments: Array<ITagAssignment> = await TagAssignment.find().where({
     participant: { $in: participantIds },
   });
-
-  const tagIds = assignments.map((assignment) => assignment.tag);
+  const assignmentIds: Array<string> = assignments.map(
+    (assignment) => assignment._id
+  );
 
   const routes: Array<IRoute> = await Route.find().where({
-    tag: { $in: tagIds },
+    tagAssignment: { $in: assignmentIds },
   });
 
   res.status(StatusCodes.OK).json({ route: routes });

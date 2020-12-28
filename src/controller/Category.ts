@@ -2,8 +2,6 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import GenericController from "controller/Common";
-import ParticipantController from "controller/Participant";
-import TeamController from "controller/Team";
 
 import Category, { ICategory } from "model/Category";
 import Krok, { IKrok } from "model/Krok";
@@ -12,7 +10,7 @@ import CheckpointAssignment, {
   ICheckpointAssignment,
 } from "model/CheckpointAssignment";
 import Route, { IRoute } from "model/Route";
-import { IParticipant } from "model/Participant";
+import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 
 const validateCategoryExists: RequestHandler = async (
   req: Request,
@@ -87,41 +85,31 @@ const unassignCategoryFromKrok = async (categoryId: string) => {
 };
 
 const categoryHasRoutes = async (category: ICategory): Promise<boolean> => {
-  // First, we get the IDs of kroks that have this category
-  const kroks: Array<IKrok> = await Krok.find().where({
-    categories: category._id,
-  });
+  // Get all routes
+  const routes: Array<IRoute> = await Route.find();
+  const assignmentIds: Array<string> = routes.map(
+    (route) => route.tagAssignment
+  );
 
-  const krokIds: Array<string> = [];
-  kroks.forEach((krok) => {
-    krokIds.push(krok._id);
-  });
-
-  // We get all routes for such kroks
-  const routes: Array<IRoute> = await Route.find().where({
-    krok: { $in: krokIds },
-  });
-
-  // Lastly, we check if any of the routes relates to this category
-  return routes.some(async (route) => {
-    const tagNumber: number = route.tag;
-    const participant: IParticipant | null = await ParticipantController.getByTagAndKrok(
-      { tag: tagNumber, krok: route.krok }
-    );
-
-    if (participant) {
-      const team: ITeam | null = await TeamController.getByParticipantAndKrok({
-        participant: participant._id,
-        krok: route.krok,
-      });
-
-      if (team && team.category === category._id) {
-        return true;
-      }
+  // Get all tag assignments that have routes.
+  const tagAssignments: Array<ITagAssignment> = await TagAssignment.find().where(
+    {
+      _id: { $in: assignmentIds },
     }
+  );
 
-    return false;
+  // Get ids of people for these tag assignments
+  const routeParticipantIds: Array<string> = tagAssignments.map(
+    (assignment) => assignment.participant
+  );
+
+  // Get teams that contain these participants
+  const teams: Array<ITeam> = await Team.find().where({
+    participants: { $in: routeParticipantIds },
   });
+
+  // Check if at least one team is registered in that category
+  return teams.some((team) => String(team.category) === String(category._id));
 };
 
 const canSetParticipantsNumber = async (

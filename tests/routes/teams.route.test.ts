@@ -543,20 +543,18 @@ describe("Team endpoints", () => {
     expect(res.body).toMatchObject({
       route: [
         {
-          _id: "5fd550a7b547649dd7e3777a",
-          tag: 257,
-          krok: "5f8d04b3b54764421b7156dc",
-          actions: expect.any(Array),
-          start: new Date(1601104871000).toISOString(),
-          finish: new Date(1601132881000).toISOString(),
-        },
-        {
           _id: "5fd550a7b547649dd7e37779",
-          tag: 269,
-          krok: "5f8d04b3b54764421b7156dc",
-          actions: expect.any(Array),
+          tagAssignment: "5fcc1bd5b54764851111848c",
           start: new Date(1601104882000).toISOString(),
           finish: new Date(1601132884000).toISOString(),
+          actions: expect.any(Array),
+        },
+        {
+          _id: "5fd550a7b547649dd7e3777a",
+          tagAssignment: "5fcc1bd5b54764851111848d",
+          start: new Date(1601104871000).toISOString(),
+          finish: new Date(1601132881000).toISOString(),
+          actions: expect.any(Array),
         },
       ],
     });
