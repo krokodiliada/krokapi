@@ -2,20 +2,33 @@ import mongoose from "mongoose";
 
 import Krok, { IKrok } from "model/Krok";
 import Route, { IRoute } from "model/Route";
+import Participant, { IParticipant } from "model/Participant";
+import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 
-const tag = 44;
+const participant: IParticipant = new Participant({
+  name: {
+    first: "Ivan",
+    last: "Petrov",
+  },
+  birthday: new Date("Dec 12, 1991"),
+});
 
 const krok: IKrok = new Krok({
-  number: 50,
+  number: 172,
   date: {
     start: new Date("Sep 25, 2020"),
     end: new Date("Sep 27, 2020"),
   },
 });
 
-const validRoute: IRoute = new Route({
-  tag,
+const tagAssignment: ITagAssignment = new TagAssignment({
+  tag: 5002,
+  participant: participant._id,
   krok: krok._id,
+});
+
+const validRoute: IRoute = new Route({
+  tagAssignment: tagAssignment._id,
   start: new Date("2020-09-25T10:13:00"),
   finish: new Date("2020-09-25T10:14:00"),
 });
@@ -34,7 +47,9 @@ describe("Route model", () => {
   });
 
   afterEach(async () => {
+    await Participant.deleteMany({});
     await Krok.deleteMany({});
+    await TagAssignment.deleteMany({});
     await Route.deleteMany({});
   });
 
@@ -43,19 +58,17 @@ describe("Route model", () => {
     expect(route.validate).toThrow();
   });
 
-  it("Throws an error if route is created without tag", () => {
+  it("Throws an error if route is created without tag assignment", () => {
     const route: IRoute = new Route({
-      krok: krok._id,
       start: new Date("2020-09-25T10:13:00"),
       finish: new Date("2020-09-25T10:14:00"),
     });
     expect(route.validate).toThrow();
   });
 
-  it("Throws an error if route is created without krok", () => {
+  it("Throws an error if route is created without start timestamp", () => {
     const route: IRoute = new Route({
-      tag,
-      start: new Date("2020-09-25T10:13:00"),
+      tagAssignment: tagAssignment._id,
       finish: new Date("2020-09-25T10:14:00"),
     });
     expect(route.validate).toThrow();
@@ -63,8 +76,7 @@ describe("Route model", () => {
 
   it("Throws an error if finish date is prior to the start date", () => {
     const route: IRoute = new Route({
-      tag,
-      krok: krok._id,
+      tagAssignment,
       start: new Date("2020-09-25T10:14:00"),
       finish: new Date("2020-09-25T10:13:00"),
     });
@@ -81,8 +93,7 @@ describe("Route model", () => {
     expect(spy).toHaveBeenCalled();
 
     expect(savedRoute).toMatchObject({
-      tag: expect.any(Number),
-      krok: expect.any(Object),
+      tagAssignment: expect.any(Object),
       start: expect.any(Date),
       finish: expect.any(Date),
       actions: expect.any(Array),
