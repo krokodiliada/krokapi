@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IKrok } from "model/Krok";
+import { ITagAssignment } from "model/TagAssignment";
 import { IStation } from "model/Station";
 
 export interface IRouteAction extends Document {
@@ -8,8 +8,7 @@ export interface IRouteAction extends Document {
 }
 
 export interface IRoute extends Document {
-  tag: number;
-  krok: IKrok["_id"];
+  tagAssignment: ITagAssignment["_id"];
   start: Date;
   finish: Date;
   actions: [IRouteAction];
@@ -31,14 +30,11 @@ const RouteActionSchema: Schema = new Schema({
 
 export const RouteSchema: Schema = new Schema(
   {
-    tag: {
-      type: Number,
-      required: true,
-    },
-    krok: {
+    tagAssignment: {
       type: Schema.Types.ObjectId,
-      ref: "Krok",
+      ref: "TagAssignment",
       required: true,
+      unique: true,
     },
     start: {
       type: Date,
@@ -61,7 +57,5 @@ export const RouteSchema: Schema = new Schema(
   },
   { timestamps: true }
 );
-
-RouteSchema.index({ tag: 1, krok: 1 }, { unique: true });
 
 export default mongoose.model<IRoute>("Route", RouteSchema);

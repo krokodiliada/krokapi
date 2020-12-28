@@ -1,8 +1,6 @@
 export default [
   {
     _id: "5fd550a7b547649dd7e376e0",
-    tag: 48,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -43,11 +41,10 @@ export default [
     ],
     start: new Date(1601106430000),
     finish: new Date(1601122343000),
+    tagAssignment: "5fcc1bd5b5476485111184dc",
   },
   {
     _id: "5fd550a7b547649dd7e376e1",
-    tag: 144,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -88,11 +85,10 @@ export default [
     ],
     start: new Date(1601106432000),
     finish: new Date(1601122341000),
+    tagAssignment: "5fcc1bd5b5476485111184db",
   },
   {
     _id: "5fd550a7b547649dd7e376e2",
-    tag: 214,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -133,11 +129,10 @@ export default [
     ],
     start: new Date(1601105828000),
     finish: new Date(1601122728000),
+    tagAssignment: "5fcc1bd5b547648511118492",
   },
   {
     _id: "5fd550a7b547649dd7e376e3",
-    tag: 224,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -178,11 +173,10 @@ export default [
     ],
     start: new Date(1601105826000),
     finish: new Date(1601122729000),
+    tagAssignment: "5fcc1bd5b547648511118491",
   },
   {
     _id: "5fd550a7b547649dd7e376e4",
-    tag: 271,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -203,11 +197,10 @@ export default [
     ],
     start: new Date(1601102367000),
     finish: new Date(1601122798000),
+    tagAssignment: "5fcc1bd5b5476485111184bf",
   },
   {
     _id: "5fd550a7b547649dd7e376e5",
-    tag: 185,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -232,11 +225,10 @@ export default [
     ],
     start: new Date(1601102369000),
     finish: new Date(1601122802000),
+    tagAssignment: "5fcc1bd5b5476485111184c0",
   },
   {
     _id: "5fd550a7b547649dd7e376e6",
-    tag: 267,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -285,11 +277,10 @@ export default [
     ],
     start: new Date(1601105734000),
     finish: new Date(1601123379000),
+    tagAssignment: "5fcc1bd5b5476485111184d4",
   },
   {
     _id: "5fd550a7b547649dd7e376e7",
-    tag: 307,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -302,11 +293,10 @@ export default [
     ],
     start: new Date(1601112067000),
     finish: new Date(1601123740000),
+    tagAssignment: "5fcc1bd5b5476485111183e7",
   },
   {
     _id: "5fd550a7b547649dd7e376e8",
-    tag: 306,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -319,11 +309,10 @@ export default [
     ],
     start: new Date(1601112057000),
     finish: new Date(1601123738000),
+    tagAssignment: "5fcc1bd5b5476485111183e6",
   },
   {
     _id: "5fd550a7b547649dd7e376e9",
-    tag: 309,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -372,11 +361,10 @@ export default [
     ],
     start: new Date(1601112597000),
     finish: new Date(1601123983000),
+    tagAssignment: "5fcc1bd5b54764851111850e",
   },
   {
     _id: "5fd550a7b547649dd7e376ea",
-    tag: 94,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -417,11 +405,10 @@ export default [
     ],
     start: new Date(1601105966000),
     finish: new Date(1601123988000),
+    tagAssignment: "5fcc1bd5b547648511118400",
   },
   {
     _id: "5fd550a7b547649dd7e376eb",
-    tag: 197,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -462,11 +449,10 @@ export default [
     ],
     start: new Date(1601105969000),
     finish: new Date(1601123989000),
+    tagAssignment: "5fcc1bd5b5476485111183ff",
   },
   {
     _id: "5fd550a7b547649dd7e376ec",
-    tag: 203,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -507,11 +493,10 @@ export default [
     ],
     start: new Date(1601104886000),
     finish: new Date(1601124222000),
+    tagAssignment: "5fcc1bd5b547648511118438",
   },
   {
     _id: "5fd550a7b547649dd7e376ed",
-    tag: 169,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -552,11 +537,10 @@ export default [
     ],
     start: new Date(1601104884000),
     finish: new Date(1601124218000),
+    tagAssignment: "5fcc1bd5b547648511118439",
   },
   {
     _id: "5fd550a7b547649dd7e376ee",
-    tag: 112,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -605,11 +589,10 @@ export default [
     ],
     start: new Date(1601106195000),
     finish: new Date(1601124359000),
+    tagAssignment: "5fcc1bd5b54764851111844b",
   },
   {
     _id: "5fd550a7b547649dd7e376ef",
-    tag: 150,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -658,11 +641,10 @@ export default [
     ],
     start: new Date(1601107093000),
     finish: new Date(1601124687000),
+    tagAssignment: "5fcc1bd5b54764851111849e",
   },
   {
     _id: "5fd550a7b547649dd7e376f0",
-    tag: 210,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -719,11 +701,10 @@ export default [
     ],
     start: new Date(1601107710000),
     finish: new Date(1601124695000),
+    tagAssignment: "5fcc1bd5b5476485111184a5",
   },
   {
     _id: "5fd550a7b547649dd7e376f1",
-    tag: 285,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -780,11 +761,10 @@ export default [
     ],
     start: new Date(1601107701000),
     finish: new Date(1601124699000),
+    tagAssignment: "5fcc1bd5b5476485111184a6",
   },
   {
     _id: "5fd550a7b547649dd7e376f2",
-    tag: 287,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -833,11 +813,10 @@ export default [
     ],
     start: new Date(1601107095000),
     finish: new Date(1601124688000),
+    tagAssignment: "5fcc1bd5b54764851111849d",
   },
   {
     _id: "5fd550a7b547649dd7e376f3",
-    tag: 50,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -874,11 +853,10 @@ export default [
     ],
     start: new Date(1601110291000),
     finish: new Date(1601124684000),
+    tagAssignment: "5fcc1bd5b5476485111184ab",
   },
   {
     _id: "5fd550a7b547649dd7e376f4",
-    tag: 118,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -927,11 +905,10 @@ export default [
     ],
     start: new Date(1601107838000),
     finish: new Date(1601124891000),
+    tagAssignment: "5fcc1bd5b5476485111184c4",
   },
   {
     _id: "5fd550a7b547649dd7e376f5",
-    tag: 222,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -980,11 +957,10 @@ export default [
     ],
     start: new Date(1601107840000),
     finish: new Date(1601124893000),
+    tagAssignment: "5fcc1bd5b5476485111184c5",
   },
   {
     _id: "5fd550a7b547649dd7e376f6",
-    tag: 218,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -1033,11 +1009,10 @@ export default [
     ],
     start: new Date(1601108413000),
     finish: new Date(1601125133000),
+    tagAssignment: "5fcc1bd5b54764851111842b",
   },
   {
     _id: "5fd550a7b547649dd7e376f7",
-    tag: 147,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4c",
@@ -1090,11 +1065,10 @@ export default [
     ],
     start: new Date(1601113641000),
     finish: new Date(1601125220000),
+    tagAssignment: "5fcc1bd5b54764851111841e",
   },
   {
     _id: "5fd550a7b547649dd7e376f8",
-    tag: 159,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -1155,11 +1129,10 @@ export default [
     ],
     start: new Date(1601103999000),
     finish: new Date(1601125357000),
+    tagAssignment: "5fcc1bd5b54764851111842d",
   },
   {
     _id: "5fd550a7b547649dd7e376f9",
-    tag: 68,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4c",
@@ -1204,11 +1177,10 @@ export default [
     ],
     start: new Date(1601111848000),
     finish: new Date(1601125604000),
+    tagAssignment: "5fcc1bd5b54764851111840d",
   },
   {
     _id: "5fd550a7b547649dd7e376fa",
-    tag: 187,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1249,11 +1221,10 @@ export default [
     ],
     start: new Date(1601103378000),
     finish: new Date(1601125861000),
+    tagAssignment: "5fcc1bd5b547648511118444",
   },
   {
     _id: "5fd550a7b547649dd7e376fb",
-    tag: 206,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1294,11 +1265,10 @@ export default [
     ],
     start: new Date(1601103380000),
     finish: new Date(1601125860000),
+    tagAssignment: "5fcc1bd5b547648511118445",
   },
   {
     _id: "5fd550a7b547649dd7e376fc",
-    tag: 272,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -1331,11 +1301,10 @@ export default [
     ],
     start: new Date(1601107912000),
     finish: new Date(1601126080000),
+    tagAssignment: "5fcc1bd5b5476485111184c8",
   },
   {
     _id: "5fd550a7b547649dd7e376fd",
-    tag: 252,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -1380,11 +1349,10 @@ export default [
     ],
     start: new Date(1601103713000),
     finish: new Date(1601126111000),
+    tagAssignment: "5fcc1bd5b547648511118419",
   },
   {
     _id: "5fd550a7b547649dd7e376fe",
-    tag: 244,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1425,11 +1393,10 @@ export default [
     ],
     start: new Date(1601103966000),
     finish: new Date(1601126239000),
+    tagAssignment: "5fcc1bd5b5476485111184c7",
   },
   {
     _id: "5fd550a7b547649dd7e376ff",
-    tag: 270,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1470,11 +1437,10 @@ export default [
     ],
     start: new Date(1601103964000),
     finish: new Date(1601126234000),
+    tagAssignment: "5fcc1bd5b5476485111184c6",
   },
   {
     _id: "5fd550a7b547649dd7e37700",
-    tag: 18,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1519,11 +1485,10 @@ export default [
     ],
     start: new Date(1601107260000),
     finish: new Date(1601126290000),
+    tagAssignment: "5fcc1bd5b5476485111184b7",
   },
   {
     _id: "5fd550a7b547649dd7e37701",
-    tag: 55,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1564,11 +1529,10 @@ export default [
     ],
     start: new Date(1601107262000),
     finish: new Date(1601126288000),
+    tagAssignment: "5fcc1bd5b5476485111184b8",
   },
   {
     _id: "5fd550a7b547649dd7e37702",
-    tag: 59,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4c",
@@ -1621,11 +1585,10 @@ export default [
     ],
     start: new Date(1601109187000),
     finish: new Date(1601126498000),
+    tagAssignment: "5fcc1bd5b547648511118425",
   },
   {
     _id: "5fd550a7b547649dd7e37703",
-    tag: 73,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -1674,11 +1637,10 @@ export default [
     ],
     start: new Date(1601110954000),
     finish: new Date(1601126804000),
+    tagAssignment: "5fcc1bd5b547648511118501",
   },
   {
     _id: "5fd550a7b547649dd7e37704",
-    tag: 124,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1723,11 +1685,10 @@ export default [
     ],
     start: new Date(1601106821000),
     finish: new Date(1601124673000),
+    tagAssignment: "5fcc1bd5b5476485111184df",
   },
   {
     _id: "5fd550a7b547649dd7e37705",
-    tag: 130,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1768,11 +1729,10 @@ export default [
     ],
     start: new Date(1601106823000),
     finish: new Date(1601124675000),
+    tagAssignment: "5fcc1bd5b5476485111184e0",
   },
   {
     _id: "5fd550a7b547649dd7e37706",
-    tag: 209,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1813,11 +1773,10 @@ export default [
     ],
     start: new Date(1601106827000),
     finish: new Date(1601126884000),
+    tagAssignment: "5fcc1bd5b54764851111842a",
   },
   {
     _id: "5fd550a7b547649dd7e37707",
-    tag: 189,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1858,11 +1817,10 @@ export default [
     ],
     start: new Date(1601106825000),
     finish: new Date(1601126882000),
+    tagAssignment: "5fcc1bd5b547648511118429",
   },
   {
     _id: "5fd550a7b547649dd7e37708",
-    tag: 168,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -1919,11 +1877,10 @@ export default [
     ],
     start: new Date(1601104060000),
     finish: new Date(1601127555000),
+    tagAssignment: "5fcc1bd5b5476485111183da",
   },
   {
     _id: "5fd550a7b547649dd7e37709",
-    tag: 117,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -1968,11 +1925,10 @@ export default [
     ],
     start: new Date(1601103471000),
     finish: new Date(1601127650000),
+    tagAssignment: "5fcc1bd5b5476485111184b4",
   },
   {
     _id: "5fd550a7b547649dd7e3770a",
-    tag: 32,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2009,11 +1965,10 @@ export default [
     ],
     start: new Date(1601109233000),
     finish: new Date(1601127656000),
+    tagAssignment: "5fcc1bd5b5476485111184ee",
   },
   {
     _id: "5fd550a7b547649dd7e3770b",
-    tag: 114,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -2058,11 +2013,10 @@ export default [
     ],
     start: new Date(1601104332000),
     finish: new Date(1601127079000),
+    tagAssignment: "5fcc1bd5b5476485111183fb",
   },
   {
     _id: "5fd550a7b547649dd7e3770c",
-    tag: 316,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2083,11 +2037,10 @@ export default [
     ],
     start: new Date(1601114743000),
     finish: new Date(1601127975000),
+    tagAssignment: "5fcc1bd5b547648511118502",
   },
   {
     _id: "5fd550a7b547649dd7e3770d",
-    tag: 199,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -2136,11 +2089,10 @@ export default [
     ],
     start: new Date(1601109030000),
     finish: new Date(1601128018000),
+    tagAssignment: "5fcc1bd5b54764851111844e",
   },
   {
     _id: "5fd550a7b547649dd7e3770e",
-    tag: 135,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -2185,11 +2137,10 @@ export default [
     ],
     start: new Date(1601104330000),
     finish: new Date(1601127075000),
+    tagAssignment: "5fcc1bd5b5476485111183fc",
   },
   {
     _id: "5fd550a7b547649dd7e3770f",
-    tag: 137,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2246,11 +2197,10 @@ export default [
     ],
     start: new Date(1601106837000),
     finish: new Date(1601128260000),
+    tagAssignment: "5fcc1bd5b5476485111183de",
   },
   {
     _id: "5fd550a7b547649dd7e37710",
-    tag: 6,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2287,11 +2237,10 @@ export default [
     ],
     start: new Date(1601111694000),
     finish: new Date(1601128287000),
+    tagAssignment: "5fcc1bd5b547648511118493",
   },
   {
     _id: "5fd550a7b547649dd7e37711",
-    tag: 64,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2328,11 +2277,10 @@ export default [
     ],
     start: new Date(1601111691000),
     finish: new Date(1601128339000),
+    tagAssignment: "5fcc1bd5b54764851111849a",
   },
   {
     _id: "5fd550a7b547649dd7e37712",
-    tag: 241,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -2385,11 +2333,10 @@ export default [
     ],
     start: new Date(1601105609000),
     finish: new Date(1601128512000),
+    tagAssignment: "5fcc1bd5b547648511118410",
   },
   {
     _id: "5fd550a7b547649dd7e37713",
-    tag: 242,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -2442,11 +2389,10 @@ export default [
     ],
     start: new Date(1601105612000),
     finish: new Date(1601128513000),
+    tagAssignment: "5fcc1bd5b547648511118411",
   },
   {
     _id: "5fd550a7b547649dd7e37714",
-    tag: 51,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -2479,11 +2425,10 @@ export default [
     ],
     start: new Date(1601108149000),
     finish: new Date(1601128650000),
+    tagAssignment: "5fcc1bd5b547648511118459",
   },
   {
     _id: "5fd550a7b547649dd7e37715",
-    tag: 2,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -2528,11 +2473,10 @@ export default [
     ],
     start: new Date(1601111012000),
     finish: new Date(1601128780000),
+    tagAssignment: "5fcc1bd5b5476485111183db",
   },
   {
     _id: "5fd550a7b547649dd7e37716",
-    tag: 120,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -2565,11 +2509,10 @@ export default [
     ],
     start: new Date(1601104895000),
     finish: new Date(1601128830000),
+    tagAssignment: "5fcc1bd5b547648511118417",
   },
   {
     _id: "5fd550a7b547649dd7e37717",
-    tag: 90,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2610,11 +2553,10 @@ export default [
     ],
     start: new Date(1601107730000),
     finish: new Date(1601128880000),
+    tagAssignment: "5fcc1bd5b547648511118462",
   },
   {
     _id: "5fd550a7b547649dd7e37718",
-    tag: 149,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2655,11 +2597,10 @@ export default [
     ],
     start: new Date(1601107729000),
     finish: new Date(1601128878000),
+    tagAssignment: "5fcc1bd5b547648511118461",
   },
   {
     _id: "5fd550a7b547649dd7e37719",
-    tag: 277,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -2692,11 +2633,10 @@ export default [
     ],
     start: new Date(1601104857000),
     finish: new Date(1601128817000),
+    tagAssignment: "5fcc1bd5b547648511118416",
   },
   {
     _id: "5fd550a7b547649dd7e3771a",
-    tag: 283,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2741,11 +2681,10 @@ export default [
     ],
     start: new Date(1601105183000),
     finish: new Date(1601129075000),
+    tagAssignment: "5fcc1bd5b5476485111184ce",
   },
   {
     _id: "5fd550a7b547649dd7e3771b",
-    tag: 24,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2790,11 +2729,10 @@ export default [
     ],
     start: new Date(1601108818000),
     finish: new Date(1601129176000),
+    tagAssignment: "5fcc1bd5b5476485111184ec",
   },
   {
     _id: "5fd550a7b547649dd7e3771c",
-    tag: 38,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2839,11 +2777,10 @@ export default [
     ],
     start: new Date(1601108820000),
     finish: new Date(1601129174000),
+    tagAssignment: "5fcc1bd5b5476485111184ed",
   },
   {
     _id: "5fd550a7b547649dd7e3771d",
-    tag: 153,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2888,11 +2825,10 @@ export default [
     ],
     start: new Date(1601107002000),
     finish: new Date(1601129426000),
+    tagAssignment: "5fcc1bd5b547648511118413",
   },
   {
     _id: "5fd550a7b547649dd7e3771e",
-    tag: 84,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2937,11 +2873,10 @@ export default [
     ],
     start: new Date(1601107000000),
     finish: new Date(1601129425000),
+    tagAssignment: "5fcc1bd5b547648511118412",
   },
   {
     _id: "5fd550a7b547649dd7e3771f",
-    tag: 69,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -2986,11 +2921,10 @@ export default [
     ],
     start: new Date(1601105860000),
     finish: new Date(1601129436000),
+    tagAssignment: "5fcc1bd5b5476485111184d8",
   },
   {
     _id: "5fd550a7b547649dd7e37720",
-    tag: 282,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3035,11 +2969,10 @@ export default [
     ],
     start: new Date(1601105858000),
     finish: new Date(1601129434000),
+    tagAssignment: "5fcc1bd5b5476485111184d7",
   },
   {
     _id: "5fd550a7b547649dd7e37721",
-    tag: 260,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3076,11 +3009,10 @@ export default [
     ],
     start: new Date(1601103264000),
     finish: new Date(1601129575000),
+    tagAssignment: "5fcc1bd5b54764851111842e",
   },
   {
     _id: "5fd550a7b547649dd7e37722",
-    tag: 248,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3137,11 +3069,10 @@ export default [
     ],
     start: new Date(1601103494000),
     finish: new Date(1601129584000),
+    tagAssignment: "5fcc1bd5b547648511118486",
   },
   {
     _id: "5fd550a7b547649dd7e37723",
-    tag: 300,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -3206,11 +3137,10 @@ export default [
     ],
     start: new Date(1601107956000),
     finish: new Date(1601129429000),
+    tagAssignment: "5fcc1bd5b5476485111183fe",
   },
   {
     _id: "5fd550a7b547649dd7e37724",
-    tag: 220,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -3275,11 +3205,10 @@ export default [
     ],
     start: new Date(1601107952000),
     finish: new Date(1601129428000),
+    tagAssignment: "5fcc1bd5b5476485111183fd",
   },
   {
     _id: "5fd550a7b547649dd7e37725",
-    tag: 212,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3324,11 +3253,10 @@ export default [
     ],
     start: new Date(1601104835000),
     finish: new Date(1601129787000),
+    tagAssignment: "5fcc1bd5b547648511118407",
   },
   {
     _id: "5fd550a7b547649dd7e37726",
-    tag: 195,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3373,11 +3301,10 @@ export default [
     ],
     start: new Date(1601104839000),
     finish: new Date(1601129790000),
+    tagAssignment: "5fcc1bd5b547648511118406",
   },
   {
     _id: "5fd550a7b547649dd7e37727",
-    tag: 42,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3434,11 +3361,10 @@ export default [
     ],
     start: new Date(1601110234000),
     finish: new Date(1601129808000),
+    tagAssignment: "5fcc1bd5b547648511118415",
   },
   {
     _id: "5fd550a7b547649dd7e37728",
-    tag: 247,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3479,11 +3405,10 @@ export default [
     ],
     start: new Date(1601106471000),
     finish: new Date(1601130035000),
+    tagAssignment: "5fcc1bd5b547648511118405",
   },
   {
     _id: "5fd550a7b547649dd7e37729",
-    tag: 208,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3524,11 +3449,10 @@ export default [
     ],
     start: new Date(1601106469000),
     finish: new Date(1601130037000),
+    tagAssignment: "5fcc1bd5b547648511118404",
   },
   {
     _id: "5fd550a7b547649dd7e3772a",
-    tag: 320,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -3541,11 +3465,10 @@ export default [
     ],
     start: new Date(1601114383000),
     finish: new Date(1601130083000),
+    tagAssignment: "5fcc1bd5b54764851111841d",
   },
   {
     _id: "5fd550a7b547649dd7e3772b",
-    tag: 293,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -3590,11 +3513,10 @@ export default [
     ],
     start: new Date(1601106480000),
     finish: new Date(1601130071000),
+    tagAssignment: "5fcc1bd5b54764851111842c",
   },
   {
     _id: "5fd550a7b547649dd7e3772c",
-    tag: 4,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -3643,11 +3565,10 @@ export default [
     ],
     start: new Date(1601111645000),
     finish: new Date(1601129803000),
+    tagAssignment: "5fcc1bd5b54764851111850b",
   },
   {
     _id: "5fd550a7b547649dd7e3772d",
-    tag: 211,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -3680,11 +3601,10 @@ export default [
     ],
     start: new Date(1601107268000),
     finish: new Date(1601130300000),
+    tagAssignment: "5fcc1bd5b54764851111844f",
   },
   {
     _id: "5fd550a7b547649dd7e3772e",
-    tag: 40,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -3733,11 +3653,10 @@ export default [
     ],
     start: new Date(1601110656000),
     finish: new Date(1601130318000),
+    tagAssignment: "5fcc1bd5b54764851111849b",
   },
   {
     _id: "5fd550a7b547649dd7e3772f",
-    tag: 88,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -3786,11 +3705,10 @@ export default [
     ],
     start: new Date(1601108126000),
     finish: new Date(1601129802000),
+    tagAssignment: "5fcc1bd5b547648511118408",
   },
   {
     _id: "5fd550a7b547649dd7e37730",
-    tag: 83,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3835,11 +3753,10 @@ export default [
     ],
     start: new Date(1601107499000),
     finish: new Date(1601130383000),
+    tagAssignment: "5fcc1bd5b547648511118403",
   },
   {
     _id: "5fd550a7b547649dd7e37731",
-    tag: 16,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -3884,11 +3801,10 @@ export default [
     ],
     start: new Date(1601107502000),
     finish: new Date(1601130385000),
+    tagAssignment: "5fcc1bd5b547648511118402",
   },
   {
     _id: "5fd550a7b547649dd7e37732",
-    tag: 198,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -3937,11 +3853,10 @@ export default [
     ],
     start: new Date(1601109850000),
     finish: new Date(1601130420000),
+    tagAssignment: "5fcc1bd5b5476485111184fc",
   },
   {
     _id: "5fd550a7b547649dd7e37733",
-    tag: 294,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4c",
@@ -3982,11 +3897,10 @@ export default [
     ],
     start: new Date(1601106140000),
     finish: new Date(1601130545000),
+    tagAssignment: "5fcc1bd5b5476485111184d3",
   },
   {
     _id: "5fd550a7b547649dd7e37734",
-    tag: 21,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -4035,11 +3949,10 @@ export default [
     ],
     start: new Date(1601107553000),
     finish: new Date(1601130542000),
+    tagAssignment: "5fcc1bd5b547648511118414",
   },
   {
     _id: "5fd550a7b547649dd7e37735",
-    tag: 70,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -4088,11 +4001,10 @@ export default [
     ],
     start: new Date(1601110940000),
     finish: new Date(1601130587000),
+    tagAssignment: "5fcc1bd5b5476485111184a0",
   },
   {
     _id: "5fd550a7b547649dd7e37736",
-    tag: 125,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -4145,11 +4057,10 @@ export default [
     ],
     start: new Date(1601102869000),
     finish: new Date(1601130611000),
+    tagAssignment: "5fcc1bd5b5476485111184c2",
   },
   {
     _id: "5fd550a7b547649dd7e37737",
-    tag: 243,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -4202,11 +4113,10 @@ export default [
     ],
     start: new Date(1601102871000),
     finish: new Date(1601130616000),
+    tagAssignment: "5fcc1bd5b5476485111184c1",
   },
   {
     _id: "5fd550a7b547649dd7e37738",
-    tag: 213,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4263,11 +4173,10 @@ export default [
     ],
     start: new Date(1601110986000),
     finish: new Date(1601130723000),
+    tagAssignment: "5fcc1bd5b547648511118508",
   },
   {
     _id: "5fd550a7b547649dd7e37739",
-    tag: 134,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4312,11 +4221,10 @@ export default [
     ],
     start: new Date(1601105645000),
     finish: new Date(1601130753000),
+    tagAssignment: "5fcc1bd5b5476485111184a9",
   },
   {
     _id: "5fd550a7b547649dd7e3773a",
-    tag: 92,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4361,11 +4269,10 @@ export default [
     ],
     start: new Date(1601105643000),
     finish: new Date(1601130751000),
+    tagAssignment: "5fcc1bd5b5476485111184a8",
   },
   {
     _id: "5fd550a7b547649dd7e3773b",
-    tag: 131,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4394,11 +4301,10 @@ export default [
     ],
     start: new Date(1601105952000),
     finish: new Date(1601130797000),
+    tagAssignment: "5fcc1bd5b5476485111184b5",
   },
   {
     _id: "5fd550a7b547649dd7e3773c",
-    tag: 276,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4427,11 +4333,10 @@ export default [
     ],
     start: new Date(1601105965000),
     finish: new Date(1601130795000),
+    tagAssignment: "5fcc1bd5b5476485111184b6",
   },
   {
     _id: "5fd550a7b547649dd7e3773d",
-    tag: 25,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -4480,11 +4385,10 @@ export default [
     ],
     start: new Date(1601110972000),
     finish: new Date(1601130829000),
+    tagAssignment: "5fcc1bd5b547648511118507",
   },
   {
     _id: "5fd550a7b547649dd7e3773e",
-    tag: 81,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4529,11 +4433,10 @@ export default [
     ],
     start: new Date(1601106420000),
     finish: new Date(1601130876000),
+    tagAssignment: "5fcc1bd5b54764851111840c",
   },
   {
     _id: "5fd550a7b547649dd7e3773f",
-    tag: 190,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4578,11 +4481,10 @@ export default [
     ],
     start: new Date(1601106417000),
     finish: new Date(1601130874000),
+    tagAssignment: "5fcc1bd5b54764851111840b",
   },
   {
     _id: "5fd550a7b547649dd7e37740",
-    tag: 27,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -4635,11 +4537,10 @@ export default [
     ],
     start: new Date(1601108624000),
     finish: new Date(1601130608000),
+    tagAssignment: "5fcc1bd5b5476485111183ee",
   },
   {
     _id: "5fd550a7b547649dd7e37741",
-    tag: 54,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -4692,11 +4593,10 @@ export default [
     ],
     start: new Date(1601108621000),
     finish: new Date(1601130606000),
+    tagAssignment: "5fcc1bd5b5476485111183ed",
   },
   {
     _id: "5fd550a7b547649dd7e37742",
-    tag: 61,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4733,11 +4633,10 @@ export default [
     ],
     start: new Date(1601108651000),
     finish: new Date(1601130927000),
+    tagAssignment: "5fcc1bd5b547648511118480",
   },
   {
     _id: "5fd550a7b547649dd7e37743",
-    tag: 82,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4782,11 +4681,10 @@ export default [
     ],
     start: new Date(1601105176000),
     finish: new Date(1601130997000),
+    tagAssignment: "5fcc1bd5b5476485111184d2",
   },
   {
     _id: "5fd550a7b547649dd7e37744",
-    tag: 99,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4831,11 +4729,10 @@ export default [
     ],
     start: new Date(1601105181000),
     finish: new Date(1601131000000),
+    tagAssignment: "5fcc1bd5b5476485111184d1",
   },
   {
     _id: "5fd550a7b547649dd7e37745",
-    tag: 102,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4880,11 +4777,10 @@ export default [
     ],
     start: new Date(1601105179000),
     finish: new Date(1601130945000),
+    tagAssignment: "5fcc1bd5b547648511118482",
   },
   {
     _id: "5fd550a7b547649dd7e37746",
-    tag: 225,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -4929,11 +4825,10 @@ export default [
     ],
     start: new Date(1601105178000),
     finish: new Date(1601130943000),
+    tagAssignment: "5fcc1bd5b547648511118481",
   },
   {
     _id: "5fd550a7b547649dd7e37747",
-    tag: 315,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4c",
@@ -4958,11 +4853,10 @@ export default [
     ],
     start: new Date(1601115144000),
     finish: new Date(1601127394000),
+    tagAssignment: "5fcc1bd5b5476485111183d0",
   },
   {
     _id: "5fd550a7b547649dd7e37748",
-    tag: 44,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -4995,11 +4889,10 @@ export default [
     ],
     start: new Date(1601108104000),
     finish: new Date(1601131118000),
+    tagAssignment: "5fcc1bd5b54764851111844a",
   },
   {
     _id: "5fd550a7b547649dd7e37749",
-    tag: 23,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f54",
@@ -5040,11 +4933,10 @@ export default [
     ],
     start: new Date(1601106721000),
     finish: new Date(1601131173000),
+    tagAssignment: "5fcc1bd5b547648511118496",
   },
   {
     _id: "5fd550a7b547649dd7e3774a",
-    tag: 186,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f54",
@@ -5085,11 +4977,10 @@ export default [
     ],
     start: new Date(1601106720000),
     finish: new Date(1601131172000),
+    tagAssignment: "5fcc1bd5b547648511118497",
   },
   {
     _id: "5fd550a7b547649dd7e3774b",
-    tag: 230,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5134,11 +5025,10 @@ export default [
     ],
     start: new Date(1601110098000),
     finish: new Date(1601131232000),
+    tagAssignment: "5fcc1bd5b5476485111183f0",
   },
   {
     _id: "5fd550a7b547649dd7e3774c",
-    tag: 138,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5183,11 +5073,10 @@ export default [
     ],
     start: new Date(1601110040000),
     finish: new Date(1601131230000),
+    tagAssignment: "5fcc1bd5b5476485111183ef",
   },
   {
     _id: "5fd550a7b547649dd7e3774d",
-    tag: 106,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5228,11 +5117,10 @@ export default [
     ],
     start: new Date(1601111657000),
     finish: new Date(1601131268000),
+    tagAssignment: "5fcc1bd5b54764851111845c",
   },
   {
     _id: "5fd550a7b547649dd7e3774e",
-    tag: 148,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5277,11 +5165,10 @@ export default [
     ],
     start: new Date(1601111658000),
     finish: new Date(1601131265000),
+    tagAssignment: "5fcc1bd5b54764851111845d",
   },
   {
     _id: "5fd550a7b547649dd7e3774f",
-    tag: 98,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5310,11 +5197,10 @@ export default [
     ],
     start: new Date(1601110749000),
     finish: new Date(1601131360000),
+    tagAssignment: "5fcc1bd5b547648511118506",
   },
   {
     _id: "5fd550a7b547649dd7e37750",
-    tag: 121,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5359,11 +5245,10 @@ export default [
     ],
     start: new Date(1601105961000),
     finish: new Date(1601131419000),
+    tagAssignment: "5fcc1bd5b5476485111184d5",
   },
   {
     _id: "5fd550a7b547649dd7e37751",
-    tag: 256,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5408,11 +5293,10 @@ export default [
     ],
     start: new Date(1601105963000),
     finish: new Date(1601131418000),
+    tagAssignment: "5fcc1bd5b5476485111184d6",
   },
   {
     _id: "5fd550a7b547649dd7e37752",
-    tag: 111,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5457,11 +5341,10 @@ export default [
     ],
     start: new Date(1601105979000),
     finish: new Date(1601131426000),
+    tagAssignment: "5fcc1bd5b5476485111184be",
   },
   {
     _id: "5fd550a7b547649dd7e37753",
-    tag: 132,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5506,11 +5389,10 @@ export default [
     ],
     start: new Date(1601105976000),
     finish: new Date(1601131423000),
+    tagAssignment: "5fcc1bd5b5476485111184bd",
   },
   {
     _id: "5fd550a7b547649dd7e37754",
-    tag: 143,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -5551,11 +5433,10 @@ export default [
     ],
     start: new Date(1601107721000),
     finish: new Date(1601131522000),
+    tagAssignment: "5fcc1bd5b547648511118479",
   },
   {
     _id: "5fd550a7b547649dd7e37755",
-    tag: 60,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -5596,11 +5477,10 @@ export default [
     ],
     start: new Date(1601107716000),
     finish: new Date(1601131524000),
+    tagAssignment: "5fcc1bd5b547648511118478",
   },
   {
     _id: "5fd550a7b547649dd7e37756",
-    tag: 39,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -5657,11 +5537,10 @@ export default [
     ],
     start: new Date(1601107934000),
     finish: new Date(1601131517000),
+    tagAssignment: "5fcc1bd5b547648511118477",
   },
   {
     _id: "5fd550a7b547649dd7e37757",
-    tag: 10,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -5718,11 +5597,10 @@ export default [
     ],
     start: new Date(1601107943000),
     finish: new Date(1601131519000),
+    tagAssignment: "5fcc1bd5b547648511118476",
   },
   {
     _id: "5fd550a7b547649dd7e37758",
-    tag: 11,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -5771,11 +5649,10 @@ export default [
     ],
     start: new Date(1601108899000),
     finish: new Date(1601131592000),
+    tagAssignment: "5fcc1bd5b5476485111184f4",
   },
   {
     _id: "5fd550a7b547649dd7e37759",
-    tag: 179,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -5828,11 +5705,10 @@ export default [
     ],
     start: new Date(1601106879000),
     finish: new Date(1601131589000),
+    tagAssignment: "5fcc1bd5b547648511118473",
   },
   {
     _id: "5fd550a7b547649dd7e3775a",
-    tag: 133,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -5885,11 +5761,10 @@ export default [
     ],
     start: new Date(1601106874000),
     finish: new Date(1601131585000),
+    tagAssignment: "5fcc1bd5b547648511118472",
   },
   {
     _id: "5fd550a7b547649dd7e3775b",
-    tag: 17,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5934,11 +5809,10 @@ export default [
     ],
     start: new Date(1601108776000),
     finish: new Date(1601131813000),
+    tagAssignment: "5fcc1bd5b5476485111184f2",
   },
   {
     _id: "5fd550a7b547649dd7e3775c",
-    tag: 53,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -5983,11 +5857,10 @@ export default [
     ],
     start: new Date(1601108779000),
     finish: new Date(1601131821000),
+    tagAssignment: "5fcc1bd5b5476485111184f1",
   },
   {
     _id: "5fd550a7b547649dd7e3775d",
-    tag: 201,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6032,11 +5905,10 @@ export default [
     ],
     start: new Date(1601106380000),
     finish: new Date(1601131823000),
+    tagAssignment: "5fcc1bd5b5476485111184cd",
   },
   {
     _id: "5fd550a7b547649dd7e3775e",
-    tag: 194,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6081,11 +5953,10 @@ export default [
     ],
     start: new Date(1601106365000),
     finish: new Date(1601131825000),
+    tagAssignment: "5fcc1bd5b5476485111184cc",
   },
   {
     _id: "5fd550a7b547649dd7e3775f",
-    tag: 74,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6126,11 +5997,10 @@ export default [
     ],
     start: new Date(1601108783000),
     finish: new Date(1601131818000),
+    tagAssignment: "5fcc1bd5b5476485111184ef",
   },
   {
     _id: "5fd550a7b547649dd7e37760",
-    tag: 226,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6171,11 +6041,10 @@ export default [
     ],
     start: new Date(1601108781000),
     finish: new Date(1601131815000),
+    tagAssignment: "5fcc1bd5b5476485111184f0",
   },
   {
     _id: "5fd550a7b547649dd7e37761",
-    tag: 288,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4c",
@@ -6224,11 +6093,10 @@ export default [
     ],
     start: new Date(1601109316000),
     finish: new Date(1601131594000),
+    tagAssignment: "5fcc1bd5b547648511118471",
   },
   {
     _id: "5fd550a7b547649dd7e37762",
-    tag: 334,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6261,11 +6129,10 @@ export default [
     ],
     start: new Date(1601113434000),
     finish: new Date(1601132080000),
+    tagAssignment: "5fcc1bd5b5476485111183e5",
   },
   {
     _id: "5fd550a7b547649dd7e37763",
-    tag: 296,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6322,11 +6189,10 @@ export default [
     ],
     start: new Date(1601108487000),
     finish: new Date(1601132131000),
+    tagAssignment: "5fcc1bd5b547648511118460",
   },
   {
     _id: "5fd550a7b547649dd7e37764",
-    tag: 182,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6383,11 +6249,10 @@ export default [
     ],
     start: new Date(1601105543000),
     finish: new Date(1601132134000),
+    tagAssignment: "5fcc1bd5b54764851111841a",
   },
   {
     _id: "5fd550a7b547649dd7e37765",
-    tag: 164,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6432,11 +6297,10 @@ export default [
     ],
     start: new Date(1601104543000),
     finish: new Date(1601132372000),
+    tagAssignment: "5fcc1bd5b5476485111184bc",
   },
   {
     _id: "5fd550a7b547649dd7e37766",
-    tag: 278,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6481,11 +6345,10 @@ export default [
     ],
     start: new Date(1601104546000),
     finish: new Date(1601132380000),
+    tagAssignment: "5fcc1bd5b5476485111184bb",
   },
   {
     _id: "5fd550a7b547649dd7e37767",
-    tag: 181,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6530,11 +6393,10 @@ export default [
     ],
     start: new Date(1601109865000),
     finish: new Date(1601132441000),
+    tagAssignment: "5fcc1bd5b5476485111183f6",
   },
   {
     _id: "5fd550a7b547649dd7e37768",
-    tag: 65,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6579,11 +6441,10 @@ export default [
     ],
     start: new Date(1601109868000),
     finish: new Date(1601132444000),
+    tagAssignment: "5fcc1bd5b5476485111183f5",
   },
   {
     _id: "5fd550a7b547649dd7e37769",
-    tag: 161,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -6632,11 +6493,10 @@ export default [
     ],
     start: new Date(1601106977000),
     finish: new Date(1601132447000),
+    tagAssignment: "5fcc1bd5b5476485111183e8",
   },
   {
     _id: "5fd550a7b547649dd7e3776a",
-    tag: 107,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6681,11 +6541,10 @@ export default [
     ],
     start: new Date(1601106935000),
     finish: new Date(1601132479000),
+    tagAssignment: "5fcc1bd5b5476485111184e2",
   },
   {
     _id: "5fd550a7b547649dd7e3776b",
-    tag: 217,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -6730,11 +6589,10 @@ export default [
     ],
     start: new Date(1601106938000),
     finish: new Date(1601132476000),
+    tagAssignment: "5fcc1bd5b5476485111184e1",
   },
   {
     _id: "5fd550a7b547649dd7e3776c",
-    tag: 141,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -6787,11 +6645,10 @@ export default [
     ],
     start: new Date(1601106075000),
     finish: new Date(1601132496000),
+    tagAssignment: "5fe8feb0b54764faf553b1d6",
   },
   {
     _id: "5fd550a7b547649dd7e3776d",
-    tag: 127,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -6844,11 +6701,10 @@ export default [
     ],
     start: new Date(1601106072000),
     finish: new Date(1601132502000),
+    tagAssignment: "5fcc1bd5b5476485111184c9",
   },
   {
     _id: "5fd550a7b547649dd7e3776e",
-    tag: 344,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -6905,11 +6761,10 @@ export default [
     ],
     start: new Date(1601113358000),
     finish: new Date(1601132650000),
+    tagAssignment: "5fcc1bd5b5476485111184ad",
   },
   {
     _id: "5fd550a7b547649dd7e3776f",
-    tag: 345,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -6966,11 +6821,10 @@ export default [
     ],
     start: new Date(1601113356000),
     finish: new Date(1601132648000),
+    tagAssignment: "5fcc1bd5b5476485111184ac",
   },
   {
     _id: "5fd550a7b547649dd7e37770",
-    tag: 97,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7003,11 +6857,10 @@ export default [
     ],
     start: new Date(1601111351000),
     finish: new Date(1601132686000),
+    tagAssignment: "5fcc1bd5b54764851111841f",
   },
   {
     _id: "5fd550a7b547649dd7e37771",
-    tag: 337,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7048,11 +6901,10 @@ export default [
     ],
     start: new Date(1601114430000),
     finish: new Date(1601132723000),
+    tagAssignment: "5fcc1bd5b547648511118437",
   },
   {
     _id: "5fd550a7b547649dd7e37772",
-    tag: 338,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7093,11 +6945,10 @@ export default [
     ],
     start: new Date(1601114429000),
     finish: new Date(1601132721000),
+    tagAssignment: "5fcc1bd5b547648511118436",
   },
   {
     _id: "5fd550a7b547649dd7e37773",
-    tag: 255,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -7150,11 +7001,10 @@ export default [
     ],
     start: new Date(1601105658000),
     finish: new Date(1601132818000),
+    tagAssignment: "5fcc1bd5b5476485111183cf",
   },
   {
     _id: "5fd550a7b547649dd7e37774",
-    tag: 274,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -7207,11 +7057,10 @@ export default [
     ],
     start: new Date(1601105659000),
     finish: new Date(1601132820000),
+    tagAssignment: "5fcc1bd5b5476485111183ce",
   },
   {
     _id: "5fd550a7b547649dd7e37775",
-    tag: 249,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7240,11 +7089,10 @@ export default [
     ],
     start: new Date(1601106814000),
     finish: new Date(1601132812000),
+    tagAssignment: "5fcc1bd5b54764851111843d",
   },
   {
     _id: "5fd550a7b547649dd7e37776",
-    tag: 273,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7273,11 +7121,10 @@ export default [
     ],
     start: new Date(1601106816000),
     finish: new Date(1601132816000),
+    tagAssignment: "5fcc1bd5b54764851111843c",
   },
   {
     _id: "5fd550a7b547649dd7e37777",
-    tag: 126,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7318,11 +7165,10 @@ export default [
     ],
     start: new Date(1601104863000),
     finish: new Date(1601132878000),
+    tagAssignment: "5fcc1bd5b5476485111184a2",
   },
   {
     _id: "5fd550a7b547649dd7e37778",
-    tag: 229,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7363,11 +7209,10 @@ export default [
     ],
     start: new Date(1601104869000),
     finish: new Date(1601132868000),
+    tagAssignment: "5fcc1bd5b5476485111184a3",
   },
   {
     _id: "5fd550a7b547649dd7e37779",
-    tag: 269,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7412,11 +7257,10 @@ export default [
     ],
     start: new Date(1601104882000),
     finish: new Date(1601132884000),
+    tagAssignment: "5fcc1bd5b54764851111848c",
   },
   {
     _id: "5fd550a7b547649dd7e3777a",
-    tag: 257,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7457,11 +7301,10 @@ export default [
     ],
     start: new Date(1601104871000),
     finish: new Date(1601132881000),
+    tagAssignment: "5fcc1bd5b54764851111848d",
   },
   {
     _id: "5fd550a7b547649dd7e3777b",
-    tag: 63,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7502,11 +7345,10 @@ export default [
     ],
     start: new Date(1601110154000),
     finish: new Date(1601132937000),
+    tagAssignment: "5fcc1bd5b5476485111184ff",
   },
   {
     _id: "5fd550a7b547649dd7e3777c",
-    tag: 78,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7551,11 +7393,10 @@ export default [
     ],
     start: new Date(1601110156000),
     finish: new Date(1601132942000),
+    tagAssignment: "5fcc1bd5b547648511118500",
   },
   {
     _id: "5fd550a7b547649dd7e3777d",
-    tag: 312,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7600,11 +7441,10 @@ export default [
     ],
     start: new Date(1601116194000),
     finish: new Date(1601132906000),
+    tagAssignment: "5fcc1bd5b5476485111184a1",
   },
   {
     _id: "5fd550a7b547649dd7e3777e",
-    tag: 96,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7645,11 +7485,10 @@ export default [
     ],
     start: new Date(1601110559000),
     finish: new Date(1601132959000),
+    tagAssignment: "5fcc1bd5b54764851111848b",
   },
   {
     _id: "5fd550a7b547649dd7e3777f",
-    tag: 43,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7690,11 +7529,10 @@ export default [
     ],
     start: new Date(1601110561000),
     finish: new Date(1601132964000),
+    tagAssignment: "5fcc1bd5b54764851111848a",
   },
   {
     _id: "5fd550a7b547649dd7e37780",
-    tag: 128,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -7743,11 +7581,10 @@ export default [
     ],
     start: new Date(1601105522000),
     finish: new Date(1601132306000),
+    tagAssignment: "5fcc1bd5b547648511118424",
   },
   {
     _id: "5fd550a7b547649dd7e37781",
-    tag: 33,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7776,11 +7613,10 @@ export default [
     ],
     start: new Date(1601108027000),
     finish: new Date(1601133107000),
+    tagAssignment: "5fcc1bd5b5476485111183f3",
   },
   {
     _id: "5fd550a7b547649dd7e37782",
-    tag: 26,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7817,11 +7653,10 @@ export default [
     ],
     start: new Date(1601109872000),
     finish: new Date(1601133210000),
+    tagAssignment: "5fcc1bd5b5476485111184f3",
   },
   {
     _id: "5fd550a7b547649dd7e37783",
-    tag: 113,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7858,11 +7693,10 @@ export default [
     ],
     start: new Date(1601110169000),
     finish: new Date(1601133219000),
+    tagAssignment: "5fcc1bd5b5476485111183df",
   },
   {
     _id: "5fd550a7b547649dd7e37784",
-    tag: 347,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7907,11 +7741,10 @@ export default [
     ],
     start: new Date(1601113365000),
     finish: new Date(1601133248000),
+    tagAssignment: "5fcc1bd5b5476485111183d8",
   },
   {
     _id: "5fd550a7b547649dd7e37785",
-    tag: 346,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -7956,11 +7789,10 @@ export default [
     ],
     start: new Date(1601113366000),
     finish: new Date(1601133250000),
+    tagAssignment: "5fcc1bd5b5476485111183d7",
   },
   {
     _id: "5fd550a7b547649dd7e37786",
-    tag: 109,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -8017,11 +7849,10 @@ export default [
     ],
     start: new Date(1601112269000),
     finish: new Date(1601133231000),
+    tagAssignment: "5fcc1bd5b547648511118485",
   },
   {
     _id: "5fd550a7b547649dd7e37787",
-    tag: 105,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -8078,11 +7909,10 @@ export default [
     ],
     start: new Date(1601112266000),
     finish: new Date(1601133226000),
+    tagAssignment: "5fcc1bd5b547648511118484",
   },
   {
     _id: "5fd550a7b547649dd7e37788",
-    tag: 297,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8131,11 +7961,10 @@ export default [
     ],
     start: new Date(1601103412000),
     finish: new Date(1601133373000),
+    tagAssignment: "5fcc1bd5b5476485111184c3",
   },
   {
     _id: "5fd550a7b547649dd7e37789",
-    tag: 259,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -8184,11 +8013,10 @@ export default [
     ],
     start: new Date(1601106765000),
     finish: new Date(1601133397000),
+    tagAssignment: "5fcc1bd5b54764851111849c",
   },
   {
     _id: "5fd550a7b547649dd7e3778a",
-    tag: 155,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8229,11 +8057,10 @@ export default [
     ],
     start: new Date(1601111902000),
     finish: new Date(1601133259000),
+    tagAssignment: "5fcc1bd5b54764851111845f",
   },
   {
     _id: "5fd550a7b547649dd7e3778b",
-    tag: 100,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8274,11 +8101,10 @@ export default [
     ],
     start: new Date(1601111905000),
     finish: new Date(1601133256000),
+    tagAssignment: "5fcc1bd5b54764851111845e",
   },
   {
     _id: "5fd550a7b547649dd7e3778c",
-    tag: 264,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8319,11 +8145,10 @@ export default [
     ],
     start: new Date(1601106347000),
     finish: new Date(1601133571000),
+    tagAssignment: "5fcc1bd5b5476485111184d9",
   },
   {
     _id: "5fd550a7b547649dd7e3778d",
-    tag: 180,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8364,11 +8189,10 @@ export default [
     ],
     start: new Date(1601106345000),
     finish: new Date(1601133573000),
+    tagAssignment: "5fcc1bd5b5476485111184da",
   },
   {
     _id: "5fd550a7b547649dd7e3778e",
-    tag: 250,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8409,11 +8233,10 @@ export default [
     ],
     start: new Date(1601106353000),
     finish: new Date(1601133565000),
+    tagAssignment: "5fcc1bd5b5476485111184dd",
   },
   {
     _id: "5fd550a7b547649dd7e3778f",
-    tag: 223,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8454,11 +8277,10 @@ export default [
     ],
     start: new Date(1601106351000),
     finish: new Date(1601133570000),
+    tagAssignment: "5fcc1bd5b5476485111184de",
   },
   {
     _id: "5fd550a7b547649dd7e37790",
-    tag: 318,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -8507,11 +8329,10 @@ export default [
     ],
     start: new Date(1601112721000),
     finish: new Date(1601133613000),
+    tagAssignment: "5fcc1bd5b5476485111183f7",
   },
   {
     _id: "5fd550a7b547649dd7e37791",
-    tag: 30,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -8560,11 +8381,10 @@ export default [
     ],
     start: new Date(1601107613000),
     finish: new Date(1601133693000),
+    tagAssignment: "5fcc1bd5b5476485111183f8",
   },
   {
     _id: "5fd550a7b547649dd7e37792",
-    tag: 342,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -8613,11 +8433,10 @@ export default [
     ],
     start: new Date(1601115131000),
     finish: new Date(1601133762000),
+    tagAssignment: "5fcc1bd5b547648511118515",
   },
   {
     _id: "5fd550a7b547649dd7e37793",
-    tag: 177,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8658,11 +8477,10 @@ export default [
     ],
     start: new Date(1601106044000),
     finish: new Date(1601133794000),
+    tagAssignment: "5fcc1bd5b547648511118487",
   },
   {
     _id: "5fd550a7b547649dd7e37794",
-    tag: 167,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8703,11 +8521,10 @@ export default [
     ],
     start: new Date(1601106041000),
     finish: new Date(1601133792000),
+    tagAssignment: "5fe8feb0b54764faf553b1d7",
   },
   {
     _id: "5fd550a7b547649dd7e37795",
-    tag: 251,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8752,11 +8569,10 @@ export default [
     ],
     start: new Date(1601106049000),
     finish: new Date(1601133812000),
+    tagAssignment: "5fcc1bd5b54764851111846f",
   },
   {
     _id: "5fd550a7b547649dd7e37796",
-    tag: 163,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8797,11 +8613,10 @@ export default [
     ],
     start: new Date(1601106051000),
     finish: new Date(1601133808000),
+    tagAssignment: "5fcc1bd5b547648511118470",
   },
   {
     _id: "5fd550a7b547649dd7e37797",
-    tag: 175,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8842,11 +8657,10 @@ export default [
     ],
     start: new Date(1601106035000),
     finish: new Date(1601133821000),
+    tagAssignment: "5fcc1bd5b5476485111183f2",
   },
   {
     _id: "5fd550a7b547649dd7e37798",
-    tag: 183,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -8887,11 +8701,10 @@ export default [
     ],
     start: new Date(1601106038000),
     finish: new Date(1601133824000),
+    tagAssignment: "5fcc1bd5b5476485111183f1",
   },
   {
     _id: "5fd550a7b547649dd7e37799",
-    tag: 122,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -8944,11 +8757,10 @@ export default [
     ],
     start: new Date(1601111227000),
     finish: new Date(1601133881000),
+    tagAssignment: "5fcc1bd5b5476485111183d9",
   },
   {
     _id: "5fd550a7b547649dd7e3779a",
-    tag: 281,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -8997,11 +8809,10 @@ export default [
     ],
     start: new Date(1601110652000),
     finish: new Date(1601133915000),
+    tagAssignment: "5fcc1bd5b5476485111183d1",
   },
   {
     _id: "5fd550a7b547649dd7e3779b",
-    tag: 258,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f50",
@@ -9030,11 +8841,10 @@ export default [
     ],
     start: new Date(1601108225000),
     finish: new Date(1601134317000),
+    tagAssignment: "5fcc1bd5b547648511118426",
   },
   {
     _id: "5fd550a7b547649dd7e3779c",
-    tag: 268,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9067,11 +8877,10 @@ export default [
     ],
     start: new Date(1601105984000),
     finish: new Date(1601134391000),
+    tagAssignment: "5fcc1bd5b547648511118409",
   },
   {
     _id: "5fd550a7b547649dd7e3779d",
-    tag: 136,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9104,11 +8913,10 @@ export default [
     ],
     start: new Date(1601105982000),
     finish: new Date(1601134389000),
+    tagAssignment: "5fcc1bd5b54764851111840a",
   },
   {
     _id: "5fd550a7b547649dd7e3779e",
-    tag: 341,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9153,11 +8961,10 @@ export default [
     ],
     start: new Date(1601114615000),
     finish: new Date(1601134159000),
+    tagAssignment: "5fcc1bd5b54764851111851a",
   },
   {
     _id: "5fd550a7b547649dd7e3779f",
-    tag: 336,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9202,11 +9009,10 @@ export default [
     ],
     start: new Date(1601114596000),
     finish: new Date(1601134156000),
+    tagAssignment: "5fcc1bd5b547648511118519",
   },
   {
     _id: "5fd550a7b547649dd7e377a0",
-    tag: 302,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -9239,11 +9045,10 @@ export default [
     ],
     start: new Date(1601112426000),
     finish: new Date(1601134794000),
+    tagAssignment: "5fcc1bd5b547648511118518",
   },
   {
     _id: "5fd550a7b547649dd7e377a1",
-    tag: 31,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9284,11 +9089,10 @@ export default [
     ],
     start: new Date(1601107064000),
     finish: new Date(1601134919000),
+    tagAssignment: "5fcc1bd5b5476485111184e4",
   },
   {
     _id: "5fd550a7b547649dd7e377a2",
-    tag: 289,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9329,11 +9133,10 @@ export default [
     ],
     start: new Date(1601107061000),
     finish: new Date(1601134917000),
+    tagAssignment: "5fcc1bd5b5476485111184e3",
   },
   {
     _id: "5fd550a7b547649dd7e377a3",
-    tag: 265,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -9382,11 +9185,10 @@ export default [
     ],
     start: new Date(1601106755000),
     finish: new Date(1601134929000),
+    tagAssignment: "5fcc1bd5b5476485111184aa",
   },
   {
     _id: "5fd550a7b547649dd7e377a4",
-    tag: 108,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9427,11 +9229,10 @@ export default [
     ],
     start: new Date(1601111893000),
     finish: new Date(1601134923000),
+    tagAssignment: "5fcc1bd5b54764851111840e",
   },
   {
     _id: "5fd550a7b547649dd7e377a5",
-    tag: 104,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4c",
@@ -9480,11 +9281,10 @@ export default [
     ],
     start: new Date(1601111161000),
     finish: new Date(1601134959000),
+    tagAssignment: "5fcc1bd5b54764851111849f",
   },
   {
     _id: "5fd550a7b547649dd7e377a6",
-    tag: 330,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9541,11 +9341,10 @@ export default [
     ],
     start: new Date(1601114408000),
     finish: new Date(1601134970000),
+    tagAssignment: "5fcc1bd5b547648511118517",
   },
   {
     _id: "5fd550a7b547649dd7e377a7",
-    tag: 279,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -9594,11 +9393,10 @@ export default [
     ],
     start: new Date(1601115436000),
     finish: new Date(1601135065000),
+    tagAssignment: "5fcc1bd5b547648511118450",
   },
   {
     _id: "5fd550a7b547649dd7e377a8",
-    tag: 86,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9643,11 +9441,10 @@ export default [
     ],
     start: new Date(1601105773000),
     finish: new Date(1601135069000),
+    tagAssignment: "5fcc1bd5b547648511118433",
   },
   {
     _id: "5fd550a7b547649dd7e377a9",
-    tag: 67,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9688,11 +9485,10 @@ export default [
     ],
     start: new Date(1601105765000),
     finish: new Date(1601135068000),
+    tagAssignment: "5fcc1bd5b547648511118432",
   },
   {
     _id: "5fd550a7b547649dd7e377aa",
-    tag: 246,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -9741,11 +9537,10 @@ export default [
     ],
     start: new Date(1601106758000),
     finish: new Date(1601135129000),
+    tagAssignment: "5fcc1bd5b54764851111848e",
   },
   {
     _id: "5fd550a7b547649dd7e377ab",
-    tag: 151,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -9794,11 +9589,10 @@ export default [
     ],
     start: new Date(1601106761000),
     finish: new Date(1601135132000),
+    tagAssignment: "5fcc1bd5b54764851111848f",
   },
   {
     _id: "5fd550a7b547649dd7e377ac",
-    tag: 327,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -9851,11 +9645,10 @@ export default [
     ],
     start: new Date(1601114396000),
     finish: new Date(1601135348000),
+    tagAssignment: "5fcc1bd5b54764851111847e",
   },
   {
     _id: "5fd550a7b547649dd7e377ad",
-    tag: 333,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -9908,11 +9701,10 @@ export default [
     ],
     start: new Date(1601114391000),
     finish: new Date(1601135350000),
+    tagAssignment: "5fcc1bd5b54764851111847f",
   },
   {
     _id: "5fd550a7b547649dd7e377ae",
-    tag: 308,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -9937,11 +9729,10 @@ export default [
     ],
     start: new Date(1601114649000),
     finish: new Date(1601135873000),
+    tagAssignment: "5fcc1bd5b5476485111183f4",
   },
   {
     _id: "5fd550a7b547649dd7e377af",
-    tag: 400,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -9974,11 +9765,10 @@ export default [
     ],
     start: new Date(1601116181000),
     finish: new Date(1601135991000),
+    tagAssignment: "5fcc1bd5b5476485111184a4",
   },
   {
     _id: "5fd550a7b547649dd7e377b0",
-    tag: 35,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -10023,11 +9813,10 @@ export default [
     ],
     start: new Date(1601109241000),
     finish: new Date(1601136089000),
+    tagAssignment: "5fcc1bd5b5476485111184f8",
   },
   {
     _id: "5fd550a7b547649dd7e377b1",
-    tag: 14,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -10068,11 +9857,10 @@ export default [
     ],
     start: new Date(1601109242000),
     finish: new Date(1601136086000),
+    tagAssignment: "5fcc1bd5b5476485111184f9",
   },
   {
     _id: "5fd550a7b547649dd7e377b2",
-    tag: 319,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10121,11 +9909,10 @@ export default [
     ],
     start: new Date(1601112673000),
     finish: new Date(1601136178000),
+    tagAssignment: "5fcc1bd5b547648511118489",
   },
   {
     _id: "5fd550a7b547649dd7e377b3",
-    tag: 76,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10182,11 +9969,10 @@ export default [
     ],
     start: new Date(1601108872000),
     finish: new Date(1601136198000),
+    tagAssignment: "5fcc1bd5b547648511118464",
   },
   {
     _id: "5fd550a7b547649dd7e377b4",
-    tag: 29,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10243,11 +10029,10 @@ export default [
     ],
     start: new Date(1601108877000),
     finish: new Date(1601136187000),
+    tagAssignment: "5fcc1bd5b547648511118463",
   },
   {
     _id: "5fd550a7b547649dd7e377b5",
-    tag: 311,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10296,11 +10081,10 @@ export default [
     ],
     start: new Date(1601114634000),
     finish: new Date(1601136227000),
+    tagAssignment: "5fcc1bd5b54764851111851b",
   },
   {
     _id: "5fd550a7b547649dd7e377b6",
-    tag: 110,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10357,11 +10141,10 @@ export default [
     ],
     start: new Date(1601107192000),
     finish: new Date(1601136380000),
+    tagAssignment: "5fcc1bd5b5476485111184ba",
   },
   {
     _id: "5fd550a7b547649dd7e377b7",
-    tag: 204,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10418,11 +10201,10 @@ export default [
     ],
     start: new Date(1601107190000),
     finish: new Date(1601136377000),
+    tagAssignment: "5fcc1bd5b5476485111184b9",
   },
   {
     _id: "5fd550a7b547649dd7e377b8",
-    tag: 158,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10479,11 +10261,10 @@ export default [
     ],
     start: new Date(1601105708000),
     finish: new Date(1601136386000),
+    tagAssignment: "5fcc1bd5b5476485111184b2",
   },
   {
     _id: "5fd550a7b547649dd7e377b9",
-    tag: 160,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10540,11 +10321,10 @@ export default [
     ],
     start: new Date(1601105710000),
     finish: new Date(1601136384000),
+    tagAssignment: "5fcc1bd5b5476485111184b3",
   },
   {
     _id: "5fd550a7b547649dd7e377ba",
-    tag: 95,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10577,11 +10357,10 @@ export default [
     ],
     start: new Date(1601111862000),
     finish: new Date(1601136762000),
+    tagAssignment: "5fcc1bd5b547648511118456",
   },
   {
     _id: "5fd550a7b547649dd7e377bb",
-    tag: 19,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -10610,11 +10389,10 @@ export default [
     ],
     start: new Date(1601111860000),
     finish: new Date(1601136767000),
+    tagAssignment: "5fcc1bd5b547648511118455",
   },
   {
     _id: "5fd550a7b547649dd7e377bc",
-    tag: 280,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -10663,11 +10441,10 @@ export default [
     ],
     start: new Date(1601107232000),
     finish: new Date(1601137185000),
+    tagAssignment: "5fcc1bd5b5476485111184e5",
   },
   {
     _id: "5fd550a7b547649dd7e377bd",
-    tag: 328,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -10712,11 +10489,10 @@ export default [
     ],
     start: new Date(1601112860000),
     finish: new Date(1601137339000),
+    tagAssignment: "5fcc1bd5b547648511118511",
   },
   {
     _id: "5fd550a7b547649dd7e377be",
-    tag: 329,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -10761,11 +10537,10 @@ export default [
     ],
     start: new Date(1601112862000),
     finish: new Date(1601137336000),
+    tagAssignment: "5fcc1bd5b547648511118512",
   },
   {
     _id: "5fd550a7b547649dd7e377bf",
-    tag: 275,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f54",
@@ -10794,11 +10569,10 @@ export default [
     ],
     start: new Date(1601102239000),
     finish: new Date(1601137372000),
+    tagAssignment: "5fcc1bd5b5476485111184b1",
   },
   {
     _id: "5fd550a7b547649dd7e377c0",
-    tag: 146,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f54",
@@ -10827,11 +10601,10 @@ export default [
     ],
     start: new Date(1601102240000),
     finish: new Date(1601137370000),
+    tagAssignment: "5fcc1bd5b5476485111184b0",
   },
   {
     _id: "5fd550a7b547649dd7e377c1",
-    tag: 322,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -10876,11 +10649,10 @@ export default [
     ],
     start: new Date(1601112866000),
     finish: new Date(1601137379000),
+    tagAssignment: "5fcc1bd5b547648511118514",
   },
   {
     _id: "5fd550a7b547649dd7e377c2",
-    tag: 323,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -10925,11 +10697,10 @@ export default [
     ],
     start: new Date(1601112864000),
     finish: new Date(1601137377000),
+    tagAssignment: "5fcc1bd5b547648511118513",
   },
   {
     _id: "5fd550a7b547649dd7e377c3",
-    tag: 22,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -10974,11 +10745,10 @@ export default [
     ],
     start: new Date(1601109039000),
     finish: new Date(1601137508000),
+    tagAssignment: "5fcc1bd5b5476485111183e9",
   },
   {
     _id: "5fd550a7b547649dd7e377c4",
-    tag: 1,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -11023,11 +10793,10 @@ export default [
     ],
     start: new Date(1601109041000),
     finish: new Date(1601137505000),
+    tagAssignment: "5fcc1bd5b5476485111183ea",
   },
   {
     _id: "5fd550a7b547649dd7e377c5",
-    tag: 335,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -11076,11 +10845,10 @@ export default [
     ],
     start: new Date(1601113684000),
     finish: new Date(1601137511000),
+    tagAssignment: "5fcc1bd5b547648511118431",
   },
   {
     _id: "5fd550a7b547649dd7e377c6",
-    tag: 292,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -11133,11 +10901,10 @@ export default [
     ],
     start: new Date(1601104551000),
     finish: new Date(1601137798000),
+    tagAssignment: "5fcc1bd5b5476485111184ca",
   },
   {
     _id: "5fd550a7b547649dd7e377c7",
-    tag: 221,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -11190,11 +10957,10 @@ export default [
     ],
     start: new Date(1601104553000),
     finish: new Date(1601137801000),
+    tagAssignment: "5fcc1bd5b5476485111184cb",
   },
   {
     _id: "5fd550a7b547649dd7e377c8",
-    tag: 331,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -11239,11 +11005,10 @@ export default [
     ],
     start: new Date(1601112694000),
     finish: new Date(1601137853000),
+    tagAssignment: "5fcc1bd5b54764851111850f",
   },
   {
     _id: "5fd550a7b547649dd7e377c9",
-    tag: 332,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -11288,11 +11053,10 @@ export default [
     ],
     start: new Date(1601112686000),
     finish: new Date(1601137851000),
+    tagAssignment: "5fcc1bd5b547648511118510",
   },
   {
     _id: "5fd550a7b547649dd7e377ca",
-    tag: 305,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -11317,11 +11081,10 @@ export default [
     ],
     start: new Date(1601114652000),
     finish: new Date(1601135869000),
+    tagAssignment: "5fcc1bd5b5476485111183d6",
   },
   {
     _id: "5fd550a7b547649dd7e377cb",
-    tag: 49,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -11370,11 +11133,10 @@ export default [
     ],
     start: new Date(1601108985000),
     finish: new Date(1601137925000),
+    tagAssignment: "5fcc1bd5b5476485111184f7",
   },
   {
     _id: "5fd550a7b547649dd7e377cc",
-    tag: 34,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -11435,11 +11197,10 @@ export default [
     ],
     start: new Date(1601108525000),
     finish: new Date(1601137983000),
+    tagAssignment: "5fcc1bd5b5476485111184eb",
   },
   {
     _id: "5fd550a7b547649dd7e377cd",
-    tag: 219,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -11500,11 +11261,10 @@ export default [
     ],
     start: new Date(1601108523000),
     finish: new Date(1601137980000),
+    tagAssignment: "5fcc1bd5b5476485111184ea",
   },
   {
     _id: "5fd550a7b547649dd7e377ce",
-    tag: 215,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -11557,11 +11317,10 @@ export default [
     ],
     start: new Date(1601104149000),
     finish: new Date(1601138048000),
+    tagAssignment: "5fcc1bd5b5476485111184ae",
   },
   {
     _id: "5fd550a7b547649dd7e377cf",
-    tag: 298,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f54",
@@ -11610,11 +11369,10 @@ export default [
     ],
     start: new Date(1601104151000),
     finish: new Date(1601138050000),
+    tagAssignment: "5fcc1bd5b5476485111184af",
   },
   {
     _id: "5fd550a7b547649dd7e377d0",
-    tag: 7,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -11647,11 +11405,10 @@ export default [
     ],
     start: new Date(1601108831000),
     finish: new Date(1601138118000),
+    tagAssignment: "5fcc1bd5b5476485111184f6",
   },
   {
     _id: "5fd550a7b547649dd7e377d1",
-    tag: 28,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -11684,11 +11441,10 @@ export default [
     ],
     start: new Date(1601108833000),
     finish: new Date(1601138120000),
+    tagAssignment: "5fcc1bd5b5476485111184f5",
   },
   {
     _id: "5fd550a7b547649dd7e377d2",
-    tag: 310,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -11741,11 +11497,10 @@ export default [
     ],
     start: new Date(1601114411000),
     finish: new Date(1601138133000),
+    tagAssignment: "5fcc1bd5b547648511118468",
   },
   {
     _id: "5fd550a7b547649dd7e377d3",
-    tag: 340,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -11798,11 +11553,10 @@ export default [
     ],
     start: new Date(1601114412000),
     finish: new Date(1601138136000),
+    tagAssignment: "5fcc1bd5b547648511118467",
   },
   {
     _id: "5fd550a7b547649dd7e377d4",
-    tag: 192,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -11863,11 +11617,10 @@ export default [
     ],
     start: new Date(1601110869000),
     finish: new Date(1601138172000),
+    tagAssignment: "5fcc1bd5b547648511118498",
   },
   {
     _id: "5fd550a7b547649dd7e377d5",
-    tag: 66,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -11928,11 +11681,10 @@ export default [
     ],
     start: new Date(1601110868000),
     finish: new Date(1601138170000),
+    tagAssignment: "5fcc1bd5b547648511118499",
   },
   {
     _id: "5fd550a7b547649dd7e377d6",
-    tag: 37,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -11993,11 +11745,10 @@ export default [
     ],
     start: new Date(1601110098000),
     finish: new Date(1601138169000),
+    tagAssignment: "5fcc1bd5b54764851111844c",
   },
   {
     _id: "5fd550a7b547649dd7e377d7",
-    tag: 91,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -12058,11 +11809,10 @@ export default [
     ],
     start: new Date(1601110097000),
     finish: new Date(1601138167000),
+    tagAssignment: "5fcc1bd5b54764851111844d",
   },
   {
     _id: "5fd550a7b547649dd7e377d8",
-    tag: 62,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -12123,11 +11873,10 @@ export default [
     ],
     start: new Date(1601108110000),
     finish: new Date(1601138211000),
+    tagAssignment: "5fcc1bd5b547648511118401",
   },
   {
     _id: "5fd550a7b547649dd7e377d9",
-    tag: 227,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -12184,11 +11933,10 @@ export default [
     ],
     start: new Date(1601106056000),
     finish: new Date(1601138251000),
+    tagAssignment: "5fcc1bd5b54764851111843f",
   },
   {
     _id: "5fd550a7b547649dd7e377da",
-    tag: 299,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -12245,11 +11993,10 @@ export default [
     ],
     start: new Date(1601106054000),
     finish: new Date(1601138253000),
+    tagAssignment: "5fcc1bd5b547648511118440",
   },
   {
     _id: "5fd550a7b547649dd7e377db",
-    tag: 87,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12294,11 +12041,10 @@ export default [
     ],
     start: new Date(1601110285000),
     finish: new Date(1601138293000),
+    tagAssignment: "5fcc1bd5b547648511118504",
   },
   {
     _id: "5fd550a7b547649dd7e377dc",
-    tag: 116,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12343,11 +12089,10 @@ export default [
     ],
     start: new Date(1601110286000),
     finish: new Date(1601138292000),
+    tagAssignment: "5fcc1bd5b547648511118503",
   },
   {
     _id: "5fd550a7b547649dd7e377dd",
-    tag: 20,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12392,11 +12137,10 @@ export default [
     ],
     start: new Date(1601109758000),
     finish: new Date(1601138295000),
+    tagAssignment: "5fcc1bd5b5476485111183dd",
   },
   {
     _id: "5fd550a7b547649dd7e377de",
-    tag: 93,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12441,11 +12185,10 @@ export default [
     ],
     start: new Date(1601109761000),
     finish: new Date(1601138296000),
+    tagAssignment: "5fcc1bd5b5476485111183dc",
   },
   {
     _id: "5fd550a7b547649dd7e377df",
-    tag: 200,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12494,11 +12237,10 @@ export default [
     ],
     start: new Date(1601105559000),
     finish: new Date(1601138636000),
+    tagAssignment: "5fcc1bd5b54764851111841b",
   },
   {
     _id: "5fd550a7b547649dd7e377e0",
-    tag: 79,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12547,11 +12289,10 @@ export default [
     ],
     start: new Date(1601105557000),
     finish: new Date(1601138638000),
+    tagAssignment: "5fcc1bd5b54764851111841c",
   },
   {
     _id: "5fd550a7b547649dd7e377e1",
-    tag: 152,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12576,11 +12317,10 @@ export default [
     ],
     start: new Date(1601106062000),
     finish: new Date(1601138672000),
+    tagAssignment: "5fcc1bd5b547648511118421",
   },
   {
     _id: "5fd550a7b547649dd7e377e2",
-    tag: 142,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12605,11 +12345,10 @@ export default [
     ],
     start: new Date(1601106060000),
     finish: new Date(1601138669000),
+    tagAssignment: "5fcc1bd5b547648511118420",
   },
   {
     _id: "5fd550a7b547649dd7e377e3",
-    tag: 3,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -12646,11 +12385,10 @@ export default [
     ],
     start: new Date(1601110221000),
     finish: new Date(1601138607000),
+    tagAssignment: "5fcc1bd5b547648511118452",
   },
   {
     _id: "5fd550a7b547649dd7e377e4",
-    tag: 56,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -12687,11 +12425,10 @@ export default [
     ],
     start: new Date(1601110218000),
     finish: new Date(1601138616000),
+    tagAssignment: "5fcc1bd5b547648511118451",
   },
   {
     _id: "5fd550a7b547649dd7e377e5",
-    tag: 291,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -12728,11 +12465,10 @@ export default [
     ],
     start: new Date(1601110223000),
     finish: new Date(1601138624000),
+    tagAssignment: "5fcc1bd5b547648511118454",
   },
   {
     _id: "5fd550a7b547649dd7e377e6",
-    tag: 47,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -12769,11 +12505,10 @@ export default [
     ],
     start: new Date(1601110216000),
     finish: new Date(1601138630000),
+    tagAssignment: "5fcc1bd5b547648511118453",
   },
   {
     _id: "5fd550a7b547649dd7e377e7",
-    tag: 174,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12818,11 +12553,10 @@ export default [
     ],
     start: new Date(1601108096000),
     finish: new Date(1601138804000),
+    tagAssignment: "5fcc1bd5b5476485111184e8",
   },
   {
     _id: "5fd550a7b547649dd7e377e8",
-    tag: 202,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12867,11 +12601,10 @@ export default [
     ],
     start: new Date(1601108094000),
     finish: new Date(1601138810000),
+    tagAssignment: "5fcc1bd5b5476485111184e9",
   },
   {
     _id: "5fd550a7b547649dd7e377e9",
-    tag: 263,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12916,11 +12649,10 @@ export default [
     ],
     start: new Date(1601107541000),
     finish: new Date(1601138822000),
+    tagAssignment: "5fcc1bd5b5476485111184e6",
   },
   {
     _id: "5fd550a7b547649dd7e377ea",
-    tag: 245,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -12965,11 +12697,10 @@ export default [
     ],
     start: new Date(1601107538000),
     finish: new Date(1601138818000),
+    tagAssignment: "5fcc1bd5b5476485111184e7",
   },
   {
     _id: "5fd550a7b547649dd7e377eb",
-    tag: 317,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -13018,11 +12749,10 @@ export default [
     ],
     start: new Date(1601116120000),
     finish: new Date(1601138990000),
+    tagAssignment: "5fcc1bd5b54764851111851d",
   },
   {
     _id: "5fd550a7b547649dd7e377ec",
-    tag: 303,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -13063,11 +12793,10 @@ export default [
     ],
     start: new Date(1601112424000),
     finish: new Date(1601139124000),
+    tagAssignment: "5fcc1bd5b547648511118418",
   },
   {
     _id: "5fd550a7b547649dd7e377ed",
-    tag: 196,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -13108,11 +12837,10 @@ export default [
     ],
     start: new Date(1601103102000),
     finish: new Date(1601139441000),
+    tagAssignment: "5fcc1bd5b547648511118449",
   },
   {
     _id: "5fd550a7b547649dd7e377ee",
-    tag: 295,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -13153,11 +12881,10 @@ export default [
     ],
     start: new Date(1601103101000),
     finish: new Date(1601139445000),
+    tagAssignment: "5fcc1bd5b547648511118448",
   },
   {
     _id: "5fd550a7b547649dd7e377ef",
-    tag: 176,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13202,11 +12929,10 @@ export default [
     ],
     start: new Date(1601105149000),
     finish: new Date(1601139777000),
+    tagAssignment: "5fcc1bd5b5476485111183d4",
   },
   {
     _id: "5fd550a7b547649dd7e377f0",
-    tag: 71,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13247,11 +12973,10 @@ export default [
     ],
     start: new Date(1601105146000),
     finish: new Date(1601139779000),
+    tagAssignment: "5fcc1bd5b5476485111183d5",
   },
   {
     _id: "5fd550a7b547649dd7e377f1",
-    tag: 191,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13292,11 +13017,10 @@ export default [
     ],
     start: new Date(1601105082000),
     finish: new Date(1601139776000),
+    tagAssignment: "5fcc1bd5b5476485111184cf",
   },
   {
     _id: "5fd550a7b547649dd7e377f2",
-    tag: 171,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13341,11 +13065,10 @@ export default [
     ],
     start: new Date(1601105137000),
     finish: new Date(1601139774000),
+    tagAssignment: "5fcc1bd5b54764851111846c",
   },
   {
     _id: "5fd550a7b547649dd7e377f3",
-    tag: 173,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13390,11 +13113,10 @@ export default [
     ],
     start: new Date(1601105141000),
     finish: new Date(1601139770000),
+    tagAssignment: "5fcc1bd5b54764851111846b",
   },
   {
     _id: "5fd550a7b547649dd7e377f4",
-    tag: 188,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13435,11 +13157,10 @@ export default [
     ],
     start: new Date(1601105139000),
     finish: new Date(1601139979000),
+    tagAssignment: "5fcc1bd5b54764851111846a",
   },
   {
     _id: "5fd550a7b547649dd7e377f5",
-    tag: 170,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13484,11 +13205,10 @@ export default [
     ],
     start: new Date(1601105143000),
     finish: new Date(1601139980000),
+    tagAssignment: "5fcc1bd5b547648511118469",
   },
   {
     _id: "5fd550a7b547649dd7e377f6",
-    tag: 75,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13509,11 +13229,10 @@ export default [
     ],
     start: new Date(1601110147000),
     finish: new Date(1601140138000),
+    tagAssignment: "5fcc1bd5b5476485111183e0",
   },
   {
     _id: "5fd550a7b547649dd7e377f7",
-    tag: 8,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13566,11 +13285,10 @@ export default [
     ],
     start: new Date(1601111042000),
     finish: new Date(1601140323000),
+    tagAssignment: "5fcc1bd5b54764851111840f",
   },
   {
     _id: "5fd550a7b547649dd7e377f8",
-    tag: 157,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13607,11 +13325,10 @@ export default [
     ],
     start: new Date(1601105987000),
     finish: new Date(1601140368000),
+    tagAssignment: "5fcc1bd5b54764851111843b",
   },
   {
     _id: "5fd550a7b547649dd7e377f9",
-    tag: 145,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13652,11 +13369,10 @@ export default [
     ],
     start: new Date(1601105981000),
     finish: new Date(1601140366000),
+    tagAssignment: "5fcc1bd5b54764851111843a",
   },
   {
     _id: "5fd550a7b547649dd7e377fa",
-    tag: 9,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -13705,11 +13421,10 @@ export default [
     ],
     start: new Date(1601109085000),
     finish: new Date(1601140512000),
+    tagAssignment: "5fcc1bd5b5476485111184a7",
   },
   {
     _id: "5fd550a7b547649dd7e377fb",
-    tag: 261,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13754,11 +13469,10 @@ export default [
     ],
     start: new Date(1601108335000),
     finish: new Date(1601140792000),
+    tagAssignment: "5fcc1bd5b5476485111183f9",
   },
   {
     _id: "5fd550a7b547649dd7e377fc",
-    tag: 290,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13803,11 +13517,10 @@ export default [
     ],
     start: new Date(1601108346000),
     finish: new Date(1601140788000),
+    tagAssignment: "5fcc1bd5b5476485111183fa",
   },
   {
     _id: "5fd550a7b547649dd7e377fd",
-    tag: 140,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13852,11 +13565,10 @@ export default [
     ],
     start: new Date(1601105729000),
     finish: new Date(1601141214000),
+    tagAssignment: "5fcc1bd5b54764851111847d",
   },
   {
     _id: "5fd550a7b547649dd7e377fe",
-    tag: 216,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -13901,11 +13613,10 @@ export default [
     ],
     start: new Date(1601105731000),
     finish: new Date(1601141215000),
+    tagAssignment: "5fcc1bd5b54764851111847c",
   },
   {
     _id: "5fd550a7b547649dd7e377ff",
-    tag: 313,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -13962,11 +13673,10 @@ export default [
     ],
     start: new Date(1601113177000),
     finish: new Date(1601141162000),
+    tagAssignment: "5fcc1bd5b54764851111850d",
   },
   {
     _id: "5fd550a7b547649dd7e37800",
-    tag: 314,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -14019,11 +13729,10 @@ export default [
     ],
     start: new Date(1601113179000),
     finish: new Date(1601141163000),
+    tagAssignment: "5fcc1bd5b54764851111850c",
   },
   {
     _id: "5fd550a7b547649dd7e37801",
-    tag: 85,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14068,11 +13777,10 @@ export default [
     ],
     start: new Date(1601112267000),
     finish: new Date(1601141239000),
+    tagAssignment: "5fcc1bd5b5476485111183eb",
   },
   {
     _id: "5fd550a7b547649dd7e37802",
-    tag: 52,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14117,11 +13825,10 @@ export default [
     ],
     start: new Date(1601112274000),
     finish: new Date(1601141242000),
+    tagAssignment: "5fcc1bd5b5476485111183ec",
   },
   {
     _id: "5fd550a7b547649dd7e37803",
-    tag: 58,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14166,11 +13873,10 @@ export default [
     ],
     start: new Date(1601111179000),
     finish: new Date(1601141404000),
+    tagAssignment: "5fcc1bd5b547648511118474",
   },
   {
     _id: "5fd550a7b547649dd7e37804",
-    tag: 101,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14215,11 +13921,10 @@ export default [
     ],
     start: new Date(1601111176000),
     finish: new Date(1601141402000),
+    tagAssignment: "5fcc1bd5b547648511118475",
   },
   {
     _id: "5fd550a7b547649dd7e37805",
-    tag: 254,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -14252,11 +13957,10 @@ export default [
     ],
     start: new Date(1601103938000),
     finish: new Date(1601142592000),
+    tagAssignment: "5fcc1bd5b547648511118422",
   },
   {
     _id: "5fd550a7b547649dd7e37806",
-    tag: 162,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f53",
@@ -14289,11 +13993,10 @@ export default [
     ],
     start: new Date(1601103935000),
     finish: new Date(1601142587000),
+    tagAssignment: "5fcc1bd5b547648511118423",
   },
   {
     _id: "5fd550a7b547649dd7e37807",
-    tag: 301,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14334,11 +14037,10 @@ export default [
     ],
     start: new Date(1601112792000),
     finish: new Date(1601142719000),
+    tagAssignment: "5fcc1bd5b5476485111183d3",
   },
   {
     _id: "5fd550a7b547649dd7e37808",
-    tag: 193,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14379,11 +14081,10 @@ export default [
     ],
     start: new Date(1601112790000),
     finish: new Date(1601142720000),
+    tagAssignment: "5fcc1bd5b5476485111183d2",
   },
   {
     _id: "5fd550a7b547649dd7e37809",
-    tag: 262,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -14424,11 +14125,10 @@ export default [
     ],
     start: new Date(1601106313000),
     finish: new Date(1601143057000),
+    tagAssignment: "5fcc1bd5b54764851111847b",
   },
   {
     _id: "5fd550a7b547649dd7e3780a",
-    tag: 253,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -14465,11 +14165,10 @@ export default [
     ],
     start: new Date(1601106311000),
     finish: new Date(1601143055000),
+    tagAssignment: "5fcc1bd5b54764851111847a",
   },
   {
     _id: "5fd550a7b547649dd7e3780b",
-    tag: 119,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f40",
@@ -14506,11 +14205,10 @@ export default [
     ],
     start: new Date(1601107373000),
     finish: new Date(1601143098000),
+    tagAssignment: "5fcc1bd5b5476485111183e1",
   },
   {
     _id: "5fd550a7b547649dd7e3780c",
-    tag: 41,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f40",
@@ -14547,11 +14245,10 @@ export default [
     ],
     start: new Date(1601107370000),
     finish: new Date(1601143094000),
+    tagAssignment: "5fcc1bd5b5476485111183e2",
   },
   {
     _id: "5fd550a7b547649dd7e3780d",
-    tag: 46,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -14588,11 +14285,10 @@ export default [
     ],
     start: new Date(1601108501000),
     finish: new Date(1601143091000),
+    tagAssignment: "5fcc1bd5b5476485111183e4",
   },
   {
     _id: "5fd550a7b547649dd7e3780e",
-    tag: 45,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -14629,11 +14325,10 @@ export default [
     ],
     start: new Date(1601108503000),
     finish: new Date(1601143096000),
+    tagAssignment: "5fcc1bd5b5476485111183e3",
   },
   {
     _id: "5fd550a7b547649dd7e3780f",
-    tag: 339,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14666,11 +14361,10 @@ export default [
     ],
     start: new Date(1601114907000),
     finish: new Date(1601144361000),
+    tagAssignment: "5fcc1bd5b54764851111851c",
   },
   {
     _id: "5fd550a7b547649dd7e37810",
-    tag: 15,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14715,11 +14409,10 @@ export default [
     ],
     start: new Date(1601109300000),
     finish: new Date(1601145192000),
+    tagAssignment: "5fcc1bd5b5476485111184fb",
   },
   {
     _id: "5fd550a7b547649dd7e37811",
-    tag: 36,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14764,11 +14457,10 @@ export default [
     ],
     start: new Date(1601109302000),
     finish: new Date(1601145194000),
+    tagAssignment: "5fcc1bd5b5476485111184fa",
   },
   {
     _id: "5fd550a7b547649dd7e37812",
-    tag: 324,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -14813,11 +14505,10 @@ export default [
     ],
     start: new Date(1601113055000),
     finish: new Date(1601145384000),
+    tagAssignment: "5fcc1bd5b547648511118441",
   },
   {
     _id: "5fd550a7b547649dd7e37813",
-    tag: 154,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14862,11 +14553,10 @@ export default [
     ],
     start: new Date(1601109547000),
     finish: new Date(1601145772000),
+    tagAssignment: "5fcc1bd5b5476485111184fd",
   },
   {
     _id: "5fd550a7b547649dd7e37814",
-    tag: 184,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f3d",
@@ -14911,11 +14601,10 @@ export default [
     ],
     start: new Date(1601109550000),
     finish: new Date(1601145776000),
+    tagAssignment: "5fcc1bd5b5476485111184fe",
   },
   {
     _id: "5fd550a7b547649dd7e37815",
-    tag: 266,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -14956,11 +14645,10 @@ export default [
     ],
     start: new Date(1601110006000),
     finish: new Date(1601146139000),
+    tagAssignment: "5fcc1bd5b547648511118434",
   },
   {
     _id: "5fd550a7b547649dd7e37816",
-    tag: 207,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -15001,11 +14689,10 @@ export default [
     ],
     start: new Date(1601110009000),
     finish: new Date(1601146140000),
+    tagAssignment: "5fcc1bd5b547648511118435",
   },
   {
     _id: "5fd550a7b547649dd7e37817",
-    tag: 72,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -15046,11 +14733,10 @@ export default [
     ],
     start: new Date(1601109889000),
     finish: new Date(1601146108000),
+    tagAssignment: "5fcc1bd5b54764851111842f",
   },
   {
     _id: "5fd550a7b547649dd7e37818",
-    tag: 5,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -15091,11 +14777,10 @@ export default [
     ],
     start: new Date(1601109888000),
     finish: new Date(1601146106000),
+    tagAssignment: "5fcc1bd5b547648511118430",
   },
   {
     _id: "5fd550a7b547649dd7e37819",
-    tag: 321,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -15148,11 +14833,10 @@ export default [
     ],
     start: new Date(1601114214000),
     finish: new Date(1601146097000),
+    tagAssignment: "5fcc1bd5b547648511118516",
   },
   {
     _id: "5fd550a7b547649dd7e3781a",
-    tag: 325,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -15197,11 +14881,10 @@ export default [
     ],
     start: new Date(1601113775000),
     finish: new Date(1601146205000),
+    tagAssignment: "5fcc1bd5b547648511118446",
   },
   {
     _id: "5fd550a7b547649dd7e3781b",
-    tag: 326,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f4b",
@@ -15246,11 +14929,10 @@ export default [
     ],
     start: new Date(1601113778000),
     finish: new Date(1601146211000),
+    tagAssignment: "5fcc1bd5b547648511118447",
   },
   {
     _id: "5fd550a7b547649dd7e3781c",
-    tag: 284,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -15271,11 +14953,10 @@ export default [
     ],
     start: new Date(1601110017000),
     finish: new Date(1601149467000),
+    tagAssignment: "5fcc1bd5b54764851111845a",
   },
   {
     _id: "5fd550a7b547649dd7e3781d",
-    tag: 80,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -15300,11 +14981,10 @@ export default [
     ],
     start: new Date(1601110021000),
     finish: new Date(1601149468000),
+    tagAssignment: "5fcc1bd5b54764851111845b",
   },
   {
     _id: "5fd550a7b547649dd7e3781e",
-    tag: 228,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -15345,11 +15025,10 @@ export default [
     ],
     start: new Date(1601111466000),
     finish: new Date(1601149788000),
+    tagAssignment: "5fcc1bd5b547648511118509",
   },
   {
     _id: "5fd550a7b547649dd7e3781f",
-    tag: 57,
-    krok: "5f8d04b3b54764421b7156dc",
     actions: [
       {
         station: "5f8f8c44b54764421b715f5e",
@@ -15390,11 +15069,16 @@ export default [
     ],
     start: new Date(1601111463000),
     finish: new Date(1601149789000),
+    tagAssignment: "5fcc1bd5b54764851111850a",
   },
   {
     _id: "5fd550a7b547649dd7e37820",
-    tag: 571,
-    krok: "5f8d04b3b54764421b7156dc",
     start: new Date(1601111463000),
+    tagAssignment: "5fe8feb0b54764faf553b1d8",
+  },
+  {
+    _id: "5fd550a7b547649dd7e37821",
+    start: new Date(1601111463000),
+    tagAssignment: "5fe8feb0b54764faf553b1d9",
   },
 ];

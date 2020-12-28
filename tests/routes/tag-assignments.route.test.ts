@@ -28,8 +28,8 @@ describe("Tag Assignment endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBeGreaterThan(330);
-    expect(res.body.length).toBeLessThan(340);
+    expect(res.body.length).toBeGreaterThan(335);
+    expect(res.body.length).toBeLessThan(345);
     expect(res.body[0]).toMatchObject({
       _id: expect.any(String),
       tag: expect.any(Number),

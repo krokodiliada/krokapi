@@ -8,7 +8,6 @@ const router = express.Router();
 router.param("id", GenericController.validateObjectId);
 router.param("id", ParticipantController.validateParticipantExists);
 
-// Disallow the following methods:
 router.post("/:id", GenericController.disallowMethod);
 router.put("/", GenericController.disallowMethod);
 router.put("/:id", GenericController.disallowMethod);
