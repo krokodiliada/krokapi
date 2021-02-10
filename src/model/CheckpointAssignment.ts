@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { IKrok } from "model/Krok";
 import { ICategory } from "model/Category";
-import { ICheckpoint } from "model/CheckPoint";
+import { ICheckpoint } from "model/Checkpoint";
 import { IStation } from "model/Station";
 
 export enum CheckpointCostMetric {
