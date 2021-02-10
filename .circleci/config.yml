@@ -57,7 +57,7 @@ workflows:
   api_tests_and_coverage:
     jobs:
       - build
-      - build_production
+      - build-production
       - prettier:
           requires:
             - build
