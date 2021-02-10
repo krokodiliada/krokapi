@@ -5,7 +5,9 @@ orbs:
 
 jobs:
   build-production:
-    executor: node/default
+    executor:
+      name: node/default
+      tag: "15.8.0"
     steps:
       - checkout
       - node/install-packages:
@@ -65,5 +67,4 @@ workflows:
             - build
       - test:
           requires:
-            - prettier
             - eslint
