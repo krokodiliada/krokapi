@@ -1,6 +1,7 @@
 module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{js,ts}"],
+  coverageDirectory: "reports/coverage/",
   coveragePathIgnorePatterns: [
     "<rootDir>/src/index.ts",
     "<rootDir>/src/server.ts",
@@ -9,6 +10,7 @@ module.exports = {
   ],
   modulePaths: ["<rootDir>/src/"],
   preset: "@shelf/jest-mongodb",
+  reporters: ["default", ["jest-junit", { outputDirectory: "reports/junit/" }]],
   roots: ["<rootDir>/tests"],
   testEnvironment: "node",
   testPathIgnorePatterns: ["/node_modules/"],

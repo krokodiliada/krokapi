@@ -18,7 +18,7 @@ module.exports = {
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended",
   ],
-  ignorePatterns: ["node_modules", "dist"],
+  ignorePatterns: ["node_modules", "/dist", "/reports"],
   plugins: ["@typescript-eslint", "jest"],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs

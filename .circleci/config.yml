@@ -40,7 +40,11 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: npm run lint
+      - run: npm run lint-junit
+      - store_test_results:
+          path: reports/junit/eslint-results.xml
+      - store_artifacts:
+          path: reports
       - persist_to_workspace:
           root: .
           paths:
@@ -56,14 +60,18 @@ jobs:
           root: .
           paths:
             - .
+      - store_test_results:
+          path: reports/junit/junit.xml
       - store_artifacts:
-          path: coverage
+          path: reports
 
   coverage:
     executor: node/default
     steps:
+      - attach_workspace:
+          at: .
       - codecov/upload:
-          file: "coverage/clover.xml"
+          file: "reports/coverage/clover.xml"
 
 workflows:
   api_tests_and_coverage:
