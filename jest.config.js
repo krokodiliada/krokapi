@@ -10,7 +10,7 @@ module.exports = {
   ],
   modulePaths: ["<rootDir>/src/"],
   preset: "@shelf/jest-mongodb",
-  reporters: ["default", ["jest-junit", { outputDirectory: "reports/junit/" }]],
+  reporters: ["default", ["jest-junit", { outputDirectory: "reports/tests/" }]],
   roots: ["<rootDir>/tests"],
   testEnvironment: "node",
   testPathIgnorePatterns: ["/node_modules/"],

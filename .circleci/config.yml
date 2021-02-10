@@ -42,9 +42,9 @@ jobs:
           at: .
       - run: npm run lint-junit
       - store_test_results:
-          path: reports/junit/eslint-results.xml
+          path: reports/eslint
       - store_artifacts:
-          path: reports
+          path: reports/eslint
       - persist_to_workspace:
           root: .
           paths:
@@ -61,9 +61,11 @@ jobs:
           paths:
             - .
       - store_test_results:
-          path: reports/junit/junit.xml
+          path: reports/tests
       - store_artifacts:
-          path: reports
+          path: reports/tests
+      - store_artifacts:
+          path: reports/coverage
 
   coverage:
     executor: node/default
@@ -72,6 +74,7 @@ jobs:
           at: .
       - codecov/upload:
           file: "reports/coverage/clover.xml"
+          token: afba6bea-20b8-447c-8d0b-1ea1f9b818e4
 
 workflows:
   api_tests_and_coverage:

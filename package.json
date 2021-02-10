@@ -14,7 +14,7 @@
     "clean": "rimraf dist/*",
     "prettier": "prettier --check 'src/**/*.{js,ts,tsx}'",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
-    "lint-junit": "eslint '*/**/*.{js,ts,tsx}' -f junit -o reports/junit/eslint-results.xml",
+    "lint-junit": "eslint '*/**/*.{js,ts,tsx}' -f junit -o reports/eslint/junit.xml",
     "tsc": "tsc --project tsconfig.production.json",
     "build": "npm-run-all clean tsc",
     "dev": "nodemon src/index.ts",
