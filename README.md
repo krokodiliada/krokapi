@@ -1,4 +1,4 @@
-# krokAPI &middot; ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg) ![CircleCI](https://img.shields.io/circleci/build/github/krokodiliada/krokapi?label=circleci&token=c4f3b82c175aa905dabca2ab27bd5cc06a35cc8f) ![Codecov](https://img.shields.io/codecov/c/github/krokodiliada/krokapi?token=KWZ8263SC8)
+# krokAPI &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/krokodiliada/krokapi/blob/main/LICENSE) [![CircleCI](https://img.shields.io/circleci/build/github/krokodiliada/krokapi?label=circleci&token=c4f3b82c175aa905dabca2ab27bd5cc06a35cc8f)](https://circleci.com/gh/krokodiliada/krokapi) [![codecov](https://codecov.io/gh/krokodiliada/krokapi/branch/main/graph/badge.svg?token=KWZ8263SC8)](https://codecov.io/gh/krokodiliada/krokapi)
 
 REST API for [krokodiliada.ru](https://krokodiliada.ru) contests system.
 
