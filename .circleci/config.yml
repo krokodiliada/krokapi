@@ -1,0 +1,64 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.1.0
+
+jobs:
+  build-production:
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: node_modules
+          override-ci-command: npm install --production
+      - run: npm run build
+  build:
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: node_modules
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  prettier:
+    steps:
+      - attach_workspace:
+          at: .
+      - run: npm run prettier
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  eslint:
+    steps:
+      - attach_workspace:
+          at: .
+      - run: npm run lint
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  test:
+    steps:
+      - attach_workspace:
+          at: .
+      - node/test
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+workflows:
+  api_tests_and_coverage:
+    jobs:
+      - build
+      - build_production
+      - prettier:
+          requires:
+            - build
+      - eslint:
+          requires:
+            - prettier
+      - test:
+          requires:
+            - eslint
