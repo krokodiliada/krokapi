@@ -9,7 +9,6 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          cache-path: node_modules
           override-ci-command: npm install --production
       - run: npm run build
   build:
@@ -63,7 +62,8 @@ workflows:
             - build
       - eslint:
           requires:
-            - prettier
+            - build
       - test:
           requires:
+            - prettier
             - eslint

@@ -12,7 +12,7 @@
   "main": "src/index.ts",
   "scripts": {
     "clean": "rimraf dist/*",
-    "format": "prettier --check '*/**/*.{js,ts,tsx}'",
+    "prettier": "prettier --check 'src/**/*.{js,ts,tsx}'",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
     "tsc": "tsc --project tsconfig.production.json",
     "build": "npm-run-all clean tsc",
