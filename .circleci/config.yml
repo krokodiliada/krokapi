@@ -5,9 +5,7 @@ orbs:
 
 jobs:
   build-production:
-    executor:
-      name: node/default
-      tag: "15.8.0"
+    executor: node/default
     steps:
       - checkout
       - node/install-packages:

@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { ITeam } from "model/Team";
-import { ICheckpoint } from "model/CheckPoint";
+import { ICheckpoint } from "model/Checkpoint";
 
 interface IRouteWaterAction extends Document {
   checkpoint: ICheckpoint["_id"];
