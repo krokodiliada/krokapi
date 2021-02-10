@@ -12,6 +12,7 @@ jobs:
       - node/install-packages:
           override-ci-command: npm install --production
       - run: npm run build
+
   build:
     executor: node/default
     steps:
@@ -22,6 +23,7 @@ jobs:
           root: .
           paths:
             - .
+
   prettier:
     executor: node/default
     steps:
@@ -32,6 +34,7 @@ jobs:
           root: .
           paths:
             - .
+
   eslint:
     executor: node/default
     steps:
@@ -42,6 +45,7 @@ jobs:
           root: .
           paths:
             - .
+
   test:
     executor: node/default
     steps:
@@ -54,6 +58,12 @@ jobs:
             - .
       - store_artifacts:
           path: coverage
+
+  coverage:
+    executor: node/default
+    steps:
+      - codecov/upload:
+          file: "coverage/clover.xml"
 
 workflows:
   api_tests_and_coverage:
@@ -69,7 +79,6 @@ workflows:
       - test:
           requires:
             - eslint
-      - codecov/upload:
-          file: "coverage/clover.xml"
+      - coverage:
           requires:
             - test
