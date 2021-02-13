@@ -74,7 +74,6 @@ jobs:
           at: .
       - codecov/upload:
           file: "reports/coverage/clover.xml"
-          token: afba6bea-20b8-447c-8d0b-1ea1f9b818e4
 
 workflows:
   api_tests_and_coverage:
