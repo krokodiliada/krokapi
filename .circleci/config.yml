@@ -75,11 +75,33 @@ jobs:
       - codecov/upload:
           file: "reports/coverage/clover.xml"
 
+  build-docker:
+    machine: true
+    steps:
+      - checkout
+      - run: docker build -t krok/api .
+
+  build-docker-and-deploy:
+    machine: true
+    steps:
+      - checkout
+      - run: docker build -t krok/api .
+      - run: echo "$GH_REGISTRY_TOKEN" | docker login --username $GH_REGISTRY_USER --password-stdin
+      - run: docker tag krok/api:latest ghcr.io/krokodiliada/krokapi:latest
+      - run: docker push ghcr.io/krokodiliada/krokapi:latest
+
 workflows:
   api_tests_and_coverage:
     jobs:
       - build
       - build-production
+      - build-docker:
+          requires:
+            - build-production
+          filters:
+            branches:
+              ignore:
+                - main
       - prettier:
           requires:
             - build
@@ -92,3 +114,11 @@ workflows:
       - coverage:
           requires:
             - test
+      - build-docker-and-deploy:
+          requires:
+            - build-production
+            - test
+          filters:
+            branches:
+              only:
+                - main
