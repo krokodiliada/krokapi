@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import Krok, { IKrok } from "model/Krok";
+import Event, { IEvent } from "model/Event";
 import Participant, { IParticipant } from "model/Participant";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 
@@ -14,7 +14,7 @@ const participant: IParticipant = new Participant({
   birthday: new Date("Oct 13 1985"),
 });
 
-const krok: IKrok = new Krok({
+const event: IEvent = new Event({
   number: 50,
   date: {
     start: new Date("Sep 25, 2020"),
@@ -25,7 +25,7 @@ const krok: IKrok = new Krok({
 const validAssignment: ITagAssignment = new TagAssignment({
   tag,
   participant: participant._id,
-  krok: krok._id,
+  event: event._id,
 });
 
 describe("TagAssignment model", () => {
@@ -42,7 +42,7 @@ describe("TagAssignment model", () => {
   });
 
   afterEach(async () => {
-    await Krok.deleteMany({});
+    await Event.deleteMany({});
     await Participant.deleteMany({});
     await TagAssignment.deleteMany({});
   });
@@ -54,13 +54,13 @@ describe("TagAssignment model", () => {
 
   it("Throws an error if tag assignment is created without tag", () => {
     const assignment: ITagAssignment = new TagAssignment({
-      krok: krok._id,
+      event: event._id,
       participant: participant._id,
     });
     expect(assignment.validate).toThrow();
   });
 
-  it("Throws an error if tag assignment is created without krok", () => {
+  it("Throws an error if tag assignment is created without event", () => {
     const assignment: ITagAssignment = new TagAssignment({
       tag,
       participant: participant._id,
@@ -71,7 +71,7 @@ describe("TagAssignment model", () => {
   it("Throws an error if tag assignment is created without participant", () => {
     const assignment: ITagAssignment = new TagAssignment({
       tag,
-      krok: krok._id,
+      event: event._id,
     });
     expect(assignment.validate).toThrow();
   });
@@ -87,12 +87,12 @@ describe("TagAssignment model", () => {
 
     expect(savedAssignment).toMatchObject({
       tag: expect.any(Number),
-      krok: expect.any(Object),
+      event: expect.any(Object),
       participant: expect.any(Object),
     });
 
     expect(savedAssignment.tag).toBe(tag);
-    expect(savedAssignment.krok).toBe(krok._id);
+    expect(savedAssignment.event).toBe(event._id);
     expect(savedAssignment.participant).toBe(participant._id);
   });
 });

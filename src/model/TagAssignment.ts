@@ -1,11 +1,11 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { IParticipant } from "model/Participant";
-import { IKrok } from "model/Krok";
+import { IEvent } from "model/Event";
 
 export interface ITagAssignment extends Document {
   tag: number;
   participant: IParticipant["_id"];
-  krok: IKrok["_id"];
+  event: IEvent["_id"];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,9 +21,9 @@ export const TagAssignmentSchema: Schema = new Schema(
       ref: "Participant",
       required: true,
     },
-    krok: {
+    event: {
       type: Schema.Types.ObjectId,
-      ref: "Krok",
+      ref: "Event",
       required: true,
     },
   },
@@ -31,10 +31,10 @@ export const TagAssignmentSchema: Schema = new Schema(
 );
 
 // Single tag cannot be assigned to multiple people
-TagAssignmentSchema.index({ tag: 1, krok: 1 }, { unique: true });
+TagAssignmentSchema.index({ tag: 1, event: 1 }, { unique: true });
 
 // Multiple tags cannot be assigned to one participant
-TagAssignmentSchema.index({ participant: 1, krok: 1 }, { unique: true });
+TagAssignmentSchema.index({ participant: 1, event: 1 }, { unique: true });
 
 export default mongoose.model<ITagAssignment>(
   "TagAssignment",

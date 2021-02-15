@@ -5,7 +5,7 @@ import _ from "lodash";
 import GenericController from "controller/Common";
 
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
-import Krok, { IKrok } from "model/Krok";
+import Event, { IEvent } from "model/Event";
 import Participant, { IParticipant } from "model/Participant";
 
 const validateAssignmentExists: RequestHandler = async (
@@ -27,45 +27,45 @@ const validateAssignmentExists: RequestHandler = async (
 };
 
 interface TagAssignmentData {
-  krok: string;
+  event: string;
   participant: string;
 }
 
 const isAssignmentDataValid = async (
   data: TagAssignmentData
 ): Promise<boolean> => {
-  if (!("krok" in data) || !("participant" in data)) {
+  if (!("event" in data) || !("participant" in data)) {
     return false;
   }
 
-  const krokId: string = data.krok;
+  const eventId: string = data.event;
   const participantId: string = data.participant;
 
   if (
-    !GenericController.isValidObjectId(krokId) ||
+    !GenericController.isValidObjectId(eventId) ||
     !GenericController.isValidObjectId(participantId)
   ) {
     return false;
   }
 
-  const krok: IKrok | null = await Krok.findById(krokId);
+  const event: IEvent | null = await Event.findById(eventId);
   const participant: IParticipant | null = await Participant.findById(
     participantId
   );
 
-  if (!krok || !participant) {
+  if (!event || !participant) {
     return false;
   }
 
   return true;
 };
 
-const getNextAvailableTag = async (krokId: string): Promise<number> => {
-  const currentKrokAssignments = await TagAssignment.find().where({
-    krok: krokId,
+const getNextAvailableTag = async (eventId: string): Promise<number> => {
+  const currentEventAssignments = await TagAssignment.find().where({
+    event: eventId,
   });
 
-  const currentKrokTags: Array<number> = currentKrokAssignments.map(
+  const currentEventTags: Array<number> = currentEventAssignments.map(
     (assignment) => assignment.tag
   );
 
@@ -73,7 +73,7 @@ const getNextAvailableTag = async (krokId: string): Promise<number> => {
   const allAvailbleTags: Array<number> = Array.from(Array(maxTagNumber).keys());
 
   const availableTags = allAvailbleTags.filter(
-    (tag) => !currentKrokTags.includes(tag)
+    (tag) => !currentEventTags.includes(tag)
   );
 
   const tag: number | undefined = _.sample(availableTags);
@@ -85,13 +85,13 @@ const getNextAvailableTag = async (krokId: string): Promise<number> => {
   return tag;
 };
 
-const getByKrokAndParticipant = async (
-  krok: IKrok,
+const getByEventAndParticipant = async (
+  event: IEvent,
   participant: IParticipant,
   res: Response
 ): Promise<void> => {
   const filter = {
-    krok: { $in: krok._id },
+    event: { $in: event._id },
     participant: { $in: participant._id },
   };
 
@@ -101,31 +101,31 @@ const getByKrokAndParticipant = async (
 
 // GET /tag-assignments/
 const getAll: RequestHandler = async (req: Request, res: Response) => {
-  const krokId: string = req.query.krok as string;
+  const eventId: string = req.query.event as string;
   const participantId: string = req.query.participant as string;
 
   if (
-    (krokId && !GenericController.isValidObjectId(krokId)) ||
+    (eventId && !GenericController.isValidObjectId(eventId)) ||
     (participantId && !GenericController.isValidObjectId(participantId)) ||
-    (krokId && !participantId) ||
-    (participantId && !krokId)
+    (eventId && !participantId) ||
+    (participantId && !eventId)
   ) {
     res.status(StatusCodes.BAD_REQUEST).json({});
     return;
   }
 
-  const krok: IKrok | null = await Krok.findById(krokId);
+  const event: IEvent | null = await Event.findById(eventId);
   const participant: IParticipant | null = await Participant.findById(
     participantId
   );
 
-  if ((krokId && !krok) || (participantId && !participant)) {
+  if ((eventId && !event) || (participantId && !participant)) {
     res.status(StatusCodes.NOT_FOUND).json({});
     return;
   }
 
-  if (krok && participant) {
-    getByKrokAndParticipant(krok, participant, res);
+  if (event && participant) {
+    getByEventAndParticipant(event, participant, res);
     return;
   }
 
@@ -157,7 +157,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
   }
 
   if (!("tag" in data)) {
-    const tag = await getNextAvailableTag(data.krok);
+    const tag = await getNextAvailableTag(data.event);
 
     if (tag === -1) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
@@ -196,7 +196,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
     .validate()
     .then(async () => {
       const updateData: TagAssignmentData = {
-        krok: assignment.krok,
+        event: assignment.event,
         participant: assignment.participant,
       };
 

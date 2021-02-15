@@ -3,35 +3,35 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Category, { ICategory } from "model/Category";
-import Krok, { IKrok } from "model/Krok";
+import Event, { IEvent } from "model/Event";
 import GpsLocation, { IGpsLocation } from "model/GpsLocation";
 
 /**
- * Validate krok :number parameter
+ * Validate event :number parameter
  */
-const krokIdExists = async (id: string): Promise<boolean> => {
-  const krok: IKrok | null = await Krok.findById(id);
+const eventIdExists = async (id: string): Promise<boolean> => {
+  const event: IEvent | null = await Event.findById(id);
 
-  if (!krok) {
+  if (!event) {
     return false;
   }
 
   return true;
 };
 
-const validateKrokExists: RequestHandler = async (
+const validateEventExists: RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  // If inserting inexisting krok, then PUT should be allowed.
-  if (!krok && req.method !== "PUT") {
+  // If inserting inexisting event, then PUT should be allowed.
+  if (!event && req.method !== "PUT") {
     return res.status(StatusCodes.NOT_FOUND).json({});
   }
 
@@ -39,14 +39,14 @@ const validateKrokExists: RequestHandler = async (
 };
 
 /**
- * Validate krok category :categoryId parameter
+ * Validate event category :categoryId parameter
  */
 const validateCategory: RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
   const requestedCategoryId = req.params.categoryId;
 
   const { ObjectId } = mongoose.Types;
@@ -54,11 +54,14 @@ const validateCategory: RequestHandler = async (
     return res.status(StatusCodes.BAD_REQUEST).json({});
   }
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  if (req.method !== "PUT" && !krok?.categories.includes(requestedCategoryId)) {
+  if (
+    req.method !== "PUT" &&
+    !event?.categories.includes(requestedCategoryId)
+  ) {
     return res.status(StatusCodes.NOT_FOUND).json({});
   }
 
@@ -76,7 +79,7 @@ const validateCategory: RequestHandler = async (
 };
 
 /**
- * Validate krok location :locationId parameter
+ * Validate event location :locationId parameter
  * locationId is only specified for PUT method
  */
 const validateLocation: RequestHandler = async (
@@ -102,63 +105,63 @@ const validateLocation: RequestHandler = async (
   return next();
 };
 
-// GET /kroks/
+// GET /events/
 const getAll: RequestHandler = async (_: Request, res: Response) => {
-  const kroks: Array<IKrok> = await Krok.find();
+  const events: Array<IEvent> = await Event.find();
 
-  res.status(StatusCodes.OK).json(kroks);
+  res.status(StatusCodes.OK).json(events);
 };
 
-// GET /kroks/:number
+// GET /events/:number
 const getByNumber: RequestHandler = async (req: Request, res: Response) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
 
   const query = {
-    number: requestedKrokNumber,
+    number: requestedEventNumber,
   };
 
-  const krok: IKrok | null = await Krok.findOne(query);
+  const event: IEvent | null = await Event.findOne(query);
 
-  if (krok) {
-    res.status(StatusCodes.OK).json(krok);
+  if (event) {
+    res.status(StatusCodes.OK).json(event);
   }
 };
 
-// PUT /kroks/:number
+// PUT /events/:number
 const create: RequestHandler = async (req: Request, res: Response) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
 
   const query = req.body;
-  query.number = requestedKrokNumber;
+  query.number = requestedEventNumber;
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  const newKrok: IKrok = new Krok(query);
+  const newEvent: IEvent = new Event(query);
 
-  if (krok) {
-    newKrok._id = krok._id;
+  if (event) {
+    newEvent._id = event._id;
 
-    krok
-      .set(newKrok)
+    event
+      .set(newEvent)
       .save()
-      .then((modifiedKrok: IKrok) =>
-        res.status(StatusCodes.OK).json(modifiedKrok)
+      .then((modifiedEvent: IEvent) =>
+        res.status(StatusCodes.OK).json(modifiedEvent)
       )
       .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
   } else {
-    Krok.create(newKrok)
-      .then((insertedKrok: IKrok) =>
-        res.status(StatusCodes.CREATED).json(insertedKrok)
+    Event.create(newEvent)
+      .then((insertedEvent: IEvent) =>
+        res.status(StatusCodes.CREATED).json(insertedEvent)
       )
       .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
   }
 };
 
-// PATCH /kroks/:number
+// PATCH /events/:number
 const update: RequestHandler = async (req: Request, res: Response) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
 
   if (Object.keys(req.body).length === 0) {
     res.status(StatusCodes.BAD_REQUEST).json({});
@@ -166,13 +169,13 @@ const update: RequestHandler = async (req: Request, res: Response) => {
   }
 
   const query = {
-    number: requestedKrokNumber,
+    number: requestedEventNumber,
   };
 
-  const krok: IKrok | null = await Krok.findOne(query);
+  const event: IEvent | null = await Event.findOne(query);
 
-  if (krok) {
-    krok
+  if (event) {
+    event
       .set(req.body)
       .save()
       .then(() => res.status(StatusCodes.OK).json())
@@ -180,55 +183,55 @@ const update: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-// DELETE /kroks/:number
+// DELETE /events/:number
 const deleteByNumber: RequestHandler = async (req: Request, res: Response) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  if (krok) {
-    Krok.deleteOne(krok)
+  if (event) {
+    Event.deleteOne(event)
       .then(() => res.status(StatusCodes.OK).json({}))
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };
 
-// GET /kroks/:number/categories
+// GET /events/:number/categories
 const getAllCategories: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  if (krok) {
+  if (event) {
     res.status(StatusCodes.OK).json({
-      categories: krok.categories,
+      categories: event.categories,
     });
   }
 };
 
-// DELETE /kroks/:number/categories/:categoryId
+// DELETE /events/:number/categories/:categoryId
 const deleteCategory: RequestHandler = async (req: Request, res: Response) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
   const requestedCategoryId: string = req.params.categoryId;
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  if (krok) {
-    const categoryIndex = krok.categories.indexOf(requestedCategoryId, 0);
+  if (event) {
+    const categoryIndex = event.categories.indexOf(requestedCategoryId, 0);
     if (categoryIndex > -1) {
-      krok.categories.splice(categoryIndex, 1);
+      event.categories.splice(categoryIndex, 1);
     }
 
-    krok
+    event
       .save()
       .then(() => {
         res.status(StatusCodes.OK).json({});
@@ -239,25 +242,25 @@ const deleteCategory: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-// PUT /kroks/:number/categories/:categoryId
+// PUT /events/:number/categories/:categoryId
 const addCategory: RequestHandler = async (req: Request, res: Response) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
   const requestedCategoryId: string = req.params.categoryId;
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  if (!krok) {
+  if (!event) {
     res.status(StatusCodes.NOT_FOUND).json({});
     return;
   }
 
-  if (!krok.categories.includes(requestedCategoryId)) {
-    krok.categories.push(requestedCategoryId);
+  if (!event.categories.includes(requestedCategoryId)) {
+    event.categories.push(requestedCategoryId);
   }
 
-  krok
+  event
     .save()
     .then(() => {
       res.status(StatusCodes.OK).json({});
@@ -267,21 +270,21 @@ const addCategory: RequestHandler = async (req: Request, res: Response) => {
     });
 };
 
-// GET /kroks/:number/location
+// GET /events/:number/location
 const getLocation: RequestHandler = async (req: Request, res: Response) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  if (!krok) {
+  if (!event) {
     return;
   }
 
-  if (krok.location) {
+  if (event.location) {
     const location: IGpsLocation | null = await GpsLocation.findById(
-      krok.location._id
+      event.location._id
     );
 
     if (location) {
@@ -294,26 +297,26 @@ const getLocation: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-// DELETE /kroks/:number/location
+// DELETE /events/:number/location
 const deleteLocation: RequestHandler = async (req: Request, res: Response) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  if (!krok) {
+  if (!event) {
     return;
   }
 
-  if (!krok.location) {
+  if (!event.location) {
     res.status(StatusCodes.NOT_FOUND).json({});
     return;
   }
 
-  delete krok.location;
+  delete event.location;
 
-  krok
+  event
     .save()
     .then(() => {
       res.status(StatusCodes.OK).json({});
@@ -323,22 +326,22 @@ const deleteLocation: RequestHandler = async (req: Request, res: Response) => {
     });
 };
 
-// PUT /kroks/:number/location/:locationId
+// PUT /events/:number/location/:locationId
 const addLocation: RequestHandler = async (req: Request, res: Response) => {
-  const requestedKrokNumber = Number(req.params.number);
+  const requestedEventNumber = Number(req.params.number);
   const requestedLocationId = req.params.locationId;
 
-  const krok: IKrok | null = await Krok.findOne({
-    number: requestedKrokNumber,
+  const event: IEvent | null = await Event.findOne({
+    number: requestedEventNumber,
   });
 
-  if (!krok) {
+  if (!event) {
     return;
   }
 
-  krok.location = requestedLocationId;
+  event.location = requestedLocationId;
 
-  krok
+  event
     .save()
     .then(() => {
       res.status(StatusCodes.OK).json({});
@@ -349,8 +352,8 @@ const addLocation: RequestHandler = async (req: Request, res: Response) => {
 };
 
 export default {
-  krokIdExists,
-  validateKrokExists,
+  eventIdExists,
+  validateEventExists,
   validateCategory,
   validateLocation,
   getAll,

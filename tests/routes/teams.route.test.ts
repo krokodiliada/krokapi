@@ -32,15 +32,17 @@ describe("Team endpoints", () => {
       _id: expect.any(String),
       name: expect.any(String),
       participants: expect.any(Array),
-      krok: expect.any(String),
+      event: expect.any(String),
       category: expect.any(String),
       extraMapRequired: expect.any(Boolean),
     });
   });
 
-  // GET /teams/?krok=:id
-  it("Should return a list of all teams for specific krok", async () => {
-    const res = await request(app).get("/teams/?krok=5f8d0401b54764421b7156da");
+  // GET /teams/?event=:id
+  it("Should return a list of all teams for specific event", async () => {
+    const res = await request(app).get(
+      "/teams/?event=5f8d0401b54764421b7156da"
+    );
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -49,20 +51,22 @@ describe("Team endpoints", () => {
       _id: "5f90acf8b54764421a729193",
       name: "Sample Old",
       participants: ["5f8d0d55b54764421b715d99"],
-      krok: "5f8d0401b54764421b7156da",
+      event: "5f8d0401b54764421b7156da",
       category: "5f8d04f7b54764421b7156de",
       extraMapRequired: false,
     });
   });
 
-  it("Should return 400 if krok filter is invalid", async () => {
-    const res = await request(app).get("/teams/?krok=5f8d0401b547641b71da");
+  it("Should return 400 if event filter is invalid", async () => {
+    const res = await request(app).get("/teams/?event=5f8d0401b547641b71da");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 404 if krok number does not exist", async () => {
-    const res = await request(app).get("/teams/?krok=5f8d0401b54764421a7136da");
+  it("Should return 404 if event number does not exist", async () => {
+    const res = await request(app).get(
+      "/teams/?event=5f8d0401b54764421a7136da"
+    );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
@@ -80,7 +84,7 @@ describe("Team endpoints", () => {
       _id: expect.any(String),
       name: expect.any(String),
       participants: expect.any(Array),
-      krok: expect.any(String),
+      event: expect.any(String),
       category: expect.any(String),
       extraMapRequired: expect.any(Boolean),
     });
@@ -100,10 +104,10 @@ describe("Team endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  // GET /teams/?krok=:krokId&category=:categoryId
-  it("Should return a list of teams for krok and category", async () => {
+  // GET /teams/?event=:eventId&category=:categoryId
+  it("Should return a list of teams for event and category", async () => {
     const res = await request(app).get(
-      "/teams/?krok=5f8d04b3b54764421b7156dc&category=5f8d04f7b54764421b7156dd"
+      "/teams/?event=5f8d04b3b54764421b7156dc&category=5f8d04f7b54764421b7156dd"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
@@ -113,7 +117,7 @@ describe("Team endpoints", () => {
       _id: expect.any(String),
       name: expect.any(String),
       participants: expect.any(Array),
-      krok: expect.any(String),
+      event: expect.any(String),
       category: expect.any(String),
       extraMapRequired: expect.any(Boolean),
     });
@@ -133,7 +137,7 @@ describe("Team endpoints", () => {
         "5f8d0d55b54764421b715bcb",
         "5f8d0d55b54764421b715bcc",
       ],
-      krok: "5f8d04b3b54764421b7156dc",
+      event: "5f8d04b3b54764421b7156dc",
       category: "5f8d04f7b54764421b7156e2",
       extraMapRequired: false,
     });
@@ -170,7 +174,7 @@ describe("Team endpoints", () => {
       .send({
         name: "Huge Rainbow",
         participants: ["5f8d0d55b54764421b715bed", "5f8d0d55b54764421b715bee"],
-        krok: "5f8d0401b54764421b7156da",
+        event: "5f8d0401b54764421b7156da",
         category: "5f8d04f7b54764421b7156e1",
       });
     expect(res.status).toEqual(StatusCodes.CREATED);
@@ -179,13 +183,13 @@ describe("Team endpoints", () => {
     expect(res.headers.location).toMatch(/.*(\/teams\/)([a-f\d]{24})$/);
   });
 
-  it("Should return 400 if team with the same name already exists for this krok", async () => {
+  it("Should return 400 if team with the same name already exists for this event", async () => {
     const res = await request(app)
       .post("/teams/")
       .send({
         name: "Eye describe attention",
         participants: ["5f8d0d55b54764421b715bf9", "5f8d0d55b54764421b715bfa"],
-        krok: "5f8d04b3b54764421b7156dc",
+        event: "5f8d04b3b54764421b7156dc",
         category: "5f8d04f7b54764421b7156e3",
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
@@ -202,7 +206,7 @@ describe("Team endpoints", () => {
           "5f8d0d55b54764421b715c13",
           "5f8d0d55b54764421b715c16",
         ],
-        krok: "5f8d04b3b54764421b7156dc",
+        event: "5f8d04b3b54764421b7156dc",
         category: "5f8d04f7b54764421b7156df",
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
@@ -215,7 +219,7 @@ describe("Team endpoints", () => {
       .send({
         name: "Very small team",
         participants: ["5f8d0d55b54764421b715c12"],
-        krok: "5f8d04b3b54764421b7156dc",
+        event: "5f8d04b3b54764421b7156dc",
         category: "5f8d04f7b54764421b7156df",
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
@@ -228,7 +232,7 @@ describe("Team endpoints", () => {
       .send({
         name: "Oh this sneaky team!",
         participants: ["5f8d0d55b54764421b715c34"],
-        krok: "5f8d04b3b54764421b7156dc",
+        event: "5f8d04b3b54764421b7156dc",
         category: "5f8d04f7b54764421b7156de",
       });
 
@@ -241,7 +245,7 @@ describe("Team endpoints", () => {
       .post("/teams/")
       .send({
         participants: ["5f8d0d55b54764421b715c34"],
-        krok: "5f8d04b3b54764421b7156dc",
+        event: "5f8d04b3b54764421b7156dc",
         category: "5f8d04f7b54764421b7156de",
       });
 
@@ -252,7 +256,7 @@ describe("Team endpoints", () => {
   it("Should return 400 when creating a team without participants", async () => {
     const res = await request(app).post("/teams/").send({
       name: "Oh this sneaky team!",
-      krok: "5f8d04b3b54764421b7156dc",
+      event: "5f8d04b3b54764421b7156dc",
       category: "5f8d04f7b54764421b7156de",
     });
 
@@ -260,7 +264,7 @@ describe("Team endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 when creating a team without krok", async () => {
+  it("Should return 400 when creating a team without event", async () => {
     const res = await request(app)
       .post("/teams/")
       .send({
@@ -279,7 +283,7 @@ describe("Team endpoints", () => {
       .send({
         name: "Oh this sneaky team!",
         participants: ["5f8d0d55b54764421b715c34"],
-        krok: "5f8d04b3b54764421b7156dc",
+        event: "5f8d04b3b54764421b7156dc",
       });
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
@@ -334,11 +338,11 @@ describe("Team endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 200 when successfully updated team krok", async () => {
+  it("Should return 200 when successfully updated team event", async () => {
     const res = await request(app)
       .patch("/teams/5f90acf8b54764421b7160fb")
       .send({
-        krok: "5f8d0401b54764421b7156da",
+        event: "5f8d0401b54764421b7156da",
       });
 
     expect(res.status).toEqual(StatusCodes.OK);
@@ -356,11 +360,11 @@ describe("Team endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 when updating team with invalid krok", async () => {
+  it("Should return 400 when updating team with invalid event", async () => {
     const res = await request(app)
       .patch("/teams/5f90acf8b54764421b716102")
       .send({
-        krok: "5f8d0401476421b7156da",
+        event: "5f8d0401476421b7156da",
       });
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
@@ -378,11 +382,11 @@ describe("Team endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 when updating team with inexistent krok", async () => {
+  it("Should return 400 when updating team with inexistent event", async () => {
     const res = await request(app)
       .patch("/teams/5f90acf8b54764421b716102")
       .send({
-        krok: "5f8d0401b54764231a7156da",
+        event: "5f8d0401b54764231a7156da",
       });
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
@@ -411,7 +415,7 @@ describe("Team endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 200 when updating team name that already exists in the previous krok", async () => {
+  it("Should return 200 when updating team name that already exists in the previous event", async () => {
     const res = await request(app)
       .patch("/teams/5f90acf8b54764421b716102")
       .send({

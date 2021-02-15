@@ -41,18 +41,18 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-interface GetByTagAndKrokParameters {
+interface GetByTagAndEventParameters {
   tag: number;
-  krok: string;
+  event: string;
 }
 
-const getByTagAndKrok = async ({
+const getByTagAndEvent = async ({
   tag,
-  krok,
-}: GetByTagAndKrokParameters): Promise<IParticipant | null> => {
+  event,
+}: GetByTagAndEventParameters): Promise<IParticipant | null> => {
   const tagAssignments: Array<ITagAssignment> = await TagAssignment.find()
     .where({ tag })
-    .where({ krok });
+    .where({ event });
 
   if (tagAssignments.length === 0) {
     return null;
@@ -117,7 +117,7 @@ export default {
   validateParticipantExists,
   getAll,
   getById,
-  getByTagAndKrok,
+  getByTagAndEvent,
   create,
   update,
   deleteById,

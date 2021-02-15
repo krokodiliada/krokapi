@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import Krok, { IKrok } from "model/Krok";
+import Event, { IEvent } from "model/Event";
 import Route, { IRoute } from "model/Route";
 import Participant, { IParticipant } from "model/Participant";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
@@ -13,7 +13,7 @@ const participant: IParticipant = new Participant({
   birthday: new Date("Dec 12, 1991"),
 });
 
-const krok: IKrok = new Krok({
+const event: IEvent = new Event({
   number: 172,
   date: {
     start: new Date("Sep 25, 2020"),
@@ -24,7 +24,7 @@ const krok: IKrok = new Krok({
 const tagAssignment: ITagAssignment = new TagAssignment({
   tag: 5002,
   participant: participant._id,
-  krok: krok._id,
+  event: event._id,
 });
 
 const validRoute: IRoute = new Route({
@@ -48,7 +48,7 @@ describe("Route model", () => {
 
   afterEach(async () => {
     await Participant.deleteMany({});
-    await Krok.deleteMany({});
+    await Event.deleteMany({});
     await TagAssignment.deleteMany({});
     await Route.deleteMany({});
   });

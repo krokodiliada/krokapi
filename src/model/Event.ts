@@ -2,22 +2,22 @@ import mongoose, { Schema, Document } from "mongoose";
 import { IGpsLocation } from "model/GpsLocation";
 import { ICategory } from "model/Category";
 
-export interface IKrokDate extends Document {
+export interface IEventDate extends Document {
   start: Date;
   end: Date;
 }
 
-export interface IKrok extends Document {
+export interface IEvent extends Document {
   number: number;
   categories: Array<ICategory["_id"]>;
   season: string;
-  date: IKrokDate;
+  date: IEventDate;
   location?: IGpsLocation["_id"];
   createdAt: Date;
   updatedAt: Date;
 }
 
-const KrokDateSchema: Schema = new Schema({
+const EventDateSchema: Schema = new Schema({
   start: {
     type: Date,
     required: true,
@@ -28,7 +28,7 @@ const KrokDateSchema: Schema = new Schema({
     required: true,
     unique: true,
     validate: {
-      validator(this: IKrokDate, value: Date) {
+      validator(this: IEventDate, value: Date) {
         return value >= this.start;
       },
       message: () => "End date must be later or equal to start date",
@@ -36,7 +36,7 @@ const KrokDateSchema: Schema = new Schema({
   },
 });
 
-export const KrokSchema: Schema = new Schema(
+export const EventSchema: Schema = new Schema(
   {
     number: {
       type: Number,
@@ -51,13 +51,13 @@ export const KrokSchema: Schema = new Schema(
     season: {
       type: String,
       required: false,
-      default(this: IKrok) {
+      default(this: IEvent) {
         return this.number % 2 === 0 ? "fall" : "spring";
       },
       enum: ["fall", "spring"],
     },
     date: {
-      type: KrokDateSchema,
+      type: EventDateSchema,
       required: true,
       unique: true,
     },
@@ -70,4 +70,4 @@ export const KrokSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IKrok>("Krok", KrokSchema);
+export default mongoose.model<IEvent>("Event", EventSchema);

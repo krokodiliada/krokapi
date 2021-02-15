@@ -1,7 +1,7 @@
 export default [
   {
     _id: "5f907c38b54764421b71605b",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f0d",
     station: "5f8f8c44b54764421b715f3d",
@@ -11,7 +11,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71605c",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f0d",
     station: "5f8f8c44b54764421b715f3d",
@@ -21,7 +21,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71605d",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f0d",
     station: "5f8f8c44b54764421b715f50",
@@ -31,7 +31,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71605e",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156dd",
     checkpoint: "5f8f8720b54764421b715f0d",
     station: "5f8f8c44b54764421b715f3d",
@@ -41,7 +41,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71605f",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f0d",
     station: "5f8f8c44b54764421b715f3d",
@@ -51,7 +51,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716060",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f0e",
     station: "5f8f8c44b54764421b715f3e",
@@ -61,7 +61,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716061",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f0e",
     station: "5f8f8c44b54764421b715f3e",
@@ -71,7 +71,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716062",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e1",
     checkpoint: "5f8f8720b54764421b715f0e",
     station: "5f8f8c44b54764421b715f3e",
@@ -81,7 +81,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716063",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f0e",
     station: "5f8f8c44b54764421b715f3e",
@@ -91,7 +91,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716064",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f0e",
     station: "5f8f8c44b54764421b715f3e",
@@ -101,7 +101,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716065",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156dd",
     checkpoint: "5f8f8720b54764421b715f0e",
     station: "5f8f8c44b54764421b715f3e",
@@ -111,7 +111,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716066",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f0f",
     station: "5f8f8c44b54764421b715f3f",
@@ -121,7 +121,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716067",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f0f",
     station: "5f8f8c44b54764421b715f3f",
@@ -131,7 +131,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716068",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e1",
     checkpoint: "5f8f8720b54764421b715f0f",
     station: "5f8f8c44b54764421b715f3f",
@@ -141,7 +141,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716069",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f0f",
     station: "5f8f8c44b54764421b715f3f",
@@ -151,7 +151,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71606a",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f0f",
     station: "5f8f8c44b54764421b715f3f",
@@ -161,7 +161,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71606b",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f10",
     station: "5f8f8c44b54764421b715f40",
@@ -171,7 +171,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71606c",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f10",
     station: "5f8f8c44b54764421b715f40",
@@ -181,7 +181,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71606d",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f10",
     station: "5f8f8c44b54764421b715f40",
@@ -191,7 +191,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71606e",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f10",
     station: "5f8f8c44b54764421b715f40",
@@ -201,7 +201,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71606f",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156dd",
     checkpoint: "5f8f8720b54764421b715f10",
     station: "5f8f8c44b54764421b715f40",
@@ -211,7 +211,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716070",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f10",
     station: "5f8f8c44b54764421b715f40",
@@ -221,7 +221,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716071",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f11",
     station: "5f8f8c44b54764421b715f41",
@@ -231,7 +231,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716072",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f11",
     station: "5f8f8c44b54764421b715f41",
@@ -241,7 +241,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716073",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156dd",
     checkpoint: "5f8f8720b54764421b715f11",
     station: "5f8f8c44b54764421b715f41",
@@ -251,7 +251,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716074",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f11",
     station: "5f8f8c44b54764421b715f41",
@@ -261,7 +261,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716075",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f12",
     station: "5f8f8c44b54764421b715f42",
@@ -271,7 +271,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716076",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f12",
     station: "5f8f8c44b54764421b715f42",
@@ -281,7 +281,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716077",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f13",
     station: "5f8f8c44b54764421b715f43",
@@ -291,7 +291,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716078",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f13",
     station: "5f8f8c44b54764421b715f43",
@@ -301,7 +301,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716079",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f14",
     station: "5f8f8c44b54764421b715f44",
@@ -311,7 +311,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71607a",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f14",
     station: "5f8f8c44b54764421b715f44",
@@ -321,7 +321,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71607b",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f15",
     station: "5f8f8c44b54764421b715f45",
@@ -331,7 +331,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71607c",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f15",
     station: "5f8f8c44b54764421b715f45",
@@ -341,7 +341,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71607d",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f16",
     station: "5f8f8c44b54764421b715f46",
@@ -351,7 +351,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71607e",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f16",
     station: "5f8f8c44b54764421b715f46",
@@ -361,7 +361,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71607f",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f17",
     station: "5f8f8c44b54764421b715f47",
@@ -371,7 +371,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716080",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f17",
     station: "5f8f8c44b54764421b715f47",
@@ -381,7 +381,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716081",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f18",
     station: "5f8f8c44b54764421b715f48",
@@ -391,7 +391,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716082",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f18",
     station: "5f8f8c44b54764421b715f48",
@@ -401,7 +401,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716083",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f19",
     station: "5f8f8c44b54764421b715f49",
@@ -411,7 +411,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716084",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f19",
     station: "5f8f8c44b54764421b715f49",
@@ -421,7 +421,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716085",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f19",
     station: "5f8f8c44b54764421b715f49",
@@ -431,7 +431,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716086",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f19",
     station: "5f8f8c44b54764421b715f49",
@@ -441,7 +441,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716087",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156dd",
     checkpoint: "5f8f8720b54764421b715f19",
     station: "5f8f8c44b54764421b715f49",
@@ -451,7 +451,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716088",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f19",
     station: "5f8f8c44b54764421b715f49",
@@ -461,7 +461,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716089",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f1a",
     station: "5f8f8c44b54764421b715f4a",
@@ -471,7 +471,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71608a",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f1a",
     station: "5f8f8c44b54764421b715f4a",
@@ -481,7 +481,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71608b",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f1a",
     station: "5f8f8c44b54764421b715f4a",
@@ -491,7 +491,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71608c",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f1a",
     station: "5f8f8c44b54764421b715f4a",
@@ -501,7 +501,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71608d",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156dd",
     checkpoint: "5f8f8720b54764421b715f1a",
     station: "5f8f8c44b54764421b715f4a",
@@ -511,7 +511,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71608e",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f1a",
     station: "5f8f8c44b54764421b715f4a",
@@ -521,7 +521,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71608f",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156de",
     checkpoint: "5f8f8720b54764421b715f1b",
     station: "5f8f8c44b54764421b715f4b",
@@ -531,7 +531,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716090",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e0",
     checkpoint: "5f8f8720b54764421b715f1b",
     station: "5f8f8c44b54764421b715f4b",
@@ -541,7 +541,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716091",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e1",
     checkpoint: "5f8f8720b54764421b715f1b",
     station: "5f8f8c44b54764421b715f4b",
@@ -551,7 +551,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716092",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f1b",
     station: "5f8f8c44b54764421b715f4b",
@@ -561,7 +561,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716093",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f1b",
     station: "5f8f8c44b54764421b715f4b",
@@ -571,7 +571,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716094",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f1c",
     station: "5f8f8c44b54764421b715f4c",
@@ -581,7 +581,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716095",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e1",
     checkpoint: "5f8f8720b54764421b715f1d",
     station: "5f8f8c44b54764421b715f4d",
@@ -591,7 +591,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716096",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f1d",
     station: "5f8f8c44b54764421b715f4d",
@@ -601,7 +601,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716097",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f1d",
     station: "5f8f8c44b54764421b715f4d",
@@ -611,7 +611,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716098",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e1",
     checkpoint: "5f8f8720b54764421b715f1e",
     station: "5f8f8c44b54764421b715f4e",
@@ -621,7 +621,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b716099",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f1e",
     station: "5f8f8c44b54764421b715f4e",
@@ -631,7 +631,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71609a",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f1e",
     station: "5f8f8c44b54764421b715f4e",
@@ -641,7 +641,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71609b",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e2",
     checkpoint: "5f8f8720b54764421b715f1f",
     station: "5f8f8c44b54764421b715f4f",
@@ -651,7 +651,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71609c",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e1",
     checkpoint: "5f8f8720b54764421b715f20",
     station: "5f8f8c44b54764421b715f50",
@@ -661,7 +661,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71609d",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f20",
     station: "5f8f8c44b54764421b715f50",
@@ -671,7 +671,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71609e",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e1",
     checkpoint: "5f8f8720b54764421b715f21",
     station: "5f8f8c44b54764421b715f51",
@@ -681,7 +681,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b71609f",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f21",
     station: "5f8f8c44b54764421b715f51",
@@ -691,7 +691,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a0",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e1",
     checkpoint: "5f8f8720b54764421b715f22",
     station: "5f8f8c44b54764421b715f52",
@@ -701,7 +701,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a1",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e3",
     checkpoint: "5f8f8720b54764421b715f22",
     station: "5f8f8c44b54764421b715f52",
@@ -711,7 +711,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a2",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156dd",
     checkpoint: "5f8f8720b54764421b715f23",
     station: "5f8f8c44b54764421b715f53",
@@ -721,7 +721,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a3",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f23",
     station: "5f8f8c44b54764421b715f53",
@@ -731,7 +731,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a4",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f24",
     station: "5f8f8c44b54764421b715f54",
@@ -741,7 +741,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a5",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f25",
     station: "5f8f8c44b54764421b715f55",
@@ -751,7 +751,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a6",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f26",
     station: "5f8f8c44b54764421b715f56",
@@ -761,7 +761,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a7",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156dd",
     checkpoint: "5f8f8720b54764421b715f27",
     station: "5f8f8c44b54764421b715f57",
@@ -771,7 +771,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a8",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f27",
     station: "5f8f8c44b54764421b715f57",
@@ -781,7 +781,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160a9",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156dd",
     checkpoint: "5f8f8720b54764421b715f28",
     station: "5f8f8c44b54764421b715f58",
@@ -791,7 +791,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160aa",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f28",
     station: "5f8f8c44b54764421b715f58",
@@ -801,7 +801,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160ab",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f29",
     station: "5f8f8c44b54764421b715f59",
@@ -811,7 +811,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160ac",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156df",
     checkpoint: "5f8f8720b54764421b715f2a",
     station: "5f8f8c44b54764421b715f5a",
@@ -821,7 +821,7 @@ export default [
   },
   {
     _id: "5f907c38b54764421b7160ad",
-    krok: "5f8d04b3b54764421b7156dc",
+    event: "5f8d04b3b54764421b7156dc",
     category: "5f8d04f7b54764421b7156e7",
     checkpoint: "5f8f8720b54764421b715f0e",
     station: "5f8f8c44b54764421b715f3e",

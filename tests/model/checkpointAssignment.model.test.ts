@@ -7,7 +7,7 @@ import CheckpointAssignment, {
   ICheckpointAssignment,
   CheckpointCostMetric,
 } from "model/CheckpointAssignment";
-import Krok, { IKrok } from "model/Krok";
+import Event, { IEvent } from "model/Event";
 import Station, { IStation } from "model/Station";
 
 const checkpoint: ICheckpoint = new Checkpoint({
@@ -21,7 +21,7 @@ const category: ICategory = new Category({
   },
 });
 
-const krok: IKrok = new Krok({
+const event: IEvent = new Event({
   number: 50,
   date: {
     start: new Date("Sep 25, 2020"),
@@ -34,7 +34,7 @@ const station: IStation = new Station({
 });
 
 const validAssignment: ICheckpointAssignment = new CheckpointAssignment({
-  krok: krok._id,
+  event: event._id,
   category: category._id,
   checkpoint: checkpoint._id,
   station: station._id,
@@ -55,7 +55,7 @@ describe("CheckpointAssignment model", () => {
 
   afterEach(async () => {
     await Checkpoint.deleteMany({});
-    await Krok.deleteMany({});
+    await Event.deleteMany({});
     await Category.deleteMany({});
     await Station.deleteMany({});
     await CheckpointAssignment.deleteMany({});
@@ -68,7 +68,7 @@ describe("CheckpointAssignment model", () => {
 
   it("Throws an error if assignment is created with only half required parameters", () => {
     const assignment: ICheckpointAssignment = new CheckpointAssignment({
-      krok: krok._id,
+      event: event._id,
       category: category._id,
     });
     expect(assignment.validate).toThrow();
@@ -87,7 +87,7 @@ describe("CheckpointAssignment model", () => {
     expect(spy).toHaveBeenCalled();
 
     expect(savedAssignment).toMatchObject({
-      krok: expect.any(Object),
+      event: expect.any(Object),
       category: expect.any(Object),
       checkpoint: expect.any(Object),
       station: expect.any(Object),
