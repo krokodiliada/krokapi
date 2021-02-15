@@ -18,7 +18,7 @@
     "tsc": "tsc --project tsconfig.production.json",
     "build": "npm-run-all clean tsc",
     "dev": "nodemon src/index.ts",
-    "prod:start": "NODE_PATH=dist/ node ./dist/index.js",
+    "prod:start": "NODE_ENV=production NODE_PATH=dist/ node ./dist/index.js",
     "prod": "npm-run-all build prod:start",
     "test": "jest --runInBand"
   },
