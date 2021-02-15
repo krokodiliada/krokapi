@@ -22,10 +22,10 @@ describe("Category endpoints", () => {
 
   // GET methods
 
-  // GET /categories/?krok=:id
-  it("Should return a list of all categories for specific krok", async () => {
+  // GET /categories/?event=:id
+  it("Should return a list of all categories for specific event", async () => {
     const res = await request(app).get(
-      "/categories/?krok=5f8d04b3b54764421b7156dc"
+      "/categories/?event=5f8d04b3b54764421b7156dc"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
@@ -68,15 +68,17 @@ describe("Category endpoints", () => {
     });
   });
 
-  it("Should return 400 if krok filter is invalid", async () => {
-    const res = await request(app).get("/categories/?krok=5f8d04b3b54721b76dc");
+  it("Should return 400 if event filter is invalid", async () => {
+    const res = await request(app).get(
+      "/categories/?event=5f8d04b3b54721b76dc"
+    );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 404 if krok number does not exist", async () => {
+  it("Should return 404 if event number does not exist", async () => {
     const res = await request(app).get(
-      "/categories/?krok=5f8d04a3b54664421b2156dc"
+      "/categories/?event=5f8d04a3b54664421b2156dc"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -215,11 +217,13 @@ describe("Category endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should also unassign a cateogry from krok when it gets deleted", async () => {
-    const krokRes = await request(app).get("/kroks/40");
-    expect(krokRes.status).toEqual(StatusCodes.OK);
-    expect(krokRes.type).toBe("application/json");
-    expect(krokRes.body.categories).toMatchObject(["5f8d04f7b54764421b7156e8"]);
+  it("Should also unassign a cateogry from event when it gets deleted", async () => {
+    const eventRes = await request(app).get("/events/40");
+    expect(eventRes.status).toEqual(StatusCodes.OK);
+    expect(eventRes.type).toBe("application/json");
+    expect(eventRes.body.categories).toMatchObject([
+      "5f8d04f7b54764421b7156e8",
+    ]);
 
     const res = await request(app).delete(
       "/categories/5f8d04f7b54764421b7156e8"
@@ -227,10 +231,10 @@ describe("Category endpoints", () => {
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
 
-    const krokRes2 = await request(app).get("/kroks/40");
-    expect(krokRes2.status).toEqual(StatusCodes.OK);
-    expect(krokRes2.type).toBe("application/json");
-    expect(krokRes2.body.categories).toMatchObject([]);
+    const eventRes2 = await request(app).get("/events/40");
+    expect(eventRes2.status).toEqual(StatusCodes.OK);
+    expect(eventRes2.type).toBe("application/json");
+    expect(eventRes2.body.categories).toMatchObject([]);
   });
 
   // PATCH /categories/:id

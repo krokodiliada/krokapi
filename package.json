@@ -1,10 +1,10 @@
 {
-  "name": "krok-api",
+  "name": "krokapi",
   "version": "0.1.0",
   "description": "REST API for Krokodiliada application",
   "repository": {
     "type": "git",
-    "url": "https://github.com/krokodiliada/app-api"
+    "url": "https://github.com/krokodiliada/krokapi"
   },
   "keywords": [],
   "author": "Sergey Shilin",

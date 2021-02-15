@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import faker from "faker";
 
 import Category, { ICategory } from "model/Category";
-import Krok, { IKrok } from "model/Krok";
+import Event, { IEvent } from "model/Event";
 import Participant, { IParticipant } from "model/Participant";
 import RouteWater, { IRouteWater } from "model/RouteWater";
 import Team, { ITeam } from "model/Team";
@@ -14,7 +14,7 @@ const category: ICategory = new Category({
   },
 });
 
-const krok: IKrok = new Krok({
+const event: IEvent = new Event({
   number: 50,
   date: {
     start: new Date("Sep 25, 2020"),
@@ -33,7 +33,7 @@ const participant: IParticipant = new Participant({
 const team: ITeam = new Team({
   name: "Test Team",
   participants: [participant._id],
-  krok: krok._id,
+  event: event._id,
   category: category._id,
 });
 

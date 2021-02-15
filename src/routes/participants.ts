@@ -2,7 +2,7 @@ import express from "express";
 import ParticipantController from "controller/Participant";
 import GenericController from "controller/Common";
 
-// Router for /kroks/ api
+// Router for /events/ api
 const router = express.Router();
 
 router.param("id", GenericController.validateObjectId);

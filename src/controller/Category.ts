@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import GenericController from "controller/Common";
 
 import Category, { ICategory } from "model/Category";
-import Krok, { IKrok } from "model/Krok";
+import Event, { IEvent } from "model/Event";
 import Team, { ITeam } from "model/Team";
 import CheckpointAssignment, {
   ICheckpointAssignment,
@@ -68,19 +68,19 @@ const isCheckpointAssignedToCategory = async (
   return false;
 };
 
-const unassignCategoryFromKrok = async (categoryId: string) => {
-  // Get the list of all krok events
-  const kroks: Array<IKrok> = await Krok.find();
+const unassignCategoryFromEvent = async (categoryId: string) => {
+  // Get the list of all events
+  const events: Array<IEvent> = await Event.find();
 
-  kroks.forEach((krok) => {
-    const { categories } = krok;
+  events.forEach((event) => {
+    const { categories } = event;
 
     const categoryIndex = categories.indexOf(categoryId, 0);
     if (categoryIndex > -1) {
       categories.splice(categoryIndex, 1);
     }
 
-    krok.save();
+    event.save();
   });
 };
 
@@ -169,25 +169,25 @@ const canSetCategoryParameters = async (
 
 // GET /categories/
 const getAll: RequestHandler = async (req: Request, res: Response) => {
-  const krokId: string = req.query.krok as string;
+  const eventId: string = req.query.event as string;
 
-  if (krokId && !GenericController.isValidObjectId(krokId)) {
+  if (eventId && !GenericController.isValidObjectId(eventId)) {
     res.status(StatusCodes.BAD_REQUEST).json({});
     return;
   }
 
-  const krok: IKrok | null = await Krok.findById(krokId);
+  const event: IEvent | null = await Event.findById(eventId);
 
-  if (krokId && !krok) {
+  if (eventId && !event) {
     res.status(StatusCodes.NOT_FOUND).json({});
     return;
   }
 
   let filter = {};
 
-  if (krok) {
+  if (event) {
     filter = {
-      _id: { $in: krok.categories },
+      _id: { $in: event.categories },
     };
   }
 
@@ -287,7 +287,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 
   Category.deleteOne(category)
     .then(() => {
-      unassignCategoryFromKrok(requestedCategoryId);
+      unassignCategoryFromEvent(requestedCategoryId);
       res.status(StatusCodes.OK).json({});
     })
     .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));

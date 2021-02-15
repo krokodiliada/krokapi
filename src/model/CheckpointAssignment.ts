@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IKrok } from "model/Krok";
+import { IEvent } from "model/Event";
 import { ICategory } from "model/Category";
 import { ICheckpoint } from "model/Checkpoint";
 import { IStation } from "model/Station";
@@ -12,7 +12,7 @@ export enum CheckpointCostMetric {
 }
 
 export interface ICheckpointAssignment extends Document {
-  krok: IKrok["_id"];
+  event: IEvent["_id"];
   category: ICategory["_id"];
   checkpoint: ICheckpoint["_id"];
   station: IStation["_id"];
@@ -43,9 +43,9 @@ export interface ICheckpointAssignment extends Document {
 
 export const CheckpointAssignmentSchema: Schema = new Schema(
   {
-    krok: {
+    event: {
       type: Schema.Types.ObjectId,
-      ref: "Krok",
+      ref: "Event",
       required: true,
     },
     category: {

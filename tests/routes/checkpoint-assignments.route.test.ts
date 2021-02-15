@@ -32,7 +32,7 @@ describe("Checkpoint Assignment endpoints", () => {
     expect(res.body.length).toBeLessThan(85);
     expect(res.body[0]).toMatchObject({
       _id: expect.any(String),
-      krok: expect.any(String),
+      event: expect.any(String),
       category: expect.any(String),
       checkpoint: expect.any(String),
       station: expect.any(String),
@@ -64,7 +64,7 @@ describe("Checkpoint Assignment endpoints", () => {
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
       _id: "5f907c38b54764421b7160a4",
-      krok: "5f8d04b3b54764421b7156dc",
+      event: "5f8d04b3b54764421b7156dc",
       category: "5f8d04f7b54764421b7156df",
       checkpoint: "5f8f8720b54764421b715f24",
       station: "5f8f8c44b54764421b715f54",
@@ -81,7 +81,7 @@ describe("Checkpoint Assignment endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if creating assignment without krok", async () => {
+  it("Should return 400 if creating assignment without event", async () => {
     const res = await request(app).post("/checkpoint-assignments/").send({
       category: "5f8d04f7b54764421b7156df",
       checkpoint: "5f8f8720b54764421b715f21",
@@ -92,7 +92,7 @@ describe("Checkpoint Assignment endpoints", () => {
 
   it("Should return 400 if creating assignment without category", async () => {
     const res = await request(app).post("/checkpoint-assignments/").send({
-      krok: "5f8d0401b54764421b7156da",
+      event: "5f8d0401b54764421b7156da",
       checkpoint: "5f8f8720b54764421b715f21",
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
@@ -101,7 +101,7 @@ describe("Checkpoint Assignment endpoints", () => {
 
   it("Should return 400 if creating assignment without checkpoint", async () => {
     const res = await request(app).post("/checkpoint-assignments/").send({
-      krok: "5f8d0401b54764421b7156da",
+      event: "5f8d0401b54764421b7156da",
       category: "5f8d04f7b54764421b7156df",
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
@@ -110,7 +110,7 @@ describe("Checkpoint Assignment endpoints", () => {
 
   it("Should return 201 if successfully created assignment", async () => {
     const res = await request(app).post("/checkpoint-assignments/").send({
-      krok: "5f8d0401b54764421b7156da",
+      event: "5f8d0401b54764421b7156da",
       category: "5f8d04f7b54764421b7156df",
       checkpoint: "5f8f8720b54764421b715f21",
     });

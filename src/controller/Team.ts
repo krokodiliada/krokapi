@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import GenericController from "controller/Common";
 
 import Team, { ITeam } from "model/Team";
-import Krok, { IKrok } from "model/Krok";
+import Event, { IEvent } from "model/Event";
 import Category, { ICategory } from "model/Category";
 import Participant, { IParticipant } from "model/Participant";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
@@ -49,7 +49,7 @@ const isValidTeamSize = async (team: ITeam): Promise<boolean> => {
 };
 
 /**
- * Check if participants assigned to the team are unique among the same krok.
+ * Check if participants assigned to the team are unique among the same event.
  * One participant cannot be assigned to multiple teams.
  * @param team Team to check
  */
@@ -58,7 +58,7 @@ const areParticipantsUniqueForTeam = async (team: ITeam): Promise<boolean> => {
 
   const teams: Array<ITeam> = await Team.find()
     .where({
-      krok: team.krok,
+      event: team.event,
     })
     .where({
       participants: { $in: participants },
@@ -88,11 +88,11 @@ const isTeamValid = async (team: ITeam): Promise<boolean> => {
         throw new Error("The team shares participants with another team");
       }
 
-      const krok: IKrok | null = await Krok.findById(team.krok);
+      const event: IEvent | null = await Event.findById(team.event);
       const category: ICategory | null = await Category.findById(team.category);
 
-      if (!krok || !category) {
-        throw new Error("Either krok or category id does not exist");
+      if (!event || !category) {
+        throw new Error("Either event or category id does not exist");
       }
 
       return true;
@@ -102,16 +102,16 @@ const isTeamValid = async (team: ITeam): Promise<boolean> => {
     });
 };
 
-interface ParticipantAndKrokParameters {
+interface ParticipantAndEventParameters {
   participant: string;
-  krok: string;
+  event: string;
 }
 
-const getByParticipantAndKrok = async ({
+const getByParticipantAndEvent = async ({
   participant,
-  krok,
-}: ParticipantAndKrokParameters): Promise<ITeam | null> => {
-  const teams: Array<ITeam> = await Team.find().where(participant).where(krok);
+  event,
+}: ParticipantAndEventParameters): Promise<ITeam | null> => {
+  const teams: Array<ITeam> = await Team.find().where(participant).where(event);
 
   if (teams.length === 0) {
     return null;
@@ -120,36 +120,36 @@ const getByParticipantAndKrok = async ({
   return teams[0];
 };
 
-interface KrokCategoryFilter {
-  krok?: unknown;
+interface EventCategoryFilter {
+  event?: unknown;
   category?: unknown;
 }
 
 // GET /teams/
 const getAll: RequestHandler = async (req: Request, res: Response) => {
-  const krokId: string = req.query.krok as string;
+  const eventId: string = req.query.event as string;
   const categoryId: string = req.query.category as string;
 
   if (
-    (krokId && !GenericController.isValidObjectId(krokId)) ||
+    (eventId && !GenericController.isValidObjectId(eventId)) ||
     (categoryId && !GenericController.isValidObjectId(categoryId))
   ) {
     res.status(StatusCodes.BAD_REQUEST).json({});
     return;
   }
 
-  const krok: IKrok | null = await Krok.findById(krokId);
+  const event: IEvent | null = await Event.findById(eventId);
   const category: ICategory | null = await Category.findById(categoryId);
 
-  if ((krokId && !krok) || (categoryId && !category)) {
+  if ((eventId && !event) || (categoryId && !category)) {
     res.status(StatusCodes.NOT_FOUND).json({});
     return;
   }
 
-  const filter: KrokCategoryFilter = {};
+  const filter: EventCategoryFilter = {};
 
-  if (krok) {
-    filter.krok = { $in: krok._id };
+  if (event) {
+    filter.event = { $in: event._id };
   }
 
   if (category) {
@@ -296,7 +296,7 @@ export default {
   validateTeamExists,
   getAll,
   getById,
-  getByParticipantAndKrok,
+  getByParticipantAndEvent,
   create,
   update,
   deleteById,

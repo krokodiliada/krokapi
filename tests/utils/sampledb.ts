@@ -2,7 +2,7 @@ import Category from "model/Category";
 import Checkpoint from "model/Checkpoint";
 import CheckpointAssignment from "model/CheckpointAssignment";
 import GpsLocation from "model/GpsLocation";
-import Krok from "model/Krok";
+import Event from "model/Event";
 import Participant from "model/Participant";
 import Route from "model/Route";
 import RouteWater from "model/RouteWater";
@@ -11,7 +11,7 @@ import TagAssignment from "model/TagAssignment";
 import Team from "model/Team";
 
 import categoryData from "../data/categories";
-import krokData from "../data/krok";
+import eventData from "../data/events";
 import participantData from "../data/participants";
 import tagAssignmentData from "../data/tagAssignment";
 import teamData from "../data/teams";
@@ -26,8 +26,8 @@ const createCategoryCollection = async () => {
   await Category.insertMany(categoryData);
 };
 
-const createKrokCollection = async () => {
-  await Krok.insertMany(krokData);
+const createEventCollection = async () => {
+  await Event.insertMany(eventData);
 };
 
 const createParticipantCollection = async () => {
@@ -68,7 +68,7 @@ const createRouteCollection = async () => {
 
 export const populateSampleDatabase = async (): Promise<void> => {
   await createCategoryCollection();
-  await createKrokCollection();
+  await createEventCollection();
   await createParticipantCollection();
   await createTagAssignmentCollection();
   await createTeamCollection();
@@ -85,7 +85,7 @@ export const eraseSampleDatabase = async (): Promise<void> => {
   await Checkpoint.deleteMany({});
   await CheckpointAssignment.deleteMany({});
   await GpsLocation.deleteMany({});
-  await Krok.deleteMany({});
+  await Event.deleteMany({});
   await Participant.deleteMany({});
   await Route.deleteMany({});
   await RouteWater.deleteMany({});

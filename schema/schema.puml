@@ -21,12 +21,12 @@ class Team {
   ==
   #""id""
   +""participants"" - //""Array[Participant.id]""//
-  +""krok"" - //""Krok.id""//
+  +""event"" - //""Event.id""//
   +""category"" - //""Category.id""//
   +""extra_map_required""
 }
 
-class Krok {
+class Event {
   Information about the current event
   ==
   #""id""
@@ -45,7 +45,7 @@ class Category {
   +""short_name""
   +""long_name""
   +""description""
-  +""krok"" - //""Krok.id""//
+  +""event"" - //""Event.id""//
   +""min_participants""
   +""max_participants""
   +""min_checkpoints"" -
@@ -71,7 +71,7 @@ class CheckPointAssignment {
   stations and categories
   ==
   #""id""
-  +""krok"" - //""Krok.id""//
+  +""event"" - //""Event.id""//
   +""category"" - //""Category.id""//
   +""checkpoint"" - //""CheckPoint.id""//
   +""station"" - //""Station.id""//
@@ -102,7 +102,7 @@ class TagAssignment {
   #""id""
   +""tag"" - //""Tag.id""//
   +""participant"" - //""Participant.id""//
-  +""krok"" - //""Krok.id""//
+  +""event"" - //""Event.id""//
 }
 
 class Route {
@@ -110,7 +110,7 @@ class Route {
   ==
   #""id""
   +""tag"" - //""Tag.id""//
-  +""krok"" - //""Krok.id""//
+  +""event"" - //""Event.id""//
   +""start"" - //Start timestamp//
   +""finish"" - //Finish timestamp//
   +""actions"" - //""Array[""//
@@ -145,20 +145,20 @@ class GpsLocation {
 }
 
 Team::participant *-right- Participant::id
-Team::krok -- Krok::id
+Team::event -- Event::id
 Team::category -down- Category::id
-Krok::id -left- Category::krok
-Krok::location -- GpsLocation::id
+Event::id -left- Category::event
+Event::location -- GpsLocation::id
 CheckPoint::location -- GpsLocation::id
-CheckPointAssignment::krok -up- Krok::id
+CheckPointAssignment::event -up- Event::id
 CheckPointAssignment::category -left- Category::id
 CheckPointAssignment::checkpoint -left- CheckPoint::id
 CheckPointAssignment::station -right- Station::id
 TagAssignment::tag -right- Tag::id
-TagAssignment::krok -- Krok::id
+TagAssignment::event -- Event::id
 TagAssignment::participant -left- Participant::id
 Route::tag -up- Tag::id
-Route::krok -left- Krok::id
+Route::event -left- Event::id
 Route::punches *-[norank]- Station::id
 RouteWater::team -up- Team::id
 RouteWater::actions *-down- CheckPoint::id
