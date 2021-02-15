@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import helmet from "helmet";
 
 import * as CategoryRouter from "routes/categories";
 import * as CheckpointRouter from "routes/checkpoints";
@@ -15,6 +16,7 @@ import * as TeamRouter from "routes/teams";
 const app = express();
 
 // Configuring body parser middleware
+app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
