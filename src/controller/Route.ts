@@ -6,6 +6,7 @@ import GenericController from "controller/Common";
 import Route, { IRoute, IRouteAction } from "model/Route";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 import Station, { IStation } from "model/Station";
+import utils from "utils";
 
 const validateRouteExists: RequestHandler = async (
   req: Request,
@@ -95,6 +96,7 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
 // POST /routes/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
   if ("tagAssignment" in data) {
     const assignmentId: string = data.tagAssignment as string;
@@ -111,7 +113,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
     .then((route: IRoute) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/routes/${route._id}`)
+        .set("Location", `/${version}/routes/${route._id}`)
         .json(route)
     )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));

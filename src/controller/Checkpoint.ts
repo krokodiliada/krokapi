@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Checkpoint, { ICheckpoint } from "model/Checkpoint";
+import utils from "utils";
 
 const validateCheckpointExists: RequestHandler = async (
   req: Request,
@@ -54,6 +55,7 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
 // PUT /checkpoints/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
   const newCheckpoint: ICheckpoint = new Checkpoint(data);
 
@@ -67,7 +69,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
           .then((checkpoint: ICheckpoint) =>
             res
               .status(StatusCodes.CREATED)
-              .set("Location", `/checkpoints/${checkpoint._id}`)
+              .set("Location", `/${version}/checkpoints/${checkpoint._id}`)
               .json(checkpoint)
           )
           .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));

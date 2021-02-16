@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 import request from "supertest";
 import { StatusCodes } from "http-status-codes";
 import app from "server";
-import { populateSampleDatabase, eraseSampleDatabase } from "../utils/sampledb";
+import {
+  populateSampleDatabase,
+  eraseSampleDatabase,
+} from "../../utils/sampledb";
 
 describe("Category endpoints", () => {
   beforeAll(async () => {
@@ -25,7 +28,7 @@ describe("Category endpoints", () => {
   // GET /categories/?event=:id
   it("Should return a list of all categories for specific event", async () => {
     const res = await request(app).get(
-      "/categories/?event=5f8d04b3b54764421b7156dc"
+      "/v1/categories/?event=5f8d04b3b54764421b7156dc"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
@@ -48,7 +51,7 @@ describe("Category endpoints", () => {
 
   // GET /categories/
   it("Should return a list of all categories", async () => {
-    const res = await request(app).get("/categories");
+    const res = await request(app).get("/v1/categories");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -70,7 +73,7 @@ describe("Category endpoints", () => {
 
   it("Should return 400 if event filter is invalid", async () => {
     const res = await request(app).get(
-      "/categories/?event=5f8d04b3b54721b76dc"
+      "/v1/categories/?event=5f8d04b3b54721b76dc"
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -78,7 +81,7 @@ describe("Category endpoints", () => {
 
   it("Should return 404 if event number does not exist", async () => {
     const res = await request(app).get(
-      "/categories/?event=5f8d04a3b54664421b2156dc"
+      "/v1/categories/?event=5f8d04a3b54664421b2156dc"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -86,7 +89,9 @@ describe("Category endpoints", () => {
 
   // GET /categories/:id
   it("Should successfully return a category by id", async () => {
-    const res = await request(app).get("/categories/5f8d04f7b54764421b7156de");
+    const res = await request(app).get(
+      "/v1/categories/5f8d04f7b54764421b7156de"
+    );
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -106,13 +111,15 @@ describe("Category endpoints", () => {
   });
 
   it("Should return 400 if requesting a category by invalid id", async () => {
-    const res = await request(app).get("/categories/5f84f7b54764421b71de");
+    const res = await request(app).get("/v1/categories/5f84f7b54764421b71de");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 if requesting a category by inexistent id", async () => {
-    const res = await request(app).get("/categories/5f8d04f7a54634421b7156de");
+    const res = await request(app).get(
+      "/v1/categories/5f8d04f7a54634421b7156de"
+    );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
@@ -120,7 +127,7 @@ describe("Category endpoints", () => {
   // POST /categories/
   it("Should return 400 if creating a category wihtout short name", async () => {
     const res = await request(app)
-      .post("/categories/")
+      .post("/v1/categories/")
       .send({
         name: {
           short: "Short name",
@@ -132,7 +139,7 @@ describe("Category endpoints", () => {
 
   it("Should return 400 if creating a category wihtout long name", async () => {
     const res = await request(app)
-      .post("/categories/")
+      .post("/v1/categories/")
       .send({
         name: {
           long: "Long name",
@@ -144,7 +151,7 @@ describe("Category endpoints", () => {
 
   it("Should return 400 if creating a category with the same name", async () => {
     const res = await request(app)
-      .post("/categories/")
+      .post("/v1/categories/")
       .send({
         name: {
           short: "Che",
@@ -157,7 +164,7 @@ describe("Category endpoints", () => {
 
   it("Should return 201 if successfully created a category", async () => {
     const res = await request(app)
-      .post("/categories/")
+      .post("/v1/categories/")
       .send({
         name: {
           short: "X",
@@ -166,19 +173,23 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
-    expect(res.headers.location).toMatch(/.*(\/categories\/)([a-f\d]{24})$/);
+    expect(res.headers.location).toMatch(
+      /.*(\/v1\/categories\/)([a-f\d]{24})$/
+    );
   });
 
   // DELETE /categories/:id
   it("Should return 400 if deleting a category by invalid id", async () => {
-    const res = await request(app).delete("/categories/5f04f7b5476441b716e5");
+    const res = await request(app).delete(
+      "/v1/categories/5f04f7b5476441b716e5"
+    );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 if deleting a category by inexistent id", async () => {
     const res = await request(app).delete(
-      "/categories/5f8d04f7a54762431b7155e5"
+      "/v1/categories/5f8d04f7a54762431b7155e5"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -186,16 +197,16 @@ describe("Category endpoints", () => {
 
   it("Should return 200 if successfully deleted a category", async () => {
     const res = await request(app).delete(
-      "/categories/5f8d04f7b54764421b7156e5"
+      "/v1/categories/5f8d04f7b54764421b7156e5"
     );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 if trying to delete the same category twice", async () => {
-    await request(app).delete("/categories/5f8d04f7b54764421b7156e6");
+    await request(app).delete("/v1/categories/5f8d04f7b54764421b7156e6");
     const res = await request(app).delete(
-      "/categories/5f8d04f7b54764421b7156e6"
+      "/v1/categories/5f8d04f7b54764421b7156e6"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -203,7 +214,7 @@ describe("Category endpoints", () => {
 
   it("Should return 400 if deleting a category with at least one team in it", async () => {
     const res = await request(app).delete(
-      "/categories/5f8d04f7b54764421b7156e3"
+      "/v1/categories/5f8d04f7b54764421b7156e3"
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -211,14 +222,14 @@ describe("Category endpoints", () => {
 
   it("Should return 400 if deleting a category with at least one CP assigned to it", async () => {
     const res = await request(app).delete(
-      "/categories/5f8d04f7b54764421b7156e7"
+      "/v1/categories/5f8d04f7b54764421b7156e7"
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should also unassign a cateogry from event when it gets deleted", async () => {
-    const eventRes = await request(app).get("/events/40");
+    const eventRes = await request(app).get("/v1/events/40");
     expect(eventRes.status).toEqual(StatusCodes.OK);
     expect(eventRes.type).toBe("application/json");
     expect(eventRes.body.categories).toMatchObject([
@@ -226,12 +237,12 @@ describe("Category endpoints", () => {
     ]);
 
     const res = await request(app).delete(
-      "/categories/5f8d04f7b54764421b7156e8"
+      "/v1/categories/5f8d04f7b54764421b7156e8"
     );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
 
-    const eventRes2 = await request(app).get("/events/40");
+    const eventRes2 = await request(app).get("/v1/events/40");
     expect(eventRes2.status).toEqual(StatusCodes.OK);
     expect(eventRes2.type).toBe("application/json");
     expect(eventRes2.body.categories).toMatchObject([]);
@@ -239,14 +250,14 @@ describe("Category endpoints", () => {
 
   // PATCH /categories/:id
   it("Should return 400 if updating a category by invalid id", async () => {
-    const res = await request(app).patch("/categories/5f04f7b5476441b716e5");
+    const res = await request(app).patch("/v1/categories/5f04f7b5476441b716e5");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 if updating a category by inexistent id", async () => {
     const res = await request(app).patch(
-      "/categories/5f8d04f7a54664411b7156e0"
+      "/v1/categories/5f8d04f7a54664411b7156e0"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -261,7 +272,7 @@ describe("Category endpoints", () => {
    */
   it("Should return 400 if cannot increase minimum number of participants", async () => {
     const res = await request(app)
-      .patch("/categories/5f8d04f7b54764421b7156e2")
+      .patch("/v1/categories/5f8d04f7b54764421b7156e2")
       .send({
         "participantsNumber.min": 4,
       });
@@ -271,7 +282,7 @@ describe("Category endpoints", () => {
 
   it("Should return 400 if cannot decrease maximum number of participants", async () => {
     const res = await request(app)
-      .patch("/categories/5f8d04f7b54764421b7156e2")
+      .patch("/v1/categories/5f8d04f7b54764421b7156e2")
       .send({
         "participantsNumber.max": 3,
       });
@@ -281,7 +292,7 @@ describe("Category endpoints", () => {
 
   it("Should return 200 if new number of participants won't affect any teams", async () => {
     const res = await request(app)
-      .patch("/categories/5f8d04f7b54764421b7156e2")
+      .patch("/v1/categories/5f8d04f7b54764421b7156e2")
       .send({
         participantsNumber: {
           min: 2,
@@ -298,7 +309,7 @@ describe("Category endpoints", () => {
    */
   it("Should return 400 if trying to set the same name as for the other category", async () => {
     const res = await request(app)
-      .patch("/categories/5f8d04f7b54764421b7156e2")
+      .patch("/v1/categories/5f8d04f7b54764421b7156e2")
       .send({
         name: {
           short: "B",
@@ -322,7 +333,7 @@ describe("Category endpoints", () => {
    */
   it("Should return 400 if not allowed to change the minimum number of checkpoints", async () => {
     const res = await request(app)
-      .patch("/categories/5f8d04f7b54764421b7156de")
+      .patch("/v1/categories/5f8d04f7b54764421b7156de")
       .send({
         minCheckpoints: 5,
       });
@@ -335,7 +346,7 @@ describe("Category endpoints", () => {
    */
   it("Should return 400 if not allowed to change the maximum time", async () => {
     const res = await request(app)
-      .patch("/categories/5f8d04f7b54764421b7156de")
+      .patch("/v1/categories/5f8d04f7b54764421b7156de")
       .send({
         maxTime: 9,
       });
@@ -345,7 +356,7 @@ describe("Category endpoints", () => {
 
   it("Should return 200 if updating minCheckpoints and maxTime won't affect any teams", async () => {
     const res = await request(app)
-      .patch("/categories/5f8d04f7b54764421b7156e9")
+      .patch("/v1/categories/5f8d04f7b54764421b7156e9")
       .send({
         minCheckpoints: 4,
         maxTime: 9,

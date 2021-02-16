@@ -11,6 +11,7 @@ import CheckpointAssignment, {
 } from "model/CheckpointAssignment";
 import Route, { IRoute } from "model/Route";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
+import utils from "utils";
 
 const validateCategoryExists: RequestHandler = async (
   req: Request,
@@ -211,6 +212,7 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
 // POST /categories/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
   const newCategory: ICategory = new Category(data);
 
@@ -218,7 +220,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
     .then((category: ICategory) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/categories/${category._id}`)
+        .set("Location", `/${version}/categories/${category._id}`)
         .json(category)
     )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));

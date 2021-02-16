@@ -3,7 +3,10 @@ import request from "supertest";
 import { StatusCodes } from "http-status-codes";
 import app from "server";
 import { StationType } from "model/Station";
-import { populateSampleDatabase, eraseSampleDatabase } from "../utils/sampledb";
+import {
+  populateSampleDatabase,
+  eraseSampleDatabase,
+} from "../../utils/sampledb";
 
 describe("Station endpoints", () => {
   beforeAll(async () => {
@@ -25,7 +28,7 @@ describe("Station endpoints", () => {
 
   // GET /stations/
   it("Should return a list of all stations", async () => {
-    const res = await request(app).get("/stations/");
+    const res = await request(app).get("/v1/stations/");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -39,7 +42,7 @@ describe("Station endpoints", () => {
 
   // GET /stations/:station
   it("Should return 200 when requesting a station by number", async () => {
-    const res = await request(app).get("/stations/19");
+    const res = await request(app).get("/v1/stations/19");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -52,52 +55,52 @@ describe("Station endpoints", () => {
   });
 
   it("Should return 400 when requesting station with invalid number", async () => {
-    const res = await request(app).get("/stations/505Aaab");
+    const res = await request(app).get("/v1/stations/505Aaab");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when requesting inexistent station", async () => {
-    const res = await request(app).get("/stations/40012");
+    const res = await request(app).get("/v1/stations/40012");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   // DELETE /stations/:station
   it("Should return 400 when deleting station with invalid number", async () => {
-    const res = await request(app).delete("/stations/505Aaab");
+    const res = await request(app).delete("/v1/stations/505Aaab");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when deleting inexistent station", async () => {
-    const res = await request(app).delete("/stations/40012");
+    const res = await request(app).delete("/v1/stations/40012");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 200 when successfully deleted station", async () => {
-    const res = await request(app).delete("/stations/13");
+    const res = await request(app).delete("/v1/stations/13");
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when deleting station for the second time", async () => {
-    await request(app).delete("/stations/15");
-    const res = await request(app).delete("/stations/15");
+    await request(app).delete("/v1/stations/15");
+    const res = await request(app).delete("/v1/stations/15");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   // PUT /stations/:station
   it("Should return 400 when adding station with invalid number", async () => {
-    const res = await request(app).put("/stations/505Aaab");
+    const res = await request(app).put("/v1/stations/505Aaab");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 201 when adding station with number only", async () => {
-    const res = await request(app).put("/stations/515");
+    const res = await request(app).put("/v1/stations/515");
 
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
@@ -109,7 +112,7 @@ describe("Station endpoints", () => {
   });
 
   it("Should return 201 when adding station with number and data", async () => {
-    const res = await request(app).put("/stations/516").send({
+    const res = await request(app).put("/v1/stations/516").send({
       stationType: StationType.Start,
     });
 
@@ -125,19 +128,19 @@ describe("Station endpoints", () => {
 
   // PATCH /stations/:station
   it("Should return 400 when updating station with invalid number", async () => {
-    const res = await request(app).patch("/stations/515Aab");
+    const res = await request(app).patch("/v1/stations/515Aab");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when updating inexistent station", async () => {
-    const res = await request(app).patch("/stations/900");
+    const res = await request(app).patch("/v1/stations/900");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 200 when successfully updated station with status", async () => {
-    const res = await request(app).patch("/stations/29").send({
+    const res = await request(app).patch("/v1/stations/29").send({
       enbled: false,
     });
     expect(res.status).toEqual(StatusCodes.OK);
@@ -145,7 +148,7 @@ describe("Station endpoints", () => {
   });
 
   it("Should return 200 when successfully updated station with type", async () => {
-    const res = await request(app).patch("/stations/30").send({
+    const res = await request(app).patch("/v1/stations/30").send({
       stationType: StationType.Finish,
     });
     expect(res.status).toEqual(StatusCodes.OK);
@@ -153,7 +156,7 @@ describe("Station endpoints", () => {
   });
 
   it("Should return 200 when updated station with both status and type", async () => {
-    const res = await request(app).patch("/stations/31").send({
+    const res = await request(app).patch("/v1/stations/31").send({
       enbled: false,
       stationType: StationType.Clear,
     });

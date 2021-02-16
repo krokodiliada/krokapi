@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 import Participant, { IParticipant } from "model/Participant";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
+import utils from "utils";
 
 const validateParticipantExists: RequestHandler = async (
   req: Request,
@@ -68,6 +69,7 @@ const getByTagAndEvent = async ({
 // PUT /participants/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
   const newParticipant: IParticipant = new Participant(data);
 
@@ -75,7 +77,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
     .then((participant: IParticipant) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/participants/${participant._id}`)
+        .set("Location", `/${version}/participants/${participant._id}`)
         .json(participant)
     )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));

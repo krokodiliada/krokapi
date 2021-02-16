@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 import request from "supertest";
 import { StatusCodes } from "http-status-codes";
 import app from "server";
-import { populateSampleDatabase, eraseSampleDatabase } from "../utils/sampledb";
+import {
+  populateSampleDatabase,
+  eraseSampleDatabase,
+} from "../../utils/sampledb";
 
 describe("Route endpoints", () => {
   beforeAll(async () => {
@@ -22,7 +25,7 @@ describe("Route endpoints", () => {
 
   // GET /routes/
   it("Should return the list of all routes", async () => {
-    const res = await request(app).get("/routes/");
+    const res = await request(app).get("/v1/routes/");
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body.length).toBeGreaterThan(315);
@@ -39,7 +42,7 @@ describe("Route endpoints", () => {
   // GET /routes/?tagAssignment=:tagAssignment
   it("Should return a single route by tag assignment id", async () => {
     const res = await request(app).get(
-      "/routes/?tagAssignment=5fcc1bd5b54764851111845b"
+      "/v1/routes/?tagAssignment=5fcc1bd5b54764851111845b"
     );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -55,7 +58,7 @@ describe("Route endpoints", () => {
 
   // GET /routes/:id
   it("Should return a route by id", async () => {
-    const res = await request(app).get("/routes/5fd550a7b547649dd7e37814");
+    const res = await request(app).get("/v1/routes/5fd550a7b547649dd7e37814");
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
@@ -69,7 +72,7 @@ describe("Route endpoints", () => {
 
   it("Should return 400 if requesting a route by invalid assignment", async () => {
     const res = await request(app).get(
-      "/routes/?tagAssignment=5f8d13a764421b7156ab"
+      "/v1/routes/?tagAssignment=5f8d13a764421b7156ab"
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -77,7 +80,7 @@ describe("Route endpoints", () => {
 
   it("Should return 404 if requesting a route by inexistent assignment", async () => {
     const res = await request(app).get(
-      "/routes/?tagAssignment=5f8d13a3b54764421b7156ab"
+      "/v1/routes/?tagAssignment=5f8d13a3b54764421b7156ab"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -85,14 +88,14 @@ describe("Route endpoints", () => {
 
   // POST /routes/
   it("Should return 400 if creating a route with empty body", async () => {
-    const res = await request(app).post("/routes/").send({});
+    const res = await request(app).post("/v1/routes/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 400 if creating a route without tag assignment", async () => {
     const res = await request(app)
-      .post("/routes/")
+      .post("/v1/routes/")
       .send({
         start: new Date(1601142588000),
       });
@@ -102,7 +105,7 @@ describe("Route endpoints", () => {
 
   it("Should return 400 if creating a route with tag assignment that already exists", async () => {
     const res = await request(app)
-      .post("/routes/")
+      .post("/v1/routes/")
       .send({
         tagAssignment: "5fcc1bd5b5476485111183e4",
         start: new Date(1601142588000),
@@ -113,7 +116,7 @@ describe("Route endpoints", () => {
 
   it("Should return 400 if creating a route with invalid tag assignment", async () => {
     const res = await request(app)
-      .post("/routes/")
+      .post("/v1/routes/")
       .send({
         tagAssignment: "5f8d13a3b4421b7156ab",
         start: new Date(1601142588000),
@@ -124,7 +127,7 @@ describe("Route endpoints", () => {
 
   it("Should return 400 if creating a route with inexistent tag assignment", async () => {
     const res = await request(app)
-      .post("/routes/")
+      .post("/v1/routes/")
       .send({
         tagAssignment: "5f8d13a3b54764421b7156ab",
         start: new Date(1601142588000),
@@ -134,7 +137,7 @@ describe("Route endpoints", () => {
   });
 
   it("Should return 400 if creating a route with invalid start timestamp", async () => {
-    const res = await request(app).post("/routes/").send({
+    const res = await request(app).post("/v1/routes/").send({
       tagAssignment: "5fcc1bd5b54764851111853a",
       start: "NotReallyATimestamp",
     });
@@ -144,20 +147,20 @@ describe("Route endpoints", () => {
 
   it("Should return 201 if successfully created a route", async () => {
     const res = await request(app)
-      .post("/routes/")
+      .post("/v1/routes/")
       .send({
         tagAssignment: "5fcc1bd5b54764851111853a",
         start: new Date(1601142588000),
       });
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
-    expect(res.headers.location).toMatch(/.*(\/routes\/)([a-f\d]{24})$/);
+    expect(res.headers.location).toMatch(/.*(\/v1\/routes\/)([a-f\d]{24})$/);
   });
 
   // PATCH /routes/:id
   it("Should return 400 when updating a route with invalid id", async () => {
     const res = await request(app)
-      .patch("/routes/5fd550649dd7e37820")
+      .patch("/v1/routes/5fd550649dd7e37820")
       .send({
         finish: new Date(1601142588000),
       });
@@ -168,7 +171,7 @@ describe("Route endpoints", () => {
 
   it("Should return 404 when updating a route with inexistent id", async () => {
     const res = await request(app)
-      .patch("/routes/5fd550a7a527644dd7e37820")
+      .patch("/v1/routes/5fd550a7a527644dd7e37820")
       .send({
         finish: new Date(1601142588000),
       });
@@ -179,7 +182,7 @@ describe("Route endpoints", () => {
 
   it("Should return 400 when updating a route with invalid finish timestamp", async () => {
     const res = await request(app)
-      .patch("/routes/5fd550a7b547649dd7e37774")
+      .patch("/v1/routes/5fd550a7b547649dd7e37774")
       .send({
         finish: "NotATimestamp",
       });
@@ -190,7 +193,7 @@ describe("Route endpoints", () => {
 
   it("Should return 400 when setting finish time earlier than start time", async () => {
     const res = await request(app)
-      .patch("/routes/5fd550a7b547649dd7e37820")
+      .patch("/v1/routes/5fd550a7b547649dd7e37820")
       .send({
         finish: new Date(1601111462000),
       });
@@ -201,7 +204,7 @@ describe("Route endpoints", () => {
 
   it("Should return 400 when setting start time later that finish time", async () => {
     const res = await request(app)
-      .patch("/routes/5fd550a7b547649dd7e37815")
+      .patch("/v1/routes/5fd550a7b547649dd7e37815")
       .send({
         start: new Date(1601146149000),
       });
@@ -212,7 +215,7 @@ describe("Route endpoints", () => {
 
   it("Should update a route's finish time", async () => {
     const res = await request(app)
-      .patch("/routes/5fd550a7b547649dd7e37820")
+      .patch("/v1/routes/5fd550a7b547649dd7e37820")
       .send({
         finish: new Date(1601142588000),
       });
@@ -223,7 +226,7 @@ describe("Route endpoints", () => {
 
   it("Should update a route's start time", async () => {
     const res = await request(app)
-      .patch("/routes/5fd550a7b547649dd7e37818")
+      .patch("/v1/routes/5fd550a7b547649dd7e37818")
       .send({
         start: new Date(1601109887000),
       });
@@ -234,30 +237,36 @@ describe("Route endpoints", () => {
 
   // DELETE /routes/:id
   it("Should return 400 when deleting a route by invalid id", async () => {
-    const res = await request(app).delete("/routes/5fd550649dd7e37765");
+    const res = await request(app).delete("/v1/routes/5fd550649dd7e37765");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when deleting a route by inexistent id", async () => {
-    const res = await request(app).delete("/routes/5fd550a7a537648dd7e37762");
+    const res = await request(app).delete(
+      "/v1/routes/5fd550a7a537648dd7e37762"
+    );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 200 when successfully deleted a route", async () => {
-    const res = await request(app).delete("/routes/5fd550a7b547649dd7e37765");
+    const res = await request(app).delete(
+      "/v1/routes/5fd550a7b547649dd7e37765"
+    );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when deleting a route twice", async () => {
-    const res = await request(app).delete("/routes/5fd550a7b547649dd7e37763");
+    const res = await request(app).delete(
+      "/v1/routes/5fd550a7b547649dd7e37763"
+    );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
 
     const resSecond = await request(app).delete(
-      "/routes/5fd550a7b547649dd7e37763"
+      "/v1/routes/5fd550a7b547649dd7e37763"
     );
     expect(resSecond.status).toEqual(StatusCodes.NOT_FOUND);
     expect(resSecond.type).toBe("application/json");
@@ -266,7 +275,7 @@ describe("Route endpoints", () => {
   // PUT /routes/:tag/actions
   it("Should return 400 when setting actions for invalid route", async () => {
     const res = await request(app)
-      .put("/routes/5fd550649dd7e37820/actions")
+      .put("/v1/routes/5fd550649dd7e37820/actions")
       .send({
         actions: [
           {
@@ -282,7 +291,7 @@ describe("Route endpoints", () => {
 
   it("Should return 404 when setting actions for inexistent route", async () => {
     const res = await request(app)
-      .put("/routes/5fd550a7a527644dd7e37820/actions")
+      .put("/v1/routes/5fd550a7a527644dd7e37820/actions")
       .send({
         actions: [
           {
@@ -298,7 +307,7 @@ describe("Route endpoints", () => {
 
   it("Should return 400 when one of the actions has invalid id", async () => {
     const res = await request(app)
-      .put("/routes/5fd550a7b547649dd7e37820/actions")
+      .put("/v1/routes/5fd550a7b547649dd7e37820/actions")
       .send({
         actions: [
           {
@@ -318,7 +327,7 @@ describe("Route endpoints", () => {
 
   it("Should return 400 when one of the actions has inexistent id", async () => {
     const res = await request(app)
-      .put("/routes/5fd550a7b547649dd7e37820/actions")
+      .put("/v1/routes/5fd550a7b547649dd7e37820/actions")
       .send({
         actions: [
           {
@@ -338,7 +347,7 @@ describe("Route endpoints", () => {
 
   it("Should update a route with all actions", async () => {
     const res = await request(app)
-      .put("/routes/5fd550a7b547649dd7e37820/actions")
+      .put("/v1/routes/5fd550a7b547649dd7e37820/actions")
       .send({
         actions: [
           {

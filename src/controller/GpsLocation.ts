@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import GpsLocation, { IGpsLocation } from "model/GpsLocation";
+import utils from "utils";
 
 const validateLocationExists: RequestHandler = async (
   req: Request,
@@ -39,6 +40,7 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
 // PUT /locations/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
   const newLocation: IGpsLocation = new GpsLocation(data);
 
@@ -46,7 +48,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
     .then((location: IGpsLocation) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/locations/${location._id}`)
+        .set("Location", `/${version}/locations/${location._id}`)
         .json(location)
     )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));

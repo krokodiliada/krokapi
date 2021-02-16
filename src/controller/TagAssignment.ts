@@ -3,10 +3,10 @@ import { StatusCodes } from "http-status-codes";
 import _ from "lodash";
 
 import GenericController from "controller/Common";
-
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 import Event, { IEvent } from "model/Event";
 import Participant, { IParticipant } from "model/Participant";
+import utils from "utils";
 
 const validateAssignmentExists: RequestHandler = async (
   req: Request,
@@ -149,6 +149,7 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
 // POST /tag-assignments/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
   const isDataValid = await isAssignmentDataValid(data);
   if (!isDataValid) {
@@ -173,7 +174,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
     .then((assignment: ITagAssignment) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/tag-assignments/${assignment._id}`)
+        .set("Location", `/${version}/tag-assignments/${assignment._id}`)
         .json(assignment)
     )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
