@@ -10,6 +10,7 @@ import Participant, { IParticipant } from "model/Participant";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 import Route, { IRoute } from "model/Route";
 import RouteWater, { IRouteWater } from "model/RouteWater";
+import utils from "utils";
 
 const validateTeamExists: RequestHandler = async (
   req: Request,
@@ -174,6 +175,7 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
 // PUT /teams/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
   const newTeam: ITeam = new Team(data);
   const isValid: boolean = await isTeamValid(newTeam);
@@ -187,7 +189,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
     .then((team: ITeam) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/teams/${team._id}`)
+        .set("Location", `/${version}/teams/${team._id}`)
         .json(team)
     )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));

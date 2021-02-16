@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import CheckpointAssignment, {
   ICheckpointAssignment,
 } from "model/CheckpointAssignment";
+import utils from "utils";
 
 const validateAssignmentExists: RequestHandler = async (
   req: Request,
@@ -45,6 +46,7 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
 // PUT /checkpoint-assignments/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
   const newAssignment: ICheckpointAssignment = new CheckpointAssignment(data);
 
@@ -52,7 +54,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
     .then((assignment: ICheckpointAssignment) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/checkpoint-assignments/${assignment._id}`)
+        .set("Location", `/${version}/checkpoint-assignments/${assignment._id}`)
         .json(assignment)
     )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Station, { IStation } from "model/Station";
+import utils from "utils";
 
 const validateStationExists: RequestHandler = async (
   req: Request,
@@ -44,6 +45,7 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
 // PUT /stations/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const requestedNumber = Number(req.params.number);
+  const version = utils.extractVersionFromUrl(req.originalUrl);
   const data = req.body;
   data.number = requestedNumber;
 
@@ -53,7 +55,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
     .then((station: IStation) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/stations/${station._id}`)
+        .set("Location", `/${version}/stations/${station._id}`)
         .json(station)
     )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));

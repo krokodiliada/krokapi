@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 import request from "supertest";
 import { StatusCodes } from "http-status-codes";
 import app from "server";
-import { populateSampleDatabase, eraseSampleDatabase } from "../utils/sampledb";
+import {
+  populateSampleDatabase,
+  eraseSampleDatabase,
+} from "../../utils/sampledb";
 
 describe("Team endpoints", () => {
   beforeAll(async () => {
@@ -22,7 +25,7 @@ describe("Team endpoints", () => {
 
   // GET methods
   it("Should return a list of all teams", async () => {
-    const res = await request(app).get("/teams/");
+    const res = await request(app).get("/v1/teams/");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -41,7 +44,7 @@ describe("Team endpoints", () => {
   // GET /teams/?event=:id
   it("Should return a list of all teams for specific event", async () => {
     const res = await request(app).get(
-      "/teams/?event=5f8d0401b54764421b7156da"
+      "/v1/teams/?event=5f8d0401b54764421b7156da"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
@@ -58,14 +61,14 @@ describe("Team endpoints", () => {
   });
 
   it("Should return 400 if event filter is invalid", async () => {
-    const res = await request(app).get("/teams/?event=5f8d0401b547641b71da");
+    const res = await request(app).get("/v1/teams/?event=5f8d0401b547641b71da");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 if event number does not exist", async () => {
     const res = await request(app).get(
-      "/teams/?event=5f8d0401b54764421a7136da"
+      "/v1/teams/?event=5f8d0401b54764421a7136da"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -74,7 +77,7 @@ describe("Team endpoints", () => {
   // GET /teams/?category=:categoryId
   it("Should return a list of all teams for specific category", async () => {
     const res = await request(app).get(
-      "/teams/?category=5f8d04f7b54764421b7156df"
+      "/v1/teams/?category=5f8d04f7b54764421b7156df"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
@@ -91,14 +94,16 @@ describe("Team endpoints", () => {
   });
 
   it("Should return 400 if category filter is invalid", async () => {
-    const res = await request(app).get("/teams/?category=5f84f7b5476442156df");
+    const res = await request(app).get(
+      "/v1/teams/?category=5f84f7b5476442156df"
+    );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 if category id does not exist", async () => {
     const res = await request(app).get(
-      "/teams/?category=5f8d04f7b32764421a7156df"
+      "/v1/teams/?category=5f8d04f7b32764421a7156df"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -107,7 +112,7 @@ describe("Team endpoints", () => {
   // GET /teams/?event=:eventId&category=:categoryId
   it("Should return a list of teams for event and category", async () => {
     const res = await request(app).get(
-      "/teams/?event=5f8d04b3b54764421b7156dc&category=5f8d04f7b54764421b7156dd"
+      "/v1/teams/?event=5f8d04b3b54764421b7156dc&category=5f8d04f7b54764421b7156dd"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
@@ -125,7 +130,7 @@ describe("Team endpoints", () => {
 
   // GET /teams/:id
   it("Should successfully return a team by id", async () => {
-    const res = await request(app).get("/teams/5f90acf8b54764421b7160d7");
+    const res = await request(app).get("/v1/teams/5f90acf8b54764421b7160d7");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -144,33 +149,33 @@ describe("Team endpoints", () => {
   });
 
   it("Should return 400 if team id is invalid", async () => {
-    const res = await request(app).get("/teams/5f90acf8b54421b716d7");
+    const res = await request(app).get("/v1/teams/5f90acf8b54421b716d7");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 if team id does not exist", async () => {
-    const res = await request(app).get("/teams/5f90acf8b54764421b7150b7");
+    const res = await request(app).get("/v1/teams/5f90acf8b54764421b7150b7");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   // POST /teams/
   it("Should return 405 if post is not allowed to update teams", async () => {
-    const res = await request(app).post("/teams/5f90acf8b54764421b7160e4");
+    const res = await request(app).post("/v1/teams/5f90acf8b54764421b7160e4");
     expect(res.status).toEqual(StatusCodes.METHOD_NOT_ALLOWED);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 400 if creating a team without data", async () => {
-    const res = await request(app).post("/teams/").send({});
+    const res = await request(app).post("/v1/teams/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 201 if successfully created a team", async () => {
     const res = await request(app)
-      .post("/teams/")
+      .post("/v1/teams/")
       .send({
         name: "Huge Rainbow",
         participants: ["5f8d0d55b54764421b715bed", "5f8d0d55b54764421b715bee"],
@@ -180,12 +185,12 @@ describe("Team endpoints", () => {
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
     // regex for response like /teams/5f8d0d55b54764421b715d5d
-    expect(res.headers.location).toMatch(/.*(\/teams\/)([a-f\d]{24})$/);
+    expect(res.headers.location).toMatch(/.*(\/v1\/teams\/)([a-f\d]{24})$/);
   });
 
   it("Should return 400 if team with the same name already exists for this event", async () => {
     const res = await request(app)
-      .post("/teams/")
+      .post("/v1/teams/")
       .send({
         name: "Eye describe attention",
         participants: ["5f8d0d55b54764421b715bf9", "5f8d0d55b54764421b715bfa"],
@@ -198,7 +203,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 if team is larger than allowed in cateogry", async () => {
     const res = await request(app)
-      .post("/teams/")
+      .post("/v1/teams/")
       .send({
         name: "Very big team",
         participants: [
@@ -215,7 +220,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 if team is smaller than allowed in cateogry", async () => {
     const res = await request(app)
-      .post("/teams/")
+      .post("/v1/teams/")
       .send({
         name: "Very small team",
         participants: ["5f8d0d55b54764421b715c12"],
@@ -228,7 +233,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 if one of the participants is already included in another team", async () => {
     const res = await request(app)
-      .post("/teams/")
+      .post("/v1/teams/")
       .send({
         name: "Oh this sneaky team!",
         participants: ["5f8d0d55b54764421b715c34"],
@@ -242,7 +247,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when creating a team without name", async () => {
     const res = await request(app)
-      .post("/teams/")
+      .post("/v1/teams/")
       .send({
         participants: ["5f8d0d55b54764421b715c34"],
         event: "5f8d04b3b54764421b7156dc",
@@ -254,7 +259,7 @@ describe("Team endpoints", () => {
   });
 
   it("Should return 400 when creating a team without participants", async () => {
-    const res = await request(app).post("/teams/").send({
+    const res = await request(app).post("/v1/teams/").send({
       name: "Oh this sneaky team!",
       event: "5f8d04b3b54764421b7156dc",
       category: "5f8d04f7b54764421b7156de",
@@ -266,7 +271,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when creating a team without event", async () => {
     const res = await request(app)
-      .post("/teams/")
+      .post("/v1/teams/")
       .send({
         name: "Oh this sneaky team!",
         participants: ["5f8d0d55b54764421b715c34"],
@@ -279,7 +284,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when creating a team without category", async () => {
     const res = await request(app)
-      .post("/teams/")
+      .post("/v1/teams/")
       .send({
         name: "Oh this sneaky team!",
         participants: ["5f8d0d55b54764421b715c34"],
@@ -292,9 +297,11 @@ describe("Team endpoints", () => {
 
   // PATCH /teams/:id
   it("Should return 400 when updating a team with invalid id", async () => {
-    const res = await request(app).patch("/teams/5f9af8b54764421b7161").send({
-      name: "New cool team name",
-    });
+    const res = await request(app)
+      .patch("/v1/teams/5f9af8b54764421b7161")
+      .send({
+        name: "New cool team name",
+      });
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -302,7 +309,7 @@ describe("Team endpoints", () => {
 
   it("Should return 404 when updating a team with inexistent id", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf7b54164421b716101")
+      .patch("/v1/teams/5f90acf7b54164421b716101")
       .send({
         name: "New cool team name",
       });
@@ -313,7 +320,7 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when successfully updated team name", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         name: "New cool team name",
       });
@@ -324,7 +331,7 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when successfully updated team participants", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         participants: [
           "5f8d0d55b54764421b715c39",
@@ -340,7 +347,7 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when successfully updated team event", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b7160fb")
+      .patch("/v1/teams/5f90acf8b54764421b7160fb")
       .send({
         event: "5f8d0401b54764421b7156da",
       });
@@ -351,7 +358,7 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when successfully updated team category", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b7160fa")
+      .patch("/v1/teams/5f90acf8b54764421b7160fa")
       .send({
         category: "5f8d04f7b54764421b7156e2",
       });
@@ -362,7 +369,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when updating team with invalid event", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         event: "5f8d0401476421b7156da",
       });
@@ -373,7 +380,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when updating team with invalid category", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         category: "5f8d04b5476441b7156e2",
       });
@@ -384,7 +391,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when updating team with inexistent event", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         event: "5f8d0401b54764231a7156da",
       });
@@ -395,7 +402,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when updating team with inexistent category", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         category: "5f8d04f7b54713421b6156e2",
       });
@@ -406,7 +413,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when updating team name that already exists", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         name: "Of character money",
       });
@@ -417,7 +424,7 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when updating team name that already exists in the previous event", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         name: "Sample Old",
       });
@@ -428,7 +435,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when updating team participants above/beyond limits in the category", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         participants: ["5f8d0d55b54764421b715c39"],
       });
@@ -439,7 +446,7 @@ describe("Team endpoints", () => {
 
   it("Should return 400 when updated team category has lower number of participants", async () => {
     const res = await request(app)
-      .patch("/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716102")
       .send({
         category: "5f8d04f7b54764421b7156de",
       });
@@ -450,40 +457,40 @@ describe("Team endpoints", () => {
 
   // DELETE /teams/:id
   it("Should return 400 when deleting team with invalid id", async () => {
-    const res = await request(app).delete("/teams/5f90acf8b54764421162");
+    const res = await request(app).delete("/v1/teams/5f90acf8b54764421162");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when deleting team with inexistent id", async () => {
-    const res = await request(app).delete("/teams/5f90acf8b54764321c726130");
+    const res = await request(app).delete("/v1/teams/5f90acf8b54764321c726130");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 200 when successfully deleted team by id", async () => {
-    const res = await request(app).delete("/teams/5f90acf8b54764421b716130");
+    const res = await request(app).delete("/v1/teams/5f90acf8b54764421b716130");
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when deleting the same team twice", async () => {
-    await request(app).delete("/teams/5f90acf8b54764421b71613a");
-    const res = await request(app).delete("/teams/5f90acf8b54764421b71613a");
+    await request(app).delete("/v1/teams/5f90acf8b54764421b71613a");
+    const res = await request(app).delete("/v1/teams/5f90acf8b54764421b71613a");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   // GET /teams/:id/participants
   it("Should return 400 when requesting participants of a team with invalid id", async () => {
-    const res = await request(app).get("/teams/5f90a51b716138/participants");
+    const res = await request(app).get("/v1/teams/5f90a51b716138/participants");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when requesting participants of a team with inexistent id", async () => {
     const res = await request(app).get(
-      "/teams/5f90acf8b54764321b726738/participants"
+      "/v1/teams/5f90acf8b54764321b726738/participants"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
@@ -491,7 +498,7 @@ describe("Team endpoints", () => {
 
   it("Should return a list of participants for team", async () => {
     const res = await request(app).get(
-      "/teams/5f90acf8b54764421b716138/participants"
+      "/v1/teams/5f90acf8b54764421b716138/participants"
     );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -515,33 +522,37 @@ describe("Team endpoints", () => {
   });
 
   it("Should return 400 when requesting team's route by invalid id", async () => {
-    const res = await request(app).get("/teams/5f90a51b716138/route");
+    const res = await request(app).get("/v1/teams/5f90a51b716138/route");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 400 when requesting team's water route by invalid id", async () => {
-    const res = await request(app).get("/teams/5f90a51b716138/route-water");
+    const res = await request(app).get("/v1/teams/5f90a51b716138/route-water");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when requesting team's route by inexistent id", async () => {
-    const res = await request(app).get("/teams/5f90acf8b54764321b616142/route");
+    const res = await request(app).get(
+      "/v1/teams/5f90acf8b54764321b616142/route"
+    );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 404 when requesting team's water route by inexistent id", async () => {
     const res = await request(app).get(
-      "/teams/5f90acf8b54764321b616142/route-water"
+      "/v1/teams/5f90acf8b54764321b616142/route-water"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
   it("Should return 200 when requesting a team's route", async () => {
-    const res = await request(app).get("/teams/5f90acf8b54764421b71612f/route");
+    const res = await request(app).get(
+      "/v1/teams/5f90acf8b54764421b71612f/route"
+    );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
@@ -566,7 +577,7 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when requesting a team's water route", async () => {
     const res = await request(app).get(
-      "/teams/5f90acf8b54764421b71610f/route-water"
+      "/v1/teams/5f90acf8b54764421b71610f/route-water"
     );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
