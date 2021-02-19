@@ -1,3 +1,42 @@
+/**
+ * Generic API schemas, such as errors
+ * @openapi
+ *  components:
+ *    responses:
+ *      BadRequest:
+ *        description: Bad request. Invalid request data.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Error'
+ *            example:
+ *              error: "Bad request. Check your request data."
+ *      NotFound:
+ *        description: The specified resource was not found
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Error'
+ *            example:
+ *              error: "Resource not found."
+ *      Unauthorized:
+ *        description: Unauthorized
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Error'
+ *            example:
+ *              error: "Not authorized."
+ *    schemas:
+ *      Error:
+ *        type: object
+ *        properties:
+ *          error:
+ *            type: string
+ *        required:
+ *          - error
+ */
+
 import express from "express";
 
 import CategoryRouter from "routes/v1/categories";

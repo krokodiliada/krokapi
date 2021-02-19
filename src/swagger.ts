@@ -16,7 +16,7 @@ export default {
     },
     servers: [
       {
-        url: "http://localhost/v1/docs",
+        url: "http://localhost:8080/v1/",
         description: "KrokAPI server version 1.x",
       },
     ],

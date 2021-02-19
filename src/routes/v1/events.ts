@@ -19,6 +19,7 @@
  *          season:
  *            type: string
  *            description: Either spring or fall
+ *            enum: [fall, spring]
  *          date:
  *            type: object
  *            description: The date when the event starts and ends
@@ -66,6 +67,19 @@
  *     description: API to manage events.
  */
 
+/**
+ * @openapi
+ *  components:
+ *    parameters:
+ *      eventNumber:
+ *        in: path
+ *        name: number
+ *        schema:
+ *          type: integer
+ *        required: true
+ *        description: Number of the event to get
+ */
+
 import express from "express";
 import EventController from "controller/Event";
 import GenericController from "controller/Common";
@@ -85,12 +99,13 @@ router.put("/", GenericController.disallowMethod);
 router.delete("/", GenericController.disallowMethod);
 
 // Router for /events/
+
 /**
  * @openapi
  *  paths:
  *    /events:
  *      get:
- *        summary: Returns a list of events.
+ *        summary: Get a list of events.
  *        tags: [Events]
  *        responses:
  *          '200':
@@ -98,14 +113,127 @@ router.delete("/", GenericController.disallowMethod);
  *            content:
  *              application/json:
  *                schema:
- *                  $ref: '#/components/schemas/Event'
- *                items:
- *                   type: string
+ *                  type: array
+ *                  items:
+ *                    $ref: '#/components/schemas/Event'
+ *          '401':
+ *            $ref: '#/components/responses/Unauthorized'
  */
 router.get("/", EventController.getAll);
+
+/**
+ * @openapi
+ *  paths:
+ *    /events/{number}:
+ *      get:
+ *        summary: Get information about a single event.
+ *        tags: [Events]
+ *        parameters:
+ *          - $ref: '#/components/parameters/eventNumber'
+ *        responses:
+ *          '200':
+ *            description: An event data
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  $ref: '#/components/schemas/Event'
+ *          '400':
+ *            $ref: '#/components/responses/BadRequest'
+ *          '401':
+ *            $ref: '#/components/responses/Unauthorized'
+ *          '404':
+ *            $ref: '#/components/responses/NotFound'
+ */
 router.get("/:number", EventController.getByNumber);
+
+/**
+ * @openapi
+ *  paths:
+ *    /events/{number}:
+ *      put:
+ *        summary: Create event.
+ *        tags: [Events]
+ *        parameters:
+ *          - $ref: '#/components/parameters/eventNumber'
+ *        requestBody:
+ *          description: Event data
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Event'
+ *              example:
+ *                date:
+ *                  start: "Sep 25, 2021"
+ *                  end: "Sep 27, 2021"
+ *        responses:
+ *          '201':
+ *            description: Event created
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  $ref: '#/components/schemas/Event'
+ *          '400':
+ *            $ref: '#/components/responses/BadRequest'
+ *          '401':
+ *            $ref: '#/components/responses/Unauthorized'
+ */
 router.put("/:number", EventController.create);
+
+/**
+ * @openapi
+ *  paths:
+ *    /events/{number}:
+ *      patch:
+ *        summary: Update event.
+ *        tags: [Events]
+ *        parameters:
+ *          - $ref: '#/components/parameters/eventNumber'
+ *        requestBody:
+ *          description: Event data
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Event'
+ *              example:
+ *                categories: [
+ *                  "5f7d04f7a54364421c7136e1",
+ *                  "5f7d04f7a54364421c7136e2",
+ *                ]
+ *        responses:
+ *          '200':
+ *            description: Event updated
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  $ref: '#/components/schemas/Event'
+ *          '400':
+ *            $ref: '#/components/responses/BadRequest'
+ *          '401':
+ *            $ref: '#/components/responses/Unauthorized'
+ *          '404':
+ *            $ref: '#/components/responses/NotFound'
+ */
 router.patch("/:number", EventController.update);
+
+/**
+ * @openapi
+ *  paths:
+ *    /events/{number}:
+ *      delete:
+ *        summary: Update event.
+ *        tags: [Events]
+ *        parameters:
+ *          - $ref: '#/components/parameters/eventNumber'
+ *        responses:
+ *          '204':
+ *            description: Event has been deleted
+ *          '401':
+ *            $ref: '#/components/responses/Unauthorized'
+ *          '404':
+ *            $ref: '#/components/responses/NotFound'
+ */
 router.delete("/:number", EventController.deleteByNumber);
 
 // Router for /events/:number/categories

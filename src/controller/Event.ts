@@ -178,7 +178,9 @@ const update: RequestHandler = async (req: Request, res: Response) => {
     event
       .set(req.body)
       .save()
-      .then(() => res.status(StatusCodes.OK).json())
+      .then((updatedEvent: IEvent) =>
+        res.status(StatusCodes.OK).json(updatedEvent)
+      )
       .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
   }
 };
@@ -193,7 +195,7 @@ const deleteByNumber: RequestHandler = async (req: Request, res: Response) => {
 
   if (event) {
     Event.deleteOne(event)
-      .then(() => res.status(StatusCodes.OK).json({}))
+      .then(() => res.status(StatusCodes.NO_CONTENT).json({}))
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };
