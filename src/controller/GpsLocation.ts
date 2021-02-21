@@ -37,7 +37,7 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-// PUT /locations/
+// POST /locations/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
   const version = utils.extractVersionFromUrl(req.originalUrl);

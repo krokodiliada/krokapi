@@ -8,9 +8,8 @@ export interface IEventDate extends Document {
 }
 
 export interface IEvent extends Document {
-  number: number;
+  name: string;
   categories: Array<ICategory["_id"]>;
-  season: string;
   date: IEventDate;
   location?: IGpsLocation["_id"];
   createdAt: Date;
@@ -38,23 +37,14 @@ const EventDateSchema: Schema = new Schema({
 
 export const EventSchema: Schema = new Schema(
   {
-    number: {
-      type: Number,
+    name: {
+      type: String,
       required: true,
-      unique: true,
     },
     categories: {
       type: [Schema.Types.ObjectId],
       ref: "Category",
       required: false,
-    },
-    season: {
-      type: String,
-      required: false,
-      default(this: IEvent) {
-        return this.number % 2 === 0 ? "fall" : "spring";
-      },
-      enum: ["fall", "spring"],
     },
     date: {
       type: EventDateSchema,
