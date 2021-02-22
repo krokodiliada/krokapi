@@ -47,33 +47,33 @@ describe("TagAssignment model", () => {
     await TagAssignment.deleteMany({});
   });
 
-  it("Throws an error if tag assignment is created without parameters", () => {
+  it("Throws an error if tag assignment is created without parameters", async () => {
     const assignment: ITagAssignment = new TagAssignment();
-    expect(assignment.validate).toThrow();
+    await expect(TagAssignment.create(assignment)).rejects.toThrowError();
   });
 
-  it("Throws an error if tag assignment is created without tag", () => {
+  it("Throws an error if tag assignment is created without tag", async () => {
     const assignment: ITagAssignment = new TagAssignment({
       event: event._id,
       participant: participant._id,
     });
-    expect(assignment.validate).toThrow();
+    await expect(TagAssignment.create(assignment)).rejects.toThrowError();
   });
 
-  it("Throws an error if tag assignment is created without event", () => {
+  it("Throws an error if tag assignment is created without event", async () => {
     const assignment: ITagAssignment = new TagAssignment({
       tag,
       participant: participant._id,
     });
-    expect(assignment.validate).toThrow();
+    await expect(TagAssignment.create(assignment)).rejects.toThrowError();
   });
 
-  it("Throws an error if tag assignment is created without participant", () => {
+  it("Throws an error if tag assignment is created without participant", async () => {
     const assignment: ITagAssignment = new TagAssignment({
       tag,
       event: event._id,
     });
-    expect(assignment.validate).toThrow();
+    await expect(TagAssignment.create(assignment)).rejects.toThrowError();
   });
 
   it("Should create a new tag assignment with all parameters", async () => {

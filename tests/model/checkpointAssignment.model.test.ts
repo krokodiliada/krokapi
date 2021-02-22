@@ -61,17 +61,21 @@ describe("CheckpointAssignment model", () => {
     await CheckpointAssignment.deleteMany({});
   });
 
-  it("Throws an error if assignment is created without parameters", () => {
+  it("Throws an error if assignment is created without parameters", async () => {
     const assignment: ICheckpointAssignment = new CheckpointAssignment();
-    expect(assignment.validate).toThrow();
+    await expect(
+      CheckpointAssignment.create(assignment)
+    ).rejects.toThrowError();
   });
 
-  it("Throws an error if assignment is created with only half required parameters", () => {
+  it("Throws an error if assignment is created with only half required parameters", async () => {
     const assignment: ICheckpointAssignment = new CheckpointAssignment({
       event: event._id,
       category: category._id,
     });
-    expect(assignment.validate).toThrow();
+    await expect(
+      CheckpointAssignment.create(assignment)
+    ).rejects.toThrowError();
   });
 
   it("Should create a new checkpoint with name only", async () => {

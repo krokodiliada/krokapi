@@ -22,9 +22,9 @@ describe("Checkpoint model", () => {
     await Checkpoint.deleteMany({});
   });
 
-  it("Throws an error if checkpoint is created without parameters", () => {
+  it("Throws an error if checkpoint is created without parameters", async () => {
     const checkpoint: ICheckpoint = new Checkpoint();
-    expect(checkpoint.validate).toThrow();
+    await expect(Checkpoint.create(checkpoint)).rejects.toThrowError();
   });
 
   it("Should create a new checkpoint with name only", async () => {

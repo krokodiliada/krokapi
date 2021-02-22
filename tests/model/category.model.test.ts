@@ -26,18 +26,18 @@ describe("Category model", () => {
     await Category.deleteMany({});
   });
 
-  it("Throws an error if category is created without parameters", () => {
+  it("Throws an error if category is created without parameters", async () => {
     const category: ICategory = new Category();
-    expect(category.validate).toThrow();
+    await expect(Category.create(category)).rejects.toThrowError();
   });
 
-  it("Throws an error if category is created with short name only", () => {
+  it("Throws an error if category is created with short name only", async () => {
     const category: ICategory = new Category({
       name: {
         short: validCategory.name.short,
       },
     });
-    expect(category.validate).toThrow();
+    await expect(Category.create(category)).rejects.toThrowError();
   });
 
   it("Should create a new category with the name", async () => {

@@ -23,6 +23,12 @@ export const TeamSchema: Schema = new Schema(
       type: [Schema.Types.ObjectId],
       ref: "Participant",
       required: true,
+      validate: {
+        validator: (participants: Array<Schema.Types.ObjectId>) => {
+          return participants !== undefined && participants.length !== 0;
+        },
+        message: () => `Participants array cannot be empty`,
+      },
     },
     event: {
       type: Schema.Types.ObjectId,

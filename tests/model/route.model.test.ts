@@ -53,34 +53,34 @@ describe("Route model", () => {
     await Route.deleteMany({});
   });
 
-  it("Throws an error if route is created without parameters", () => {
+  it("Throws an error if route is created without parameters", async () => {
     const route: IRoute = new Route();
-    expect(route.validate).toThrow();
+    await expect(Route.create(route)).rejects.toThrowError();
   });
 
-  it("Throws an error if route is created without tag assignment", () => {
+  it("Throws an error if route is created without tag assignment", async () => {
     const route: IRoute = new Route({
       start: new Date("2020-09-25T10:13:00"),
       finish: new Date("2020-09-25T10:14:00"),
     });
-    expect(route.validate).toThrow();
+    await expect(Route.create(route)).rejects.toThrowError();
   });
 
-  it("Throws an error if route is created without start timestamp", () => {
+  it("Throws an error if route is created without start timestamp", async () => {
     const route: IRoute = new Route({
       tagAssignment: tagAssignment._id,
       finish: new Date("2020-09-25T10:14:00"),
     });
-    expect(route.validate).toThrow();
+    await expect(Route.create(route)).rejects.toThrowError();
   });
 
-  it("Throws an error if finish date is prior to the start date", () => {
+  it("Throws an error if finish date is prior to the start date", async () => {
     const route: IRoute = new Route({
       tagAssignment,
       start: new Date("2020-09-25T10:14:00"),
       finish: new Date("2020-09-25T10:13:00"),
     });
-    expect(route.validate).toThrow();
+    await expect(Route.create(route)).rejects.toThrowError();
   });
 
   it("Should create a new route with an empty array of actions", async () => {
