@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -33,7 +32,7 @@ const validateEventExists: RequestHandler = async (
   // If inserting inexisting event, then PUT should be allowed.
   if (!event) {
     return res.status(StatusCodes.NOT_FOUND).json({
-      error: "Event with this id does not exist.",
+      error: "Event with this id does not exist",
     });
   }
 
@@ -50,11 +49,6 @@ const validateCategory: RequestHandler = async (
 ) => {
   const requestedEventId = req.params.id;
   const requestedCategoryId = req.params.categoryId;
-
-  const { ObjectId } = mongoose.Types;
-  if (!ObjectId.isValid(requestedCategoryId)) {
-    return res.status(StatusCodes.BAD_REQUEST).json({});
-  }
 
   const event: IEvent | null = await Event.findById(requestedEventId);
 
@@ -92,11 +86,6 @@ const validateLocation: RequestHandler = async (
   next: NextFunction
 ) => {
   const requestedLocationId = req.params.locationId;
-
-  const { ObjectId } = mongoose.Types;
-  if (!ObjectId.isValid(requestedLocationId)) {
-    return res.status(StatusCodes.BAD_REQUEST).json({});
-  }
 
   const location: IGpsLocation | null = await GpsLocation.findById(
     requestedLocationId
@@ -140,7 +129,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
     .then((event: IEvent) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/${version}/locations/${event._id}`)
+        .set("Location", `/${version}/events/${event._id}`)
         .json(event)
     )
     .catch(() =>
@@ -211,9 +200,7 @@ const getAllCategories: RequestHandler = async (
       _id: event.categories,
     });
 
-    res.status(StatusCodes.OK).json({
-      categories,
-    });
+    res.status(StatusCodes.OK).json(categories);
   }
 };
 
@@ -264,7 +251,7 @@ const addCategory: RequestHandler = async (req: Request, res: Response) => {
   event
     .save()
     .then(() => {
-      res.status(StatusCodes.CREATED).send();
+      res.status(StatusCodes.OK).send();
     })
     .catch(() => {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -358,7 +345,7 @@ const addLocation: RequestHandler = async (req: Request, res: Response) => {
   event
     .save()
     .then(() => {
-      res.status(StatusCodes.OK).json({});
+      res.status(StatusCodes.OK).send();
     })
     .catch(() => {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

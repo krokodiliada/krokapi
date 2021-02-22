@@ -241,6 +241,7 @@ router.delete("/:id", EventController.deleteById);
 
 // Router for /events/:id/categories
 router.use("/:id/categories", categoriesRouter);
+categoriesRouter.param("categoryId", GenericController.validateObjectId);
 categoriesRouter.param("categoryId", EventController.validateCategory);
 
 /**
@@ -309,6 +310,7 @@ categoriesRouter.put("/:categoryId", EventController.addCategory);
 
 // Router for /events/:id/location
 router.use("/:id/location", locationRouter);
+locationRouter.param("locationId", GenericController.validateObjectId);
 locationRouter.param("locationId", EventController.validateLocation);
 
 /**
