@@ -229,7 +229,9 @@ describe("Category endpoints", () => {
   });
 
   it("Should also unassign a cateogry from event when it gets deleted", async () => {
-    const eventRes = await request(app).get("/v1/events/40");
+    const eventRes = await request(app).get(
+      "/v1/events/5f8d0401b54764421b7155ff"
+    );
     expect(eventRes.status).toEqual(StatusCodes.OK);
     expect(eventRes.type).toBe("application/json");
     expect(eventRes.body.categories).toMatchObject([
@@ -242,7 +244,9 @@ describe("Category endpoints", () => {
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
 
-    const eventRes2 = await request(app).get("/v1/events/40");
+    const eventRes2 = await request(app).get(
+      "/v1/events/5f8d0401b54764421b7155ff"
+    );
     expect(eventRes2.status).toEqual(StatusCodes.OK);
     expect(eventRes2.type).toBe("application/json");
     expect(eventRes2.body.categories).toMatchObject([]);
