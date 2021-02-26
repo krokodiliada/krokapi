@@ -70,19 +70,12 @@
  *        required: true
  *        description: Unique identifier of the event
  *      categoryId:
- *          in: path
- *          name: categoryId
- *          schema:
- *            type: string
- *          required: true
- *          description: Unique identifier of the category
- *      locationId:
- *          in: path
- *          name: locationId
- *          schema:
- *            type: string
- *          required: true
- *          description: Unique identifier of the location
+ *        in: path
+ *        name: categoryId
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Unique identifier of the category
  */
 
 import express from "express";
