@@ -146,7 +146,7 @@ router.get("/:id", EventController.getById);
 /**
  * @openapi
  *  paths:
- *    /events/:
+ *    /events:
  *      post:
  *        summary: Create event.
  *        tags: [Events]

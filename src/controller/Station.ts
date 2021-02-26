@@ -88,7 +88,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 
   if (station) {
     Station.deleteOne(station)
-      .then(() => res.status(StatusCodes.NOT_FOUND).send())
+      .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };

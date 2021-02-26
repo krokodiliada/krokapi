@@ -114,7 +114,7 @@ router.get("/:id", LocationController.getById);
 /**
  * @openapi
  *  paths:
- *    /locations/:
+ *    /locations:
  *      post:
  *        summary: Create location.
  *        tags: [Locations]

@@ -225,7 +225,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 
   if (assignment) {
     TagAssignment.deleteOne(assignment)
-      .then(() => res.status(StatusCodes.OK).json({}))
+      .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };
