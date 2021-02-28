@@ -206,7 +206,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       if (isDataValid) {
         assignment
           .save()
-          .then(() => res.status(StatusCodes.OK).json({}))
+          .then(() => res.status(StatusCodes.OK).json(assignment))
           .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
       } else {
         res.status(StatusCodes.BAD_REQUEST).json({});

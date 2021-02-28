@@ -147,8 +147,8 @@ describe("Checkpoint Assignment endpoints", () => {
     const res = await request(app).delete(
       "/v1/checkpoint-assignments/5f907c38b54764421b716095"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 if trying to delete the same assignment twice", async () => {

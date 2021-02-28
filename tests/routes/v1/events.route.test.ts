@@ -123,6 +123,7 @@ describe("Event endpoints", () => {
       "/v1/events/5f8d0448b54764421b7156db"
     );
     expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 when deleting inexistent resource", async () => {
@@ -415,6 +416,7 @@ describe("Event endpoints", () => {
       "/v1/events/5f8d0401b54764421b7156da/categories/5f8d04f7b54764421b7156dd"
     );
     expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   // PUT /events/:id/categories/:categoryId
@@ -571,6 +573,7 @@ describe("Event endpoints", () => {
       "/v1/events/5f8d0401b54764421b7156da/location"
     );
     expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   // PUT /events/:id/location/:locationId

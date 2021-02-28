@@ -186,6 +186,13 @@ describe("Team endpoints", () => {
     expect(res.type).toBe("application/json");
     // regex for response like /teams/5f8d0d55b54764421b715d5d
     expect(res.headers.location).toMatch(/.*(\/v1\/teams\/)([a-f\d]{24})$/);
+    expect(res.body).toMatchObject({
+      name: "Huge Rainbow",
+      participants: ["5f8d0d55b54764421b715bed", "5f8d0d55b54764421b715bee"],
+      event: "5f8d0401b54764421b7156da",
+      category: "5f8d04f7b54764421b7156e1",
+      extraMapRequired: false,
+    });
   });
 
   it("Should return 400 if team with the same name already exists for this event", async () => {
@@ -320,13 +327,24 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when successfully updated team name", async () => {
     const res = await request(app)
-      .patch("/v1/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716108")
       .send({
         name: "New cool team name",
       });
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f90acf8b54764421b716108",
+      name: "New cool team name",
+      participants: [
+        "5f8d0d55b54764421b715c4e",
+        "5f8d0d55b54764421b715c4f",
+        "5f8d0d55b54764421b715c50",
+      ],
+      event: "5f8d04b3b54764421b7156dc",
+      category: "5f8d04f7b54764421b7156e3",
+    });
   });
 
   it("Should return 200 when successfully updated team participants", async () => {
@@ -343,6 +361,18 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f90acf8b54764421b716102",
+      name: "By president",
+      participants: [
+        "5f8d0d55b54764421b715c39",
+        "5f8d0d55b54764421b715c3a",
+        "5f8d0d55b54764421b715c3b",
+        "5f8d0d55b54764421b715c3c",
+      ],
+      event: "5f8d04b3b54764421b7156dc",
+      category: "5f8d04f7b54764421b7156e1",
+    });
   });
 
   it("Should return 200 when successfully updated team event", async () => {
@@ -354,6 +384,13 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f90acf8b54764421b7160fb",
+      name: "Entire together",
+      participants: ["5f8d0d55b54764421b715c2a", "5f8d0d55b54764421b715c2b"],
+      event: "5f8d0401b54764421b7156da",
+      category: "5f8d04f7b54764421b7156df",
+    });
   });
 
   it("Should return 200 when successfully updated team category", async () => {
@@ -365,6 +402,18 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f90acf8b54764421b7160fa",
+      name: "Water north serious",
+      participants: [
+        "5f8d0d55b54764421b715c26",
+        "5f8d0d55b54764421b715c27",
+        "5f8d0d55b54764421b715c28",
+        "5f8d0d55b54764421b715c29",
+      ],
+      event: "5f8d04b3b54764421b7156dc",
+      category: "5f8d04f7b54764421b7156e2",
+    });
   });
 
   it("Should return 400 when updating team with invalid event", async () => {
@@ -424,13 +473,24 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when updating team name that already exists in the previous event", async () => {
     const res = await request(app)
-      .patch("/v1/teams/5f90acf8b54764421b716102")
+      .patch("/v1/teams/5f90acf8b54764421b716103")
       .send({
         name: "Sample Old",
       });
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f90acf8b54764421b716103",
+      name: "Sample Old",
+      participants: [
+        "5f8d0d55b54764421b715c3e",
+        "5f8d0d55b54764421b715c3f",
+        "5f8d0d55b54764421b715c40",
+      ],
+      event: "5f8d04b3b54764421b7156dc",
+      category: "5f8d04f7b54764421b7156e3",
+    });
   });
 
   it("Should return 400 when updating team participants above/beyond limits in the category", async () => {
@@ -470,8 +530,8 @@ describe("Team endpoints", () => {
 
   it("Should return 200 when successfully deleted team by id", async () => {
     const res = await request(app).delete("/v1/teams/5f90acf8b54764421b716130");
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 when deleting the same team twice", async () => {
@@ -555,24 +615,22 @@ describe("Team endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body).toMatchObject({
-      route: [
-        {
-          _id: "5fd550a7b547649dd7e37779",
-          tagAssignment: "5fcc1bd5b54764851111848c",
-          start: new Date(1601104882000).toISOString(),
-          finish: new Date(1601132884000).toISOString(),
-          actions: expect.any(Array),
-        },
-        {
-          _id: "5fd550a7b547649dd7e3777a",
-          tagAssignment: "5fcc1bd5b54764851111848d",
-          start: new Date(1601104871000).toISOString(),
-          finish: new Date(1601132881000).toISOString(),
-          actions: expect.any(Array),
-        },
-      ],
-    });
+    expect(res.body).toMatchObject([
+      {
+        _id: "5fd550a7b547649dd7e37779",
+        tagAssignment: "5fcc1bd5b54764851111848c",
+        start: new Date(1601104882000).toISOString(),
+        finish: new Date(1601132884000).toISOString(),
+        actions: expect.any(Array),
+      },
+      {
+        _id: "5fd550a7b547649dd7e3777a",
+        tagAssignment: "5fcc1bd5b54764851111848d",
+        start: new Date(1601104871000).toISOString(),
+        finish: new Date(1601132881000).toISOString(),
+        actions: expect.any(Array),
+      },
+    ]);
   });
 
   it("Should return 200 when requesting a team's water route", async () => {
@@ -582,12 +640,10 @@ describe("Team endpoints", () => {
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      route: {
-        _id: "5fcc1e2fb547648511118544",
-        team: "5f90acf8b54764421b71610f",
-        start: new Date("2020-09-27T11:33:00").toISOString(),
-        actions: expect.any(Array),
-      },
+      _id: "5fcc1e2fb547648511118544",
+      team: "5f90acf8b54764421b71610f",
+      start: new Date("2020-09-27T11:33:00").toISOString(),
+      actions: expect.any(Array),
     });
   });
 });

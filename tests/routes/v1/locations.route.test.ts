@@ -89,8 +89,8 @@ describe("Location endpoints", () => {
     const res = await request(app).delete(
       "/v1/locations/5f8f83f6b54764421b715eeb"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 when deleting the same location twice", async () => {
@@ -151,6 +151,12 @@ describe("Location endpoints", () => {
     expect(res.type).toBe("application/json");
     // regex for response like /participants/5f8d0d55b54764421b715d5d
     expect(res.headers.location).toMatch(/.*(\/v1\/locations\/)([a-f\d]{24})$/);
+    expect(res.body).toMatchObject({
+      _id: expect.any(String),
+      name: "Test location name",
+      latitude: 55.855072,
+      longitude: 39.242487,
+    });
   });
 
   it("Should return 400 if creating location with existent lat/long", async () => {
@@ -216,25 +222,43 @@ describe("Location endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8f83f6b54764421b715eff",
+      name: "New location name",
+      latitude: 55.825614,
+      longitude: 39.260248,
+    });
   });
 
   it("Should return 200 when successfully updated latitude", async () => {
     const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715eff")
+      .patch("/v1/locations/5f8f83f6b54764421b715f08")
       .send({
         latitude: 55.825612,
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8f83f6b54764421b715f08",
+      name: "Rule card management",
+      latitude: 55.825612,
+      longitude: 39.389303,
+    });
   });
 
   it("Should return 200 when successfully updated longitude", async () => {
     const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715eff")
+      .patch("/v1/locations/5f8f83f6b54764421b715f0c")
       .send({
         longitude: 39.260247,
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8f83f6b54764421b715f0c",
+      name: "If position go choose",
+      latitude: 55.822349,
+      longitude: 39.260247,
+    });
   });
 });

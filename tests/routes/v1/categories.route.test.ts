@@ -199,8 +199,8 @@ describe("Category endpoints", () => {
     const res = await request(app).delete(
       "/v1/categories/5f8d04f7b54764421b7156e5"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 if trying to delete the same category twice", async () => {
@@ -241,8 +241,8 @@ describe("Category endpoints", () => {
     const res = await request(app).delete(
       "/v1/categories/5f8d04f7b54764421b7156e8"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
 
     const eventRes2 = await request(app).get(
       "/v1/events/5f8d0401b54764421b7155ff"
@@ -305,6 +305,17 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d04f7b54764421b7156e2",
+      name: {
+        short: "VL",
+        long: "Velo-Ligero",
+      },
+      participantsNumber: {
+        min: 2,
+        max: 5,
+      },
+    });
   });
 
   /**
@@ -367,5 +378,18 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d04f7b54764421b7156e9",
+      name: {
+        short: "U",
+        long: "To Update",
+      },
+      participantsNumber: {
+        min: 3,
+        max: 6,
+      },
+      minCheckpoints: 4,
+      maxTime: 9,
+    });
   });
 });

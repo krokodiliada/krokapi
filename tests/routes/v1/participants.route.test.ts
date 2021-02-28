@@ -96,8 +96,8 @@ describe("Participant endpoints", () => {
     const res = await request(app).delete(
       "/v1/participants/5f8d0d55b54764421b715d5e"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 if deleting same participant twice", async () => {
@@ -191,6 +191,14 @@ describe("Participant endpoints", () => {
     expect(res.headers.location).toMatch(
       /.*(\/v1\/participants\/)([a-f\d]{24})$/
     );
+    expect(res.body).toMatchObject({
+      _id: expect.any(String),
+      name: {
+        first: "Ivan",
+        last: "Petrov",
+      },
+      birthday: new Date("Dec 13, 1994").toISOString(),
+    });
   });
 
   it("Should return 201 if successfully created a participant with russian name", async () => {
@@ -209,6 +217,14 @@ describe("Participant endpoints", () => {
     expect(res.headers.location).toMatch(
       /.*(\/v1\/participants\/)([a-f\d]{24})$/
     );
+    expect(res.body).toMatchObject({
+      _id: expect.any(String),
+      name: {
+        first: "Иван",
+        last: "Петров",
+      },
+      birthday: new Date("Dec 10, 1985").toISOString(),
+    });
   });
 
   /**
@@ -277,16 +293,30 @@ describe("Participant endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d0d55b54764421b715d4a",
+      name: { first: "Ivan", last: "Petrov" },
+      birthday: new Date("1931-08-22").toISOString(),
+      phone: "+79528260940",
+      email: "nicholas70@mills.org",
+    });
   });
 
   it("Should return 200 if updating participant's birthday", async () => {
     const res = await request(app)
-      .patch("/v1/participants/5f8d0d55b54764421b715d4a")
+      .patch("/v1/participants/5f8d0d55b54764421b715d6e")
       .send({
         birthday: new Date("Oct 8, 1958"),
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d0d55b54764421b715d6e",
+      name: { first: "Ashley", last: "Robinson" },
+      birthday: new Date("Oct 8, 1958").toISOString(),
+      phone: "+79574428340",
+      email: "alexanderbradshaw@wiley.com",
+    });
   });
 
   /**
@@ -294,12 +324,19 @@ describe("Participant endpoints", () => {
    */
   it("Should return 200 if updating participant's first name", async () => {
     const res = await request(app)
-      .patch("/v1/participants/5f8d0d55b54764421b715d4a")
+      .patch("/v1/participants/5f8d0d55b54764421b715d6f")
       .send({
         "name.first": "Ivan",
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d0d55b54764421b715d6f",
+      name: { first: "Ivan", last: "Bender" },
+      birthday: new Date("2020-09-12").toISOString(),
+      phone: "+79433643904",
+      email: "ebailey@hotmail.com",
+    });
   });
 
   /**
@@ -382,5 +419,12 @@ describe("Participant endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d0d55b54764421b715d4c",
+      name: { first: "Daniel", last: "Castaneda" },
+      birthday: new Date("1993-12-18").toISOString(),
+      phone: "+79152786543",
+      email: "mama@yandex.ru",
+    });
   });
 });

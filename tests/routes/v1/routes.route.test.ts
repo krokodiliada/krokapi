@@ -155,6 +155,11 @@ describe("Route endpoints", () => {
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
     expect(res.headers.location).toMatch(/.*(\/v1\/routes\/)([a-f\d]{24})$/);
+    expect(res.body).toMatchObject({
+      _id: expect.any(String),
+      tagAssignment: "5fcc1bd5b54764851111853a",
+      start: new Date(1601142588000).toISOString(),
+    });
   });
 
   // PATCH /routes/:id
@@ -222,6 +227,12 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5fd550a7b547649dd7e37820",
+      tagAssignment: "5fe8feb0b54764faf553b1d8",
+      start: new Date(1601111463000).toISOString(),
+      finish: new Date(1601142588000).toISOString(),
+    });
   });
 
   it("Should update a route's start time", async () => {
@@ -233,6 +244,13 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5fd550a7b547649dd7e37818",
+      tagAssignment: "5fcc1bd5b547648511118430",
+      start: new Date(1601109887000).toISOString(),
+      finish: new Date(1601146106000).toISOString(),
+      actions: expect.any(Array),
+    });
   });
 
   // DELETE /routes/:id
@@ -254,16 +272,16 @@ describe("Route endpoints", () => {
     const res = await request(app).delete(
       "/v1/routes/5fd550a7b547649dd7e37765"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 when deleting a route twice", async () => {
     const res = await request(app).delete(
       "/v1/routes/5fd550a7b547649dd7e37763"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
 
     const resSecond = await request(app).delete(
       "/v1/routes/5fd550a7b547649dd7e37763"
