@@ -253,7 +253,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       if (canSetParameters) {
         category
           .save()
-          .then(() => res.status(StatusCodes.OK).json({}))
+          .then(() => res.status(StatusCodes.OK).json(category))
           .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
       } else {
         res.status(StatusCodes.BAD_REQUEST).json({});
@@ -290,7 +290,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   Category.deleteOne(category)
     .then(() => {
       unassignCategoryFromEvent(requestedCategoryId);
-      res.status(StatusCodes.OK).json({});
+      res.status(StatusCodes.NO_CONTENT).send();
     })
     .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
 };
