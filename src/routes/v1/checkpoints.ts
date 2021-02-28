@@ -13,8 +13,6 @@
  *        type: object
  *        required:
  *          - name
- *          - latitude
- *          - longitude
  *        properties:
  *          name:
  *            type: string
@@ -33,7 +31,7 @@
  *                         rather considered placeholders.
  *          note:
  *            type: string
- *            description:
+ *            description: A short note for the checkpoint
  *          createdAt:
  *            type: string
  *            format: date
@@ -142,7 +140,7 @@ router.get("/:id", CheckpointController.getById);
  *            content:
  *              application/json:
  *                schema:
- *                  $ref: '#/components/schemas/Location'
+ *                  $ref: '#/components/schemas/Checkpoint'
  *          '400':
  *            $ref: '#/components/responses/BadRequest'
  *          '401':

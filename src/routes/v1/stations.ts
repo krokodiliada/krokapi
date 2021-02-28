@@ -22,9 +22,11 @@
  *            description: Station number [0-65536)
  *          enabled:
  *            type: boolean
+ *            default: true
  *            description: True if station is enabled. False if disabled
  *          stationType:
  *            type: string
+ *            default: regular
  *            enum: [regular, start, finish, clear]
  *            description: Station type
  *          createdAt:
