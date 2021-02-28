@@ -15,6 +15,9 @@
  *          - name
  *        properties:
  *          name:
+ *            required:
+ *              - short
+ *              - long
  *            properties:
  *              short:
  *                type: string
