@@ -27,26 +27,26 @@ describe("Participant model", () => {
     await Participant.deleteMany({});
   });
 
-  it("Throws an error if participant is created without parameters", () => {
+  it("Throws an error if participant is created without parameters", async () => {
     const participant: IParticipant = new Participant();
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
   });
 
-  it("Throws an error if participant is created with name only", () => {
+  it("Throws an error if participant is created with name only", async () => {
     const participant: IParticipant = new Participant({
       name: {
         first: "Ivan",
         last: "Petrov",
       },
     });
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
   });
 
-  it("Throws an error if participant is created with birthday only", () => {
+  it("Throws an error if participant is created with birthday only", async () => {
     const participant: IParticipant = new Participant({
       birthday: new Date("Dec 9 1992"),
     });
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
   });
 
   it("Should create a user with name and birthday", async () => {
@@ -79,57 +79,62 @@ describe("Participant model", () => {
     expect(savedParticipant.updatedAt.getDate()).toBe(new Date().getDate());
   });
 
-  it("Throws an error if phone is not in valid format", () => {
+  it("Throws an error if phone is not in valid format", async () => {
     const participant: IParticipant = new Participant(validParticipant);
 
     participant.phone = "433-927-5687";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
 
     participant.phone = "+1 433-927-5687";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
 
     participant.phone = "257-09-13";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
 
     participant.phone = "2570913";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
 
     participant.phone = "926-173-1919";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
 
     participant.phone = "89261731919";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
 
     participant.phone = "+7 (926) 173-1919";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
   });
 
-  it("Throws an error if email is not in valid format", () => {
+  it("Throws an error if email is not in valid format", async () => {
     const participant: IParticipant = new Participant(validParticipant);
 
     participant.email = "hello";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
 
     participant.email = "hello@ca";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
 
     participant.email = "hello@ca@ma";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
 
     participant.email = "45354.com";
-    expect(participant.validate).toThrow();
+    await expect(Participant.create(participant)).rejects.toThrowError();
   });
 
-  it("Should validate a proper email correctly", () => {
-    const participant: IParticipant = new Participant(validParticipant);
+  it("Should validate a proper email correctly", async () => {
     const numAttempts = 100;
-
     expect.assertions(numAttempts);
 
     for (let i = 0; i < numAttempts; i++) {
-      participant.email = faker.internet.email();
-      const error = participant.validateSync();
-      expect(error).toBeUndefined();
+      const participant: IParticipant = new Participant({
+        name: {
+          first: faker.name.firstName(),
+          last: faker.name.lastName(),
+        },
+        birthday: faker.date.past(),
+        email: faker.internet.email(),
+      });
+      // eslint-disable-next-line no-return-await
+      expect(async () => await Participant.create(participant)).not.toThrow();
     }
   });
 
@@ -137,8 +142,7 @@ describe("Participant model", () => {
     const participant: IParticipant = new Participant(validParticipant);
 
     participant.phone = "+79261731919";
-    const error = participant.validateSync();
-    expect(error).toBeUndefined();
+    expect(async () => Participant.create(participant)).not.toThrow();
   });
 
   it("Throws an error if two people have the same name and bday", async () => {
@@ -163,5 +167,27 @@ describe("Participant model", () => {
     });
 
     await expect(Participant.create(secondParticipant)).rejects.toThrowError();
+  });
+
+  it("Throws an error if participant's first name has special characters", async () => {
+    const participant: IParticipant = new Participant({
+      name: {
+        first: "Ivan-13",
+        last: "Petrov",
+      },
+      birthday: new Date("Oct 13 1986"),
+    });
+    await expect(Participant.create(participant)).rejects.toThrowError();
+  });
+
+  it("Throws an error if participant's second name has special characters", async () => {
+    const participant: IParticipant = new Participant({
+      name: {
+        first: "Ivan",
+        last: "@_%Petrov",
+      },
+      birthday: new Date("Oct 13 1986"),
+    });
+    await expect(Participant.create(participant)).rejects.toThrowError();
   });
 });

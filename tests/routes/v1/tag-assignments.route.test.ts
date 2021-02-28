@@ -252,8 +252,8 @@ describe("Tag Assignment endpoints", () => {
     const res = await request(app).delete(
       "/v1/tag-assignments/5fcc1bd5b5476485111183e3"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 if trying to delete the same assignment twice", async () => {
@@ -384,6 +384,12 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5fcc1bd5b54764851111850b",
+      tag: 2935,
+      participant: "5f8d0d55b54764421b715d7a",
+      event: "5f8d04b3b54764421b7156dc",
+    });
   });
 
   it("Should return 200 if successfully updated assignment's participant", async () => {
@@ -394,6 +400,12 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5fcc1bd5b54764851111850c",
+      tag: 314,
+      participant: "5f8d0d55b54764421b715d5e",
+      event: "5f8d04b3b54764421b7156dc",
+    });
   });
 
   it("Should return 200 if successfully updated assignment's event", async () => {
@@ -404,5 +416,11 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5fcc1bd5b54764851111850d",
+      tag: 313,
+      participant: "5f8d0d55b54764421b715d7e",
+      event: "5f8d0448b54764421b7156db",
+    });
   });
 });

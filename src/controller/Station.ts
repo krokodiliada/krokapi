@@ -30,7 +30,7 @@ const getAll: RequestHandler = async (_: Request, res: Response) => {
 };
 
 // GET /stations/:number
-const getById: RequestHandler = async (req: Request, res: Response) => {
+const getByNumber: RequestHandler = async (req: Request, res: Response) => {
   const requestedNumber = Number(req.params.number);
 
   const station: IStation | null = await Station.findOne({
@@ -73,7 +73,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
     station
       .set(req.body)
       .save()
-      .then(() => res.status(StatusCodes.OK).json())
+      .then(() => res.status(StatusCodes.OK).json(station))
       .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
   }
 };
@@ -88,7 +88,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 
   if (station) {
     Station.deleteOne(station)
-      .then(() => res.status(StatusCodes.OK).json({}))
+      .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };
@@ -96,7 +96,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 export default {
   validateStationExists,
   getAll,
-  getById,
+  getByNumber,
   create,
   update,
   deleteById,

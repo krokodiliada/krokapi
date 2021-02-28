@@ -61,26 +61,26 @@ describe("RouteWater model", () => {
     await RouteWater.deleteMany({});
   });
 
-  it("Throws an error if route is created without parameters", () => {
+  it("Throws an error if route is created without parameters", async () => {
     const route: IRouteWater = new RouteWater();
-    expect(route.validate).toThrow();
+    await expect(RouteWater.create(route)).rejects.toThrowError();
   });
 
-  it("Throws an error if route is created without team", () => {
+  it("Throws an error if route is created without team", async () => {
     const route: IRouteWater = new RouteWater({
       start: new Date("2020-09-25T10:13:00"),
       finish: new Date("2020-09-25T10:14:00"),
     });
-    expect(route.validate).toThrow();
+    await expect(RouteWater.create(route)).rejects.toThrowError();
   });
 
-  it("Throws an error if finish date is prior to the start date", () => {
+  it("Throws an error if finish date is prior to the start date", async () => {
     const route: IRouteWater = new RouteWater({
       team: team._id,
       start: new Date("2020-09-25T10:14:00"),
       finish: new Date("2020-09-25T10:13:00"),
     });
-    expect(route.validate).toThrow();
+    await expect(RouteWater.create(route)).rejects.toThrowError();
   });
 
   it("Should create a new route with an empty array of actions", async () => {

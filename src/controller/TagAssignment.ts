@@ -206,7 +206,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       if (isDataValid) {
         assignment
           .save()
-          .then(() => res.status(StatusCodes.OK).json({}))
+          .then(() => res.status(StatusCodes.OK).json(assignment))
           .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
       } else {
         res.status(StatusCodes.BAD_REQUEST).json({});
@@ -225,7 +225,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 
   if (assignment) {
     TagAssignment.deleteOne(assignment)
-      .then(() => res.status(StatusCodes.OK).json({}))
+      .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };

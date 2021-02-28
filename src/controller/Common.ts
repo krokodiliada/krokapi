@@ -11,11 +11,17 @@ const validateObjectId: RequestHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  const requestedId = req.params.id;
+  // We suppose that the requested id parameter is the last
+  // parameter in the list
+  const params = Object.keys(req.params);
+  const requestedParameterName = params[params.length - 1];
+  const requestedId = req.params[requestedParameterName];
 
   const { ObjectId } = mongoose.Types;
   if (!ObjectId.isValid(requestedId)) {
-    return res.status(StatusCodes.BAD_REQUEST).json({});
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      error: `'${requestedId}' is not a valid object id`,
+    });
   }
 
   return next();
@@ -39,14 +45,24 @@ const validateNumber: RequestHandler = async (
   const requestedNumber = Number(req.params.number);
 
   if (Number.isNaN(requestedNumber)) {
-    return res.status(StatusCodes.BAD_REQUEST).json({});
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      error: `${requestedNumber} is not a number`,
+    });
   }
 
   return next();
 };
 
-const disallowMethod: RequestHandler = async (_: Request, res: Response) => {
-  res.status(StatusCodes.METHOD_NOT_ALLOWED).json({});
+const disallowMethod: RequestHandler = async (
+  _: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  res.status(StatusCodes.METHOD_NOT_ALLOWED).json({
+    error: "Method is not allowed. Check the API documentation",
+  });
+
+  return next();
 };
 
 export default {

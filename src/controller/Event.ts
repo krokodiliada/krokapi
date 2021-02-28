@@ -1,13 +1,14 @@
-import mongoose from "mongoose";
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Category, { ICategory } from "model/Category";
 import Event, { IEvent } from "model/Event";
 import GpsLocation, { IGpsLocation } from "model/GpsLocation";
+import Errors from "controller/Errors";
+import utils from "utils";
 
 /**
- * Validate event :number parameter
+ * Validate event :id parameter
  */
 const eventIdExists = async (id: string): Promise<boolean> => {
   const event: IEvent | null = await Event.findById(id);
@@ -24,15 +25,15 @@ const validateEventExists: RequestHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  const requestedEventNumber = Number(req.params.number);
+  const requestedId = req.params.id;
 
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
+  const event: IEvent | null = await Event.findById(requestedId);
 
   // If inserting inexisting event, then PUT should be allowed.
-  if (!event && req.method !== "PUT") {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+  if (!event) {
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: "Event with this id does not exist",
+    });
   }
 
   return next();
@@ -46,23 +47,18 @@ const validateCategory: RequestHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  const requestedEventNumber = Number(req.params.number);
+  const requestedEventId = req.params.id;
   const requestedCategoryId = req.params.categoryId;
 
-  const { ObjectId } = mongoose.Types;
-  if (!ObjectId.isValid(requestedCategoryId)) {
-    return res.status(StatusCodes.BAD_REQUEST).json({});
-  }
-
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
+  const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (
     req.method !== "PUT" &&
     !event?.categories.includes(requestedCategoryId)
   ) {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: "Event does not have a category with this id",
+    });
   }
 
   if (req.method === "PUT" || req.method === "POST") {
@@ -71,7 +67,9 @@ const validateCategory: RequestHandler = async (
     );
 
     if (!category) {
-      return res.status(StatusCodes.NOT_FOUND).json({});
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "Category with this id does not exist",
+      });
     }
   }
 
@@ -89,17 +87,14 @@ const validateLocation: RequestHandler = async (
 ) => {
   const requestedLocationId = req.params.locationId;
 
-  const { ObjectId } = mongoose.Types;
-  if (!ObjectId.isValid(requestedLocationId)) {
-    return res.status(StatusCodes.BAD_REQUEST).json({});
-  }
-
   const location: IGpsLocation | null = await GpsLocation.findById(
     requestedLocationId
   );
 
   if (!location) {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: "Location with this id does not exist",
+    });
   }
 
   return next();
@@ -112,118 +107,109 @@ const getAll: RequestHandler = async (_: Request, res: Response) => {
   res.status(StatusCodes.OK).json(events);
 };
 
-// GET /events/:number
-const getByNumber: RequestHandler = async (req: Request, res: Response) => {
-  const requestedEventNumber = Number(req.params.number);
+// GET /events/:id
+const getById: RequestHandler = async (req: Request, res: Response) => {
+  const requestedId = req.params.id;
 
-  const query = {
-    number: requestedEventNumber,
-  };
-
-  const event: IEvent | null = await Event.findOne(query);
+  const event: IEvent | null = await Event.findById(requestedId);
 
   if (event) {
     res.status(StatusCodes.OK).json(event);
   }
 };
 
-// PUT /events/:number
+// POST /events/
 const create: RequestHandler = async (req: Request, res: Response) => {
-  const requestedEventNumber = Number(req.params.number);
+  const data = req.body;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
-  const query = req.body;
-  query.number = requestedEventNumber;
+  const newEvent: IEvent = new Event(data);
 
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
-
-  const newEvent: IEvent = new Event(query);
-
-  if (event) {
-    newEvent._id = event._id;
-
-    event
-      .set(newEvent)
-      .save()
-      .then((modifiedEvent: IEvent) =>
-        res.status(StatusCodes.OK).json(modifiedEvent)
-      )
-      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
-  } else {
-    Event.create(newEvent)
-      .then((insertedEvent: IEvent) =>
-        res.status(StatusCodes.CREATED).json(insertedEvent)
-      )
-      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
-  }
+  Event.create(newEvent)
+    .then((event: IEvent) =>
+      res
+        .status(StatusCodes.CREATED)
+        .set("Location", `/${version}/events/${event._id}`)
+        .json(event)
+    )
+    .catch(() =>
+      res.status(StatusCodes.BAD_REQUEST).json({
+        error:
+          "Could not create an event." +
+          " Check your input data format and required fields",
+      })
+    );
 };
 
-// PATCH /events/:number
+// PATCH /events/:id
 const update: RequestHandler = async (req: Request, res: Response) => {
-  const requestedEventNumber = Number(req.params.number);
+  const requestedId = req.params.id;
 
   if (Object.keys(req.body).length === 0) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: "No data to update with",
+    });
     return;
   }
 
-  const query = {
-    number: requestedEventNumber,
-  };
-
-  const event: IEvent | null = await Event.findOne(query);
+  const event: IEvent | null = await Event.findById(requestedId);
 
   if (event) {
     event
       .set(req.body)
       .save()
-      .then(() => res.status(StatusCodes.OK).json())
-      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+      .then((updatedEvent: IEvent) =>
+        res.status(StatusCodes.OK).json(updatedEvent)
+      )
+      .catch(() =>
+        res.status(StatusCodes.BAD_REQUEST).json({
+          error: "Could not update. Check your input data",
+        })
+      );
   }
 };
 
-// DELETE /events/:number
-const deleteByNumber: RequestHandler = async (req: Request, res: Response) => {
-  const requestedEventNumber = Number(req.params.number);
+// DELETE /events/:id
+const deleteById: RequestHandler = async (req: Request, res: Response) => {
+  const requestedId = req.params.id;
 
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
+  const event: IEvent | null = await Event.findById(requestedId);
 
   if (event) {
     Event.deleteOne(event)
-      .then(() => res.status(StatusCodes.OK).json({}))
-      .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
+      .then(() => res.status(StatusCodes.NO_CONTENT).send())
+      .catch(() =>
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.internalServerError,
+        })
+      );
   }
 };
 
-// GET /events/:number/categories
+// GET /events/:id/categories
 const getAllCategories: RequestHandler = async (
   req: Request,
   res: Response
 ) => {
-  const requestedEventNumber = Number(req.params.number);
+  const requestedEventId = req.params.id;
 
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
+  const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (event) {
-    res.status(StatusCodes.OK).json({
-      categories: event.categories,
+    const categories: Array<ICategory> = await Category.find({
+      _id: event.categories,
     });
+
+    res.status(StatusCodes.OK).json(categories);
   }
 };
 
-// DELETE /events/:number/categories/:categoryId
+// DELETE /events/:id/categories/:categoryId
 const deleteCategory: RequestHandler = async (req: Request, res: Response) => {
-  const requestedEventNumber = Number(req.params.number);
+  const requestedEventId = req.params.id;
   const requestedCategoryId: string = req.params.categoryId;
 
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
+  const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (event) {
     const categoryIndex = event.categories.indexOf(requestedCategoryId, 0);
@@ -234,25 +220,27 @@ const deleteCategory: RequestHandler = async (req: Request, res: Response) => {
     event
       .save()
       .then(() => {
-        res.status(StatusCodes.OK).json({});
+        res.status(StatusCodes.NO_CONTENT).send();
       })
       .catch(() => {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+        res
+          .status(StatusCodes.INTERNAL_SERVER_ERROR)
+          .json({ error: Errors.internalServerError });
       });
   }
 };
 
-// PUT /events/:number/categories/:categoryId
+// PUT /events/:id/categories/:categoryId
 const addCategory: RequestHandler = async (req: Request, res: Response) => {
-  const requestedEventNumber = Number(req.params.number);
+  const requestedEventId = req.params.id;
   const requestedCategoryId: string = req.params.categoryId;
 
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
+  const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
-    res.status(StatusCodes.NOT_FOUND).json({});
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: "Event with this id does not exist",
+    });
     return;
   }
 
@@ -263,22 +251,25 @@ const addCategory: RequestHandler = async (req: Request, res: Response) => {
   event
     .save()
     .then(() => {
-      res.status(StatusCodes.OK).json({});
+      res.status(StatusCodes.OK).send();
     })
     .catch(() => {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: Errors.internalServerError,
+      });
     });
 };
 
-// GET /events/:number/location
+// GET /events/:id/location
 const getLocation: RequestHandler = async (req: Request, res: Response) => {
-  const requestedEventNumber = Number(req.params.number);
+  const requestedEventId = req.params.id;
 
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
+  const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: "Event with this id does not exist",
+    });
     return;
   }
 
@@ -290,27 +281,34 @@ const getLocation: RequestHandler = async (req: Request, res: Response) => {
     if (location) {
       res.status(StatusCodes.OK).json(location);
     } else {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: Errors.internalServerError,
+      });
     }
   } else {
-    res.status(StatusCodes.NOT_FOUND).json({});
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: "No location assigned to this event",
+    });
   }
 };
 
-// DELETE /events/:number/location
+// DELETE /events/:id/location
 const deleteLocation: RequestHandler = async (req: Request, res: Response) => {
-  const requestedEventNumber = Number(req.params.number);
+  const requestedEventId = req.params.id;
 
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
+  const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: "Event with this id does not exist",
+    });
     return;
   }
 
   if (!event.location) {
-    res.status(StatusCodes.NOT_FOUND).json({});
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: "No location assigned to this event",
+    });
     return;
   }
 
@@ -319,23 +317,26 @@ const deleteLocation: RequestHandler = async (req: Request, res: Response) => {
   event
     .save()
     .then(() => {
-      res.status(StatusCodes.OK).json({});
+      res.status(StatusCodes.NO_CONTENT).send();
     })
     .catch(() => {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: Errors.internalServerError,
+      });
     });
 };
 
-// PUT /events/:number/location/:locationId
+// PUT /events/:id/location/:locationId
 const addLocation: RequestHandler = async (req: Request, res: Response) => {
-  const requestedEventNumber = Number(req.params.number);
+  const requestedEventId = req.params.id;
   const requestedLocationId = req.params.locationId;
 
-  const event: IEvent | null = await Event.findOne({
-    number: requestedEventNumber,
-  });
+  const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: "Event with this id does not exist",
+    });
     return;
   }
 
@@ -344,10 +345,12 @@ const addLocation: RequestHandler = async (req: Request, res: Response) => {
   event
     .save()
     .then(() => {
-      res.status(StatusCodes.OK).json({});
+      res.status(StatusCodes.OK).send();
     })
     .catch(() => {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: Errors.internalServerError,
+      });
     });
 };
 
@@ -357,10 +360,10 @@ export default {
   validateCategory,
   validateLocation,
   getAll,
-  getByNumber,
+  getById,
   create,
   update,
-  deleteByNumber,
+  deleteById,
   getAllCategories,
   deleteCategory,
   addCategory,

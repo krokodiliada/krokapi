@@ -22,9 +22,9 @@ describe("Station model", () => {
     await Station.deleteMany({});
   });
 
-  it("Throws an error if station is created without parameters", () => {
+  it("Throws an error if station is created without parameters", async () => {
     const station: IStation = new Station();
-    expect(station.validate).toThrow();
+    await expect(Station.create(station)).rejects.toThrowError();
   });
 
   it("Should create a new station with station number", async () => {

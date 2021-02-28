@@ -128,8 +128,8 @@ describe("Checkpoint endpoints", () => {
     const res = await request(app).delete(
       "/v1/checkpoints/5f8f8720b54764421b715f33"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 if trying to delete the same checkpoint twice", async () => {
@@ -174,5 +174,10 @@ describe("Checkpoint endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8f8720b54764421b715f1d",
+      name: "New updated name",
+      location: "5f8f83f6b54764421b715efa",
+    });
   });
 });

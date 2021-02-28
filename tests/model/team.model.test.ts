@@ -53,19 +53,19 @@ describe("Team model", () => {
     await Team.deleteMany({});
   });
 
-  it("Throws an error if team is created without parameters", () => {
+  it("Throws an error if team is created without parameters", async () => {
     const team: ITeam = new Team();
-    expect(team.validate).toThrow();
+    await expect(Team.create(team)).rejects.toThrowError();
   });
 
-  it("Throws an error if team is created without participants", () => {
+  it("Throws an error if team is created without participants", async () => {
     const team: ITeam = new Team({
       name: "Test Team",
       participants: [],
       event: event._id,
       category: category._id,
     });
-    expect(team.validate).toThrow();
+    await expect(Team.create(team)).rejects.toThrowError();
   });
 
   it("Should create a new team with all required parameters", async () => {

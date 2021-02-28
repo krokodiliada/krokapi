@@ -24,16 +24,16 @@ describe("GpsLocation model", () => {
     await GpsLocation.deleteMany({});
   });
 
-  it("Throws an error if location is created without parameters", () => {
+  it("Throws an error if location is created without parameters", async () => {
     const location: IGpsLocation = new GpsLocation();
-    expect(location.validate).toThrow();
+    await expect(GpsLocation.create(location)).rejects.toThrowError();
   });
 
-  it("Throws an error if location is created with name only", () => {
+  it("Throws an error if location is created with name only", async () => {
     const location: IGpsLocation = new GpsLocation({
       name: "Test Location",
     });
-    expect(location.validate).toThrow();
+    await expect(GpsLocation.create(location)).rejects.toThrowError();
   });
 
   it("Should create a new location with name and lat/long", async () => {

@@ -51,6 +51,12 @@ export const RouteWaterSchema: Schema = new Schema(
     finish: {
       type: Date,
       required: false,
+      validate: {
+        validator(this: IRouteWater, value: Date) {
+          return value >= this.start;
+        },
+        message: () => "Finish date/time must be later or equal to start",
+      },
     },
     actions: {
       type: [RouteWaterActionSchema],

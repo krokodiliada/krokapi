@@ -199,8 +199,8 @@ describe("Category endpoints", () => {
     const res = await request(app).delete(
       "/v1/categories/5f8d04f7b54764421b7156e5"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 if trying to delete the same category twice", async () => {
@@ -229,7 +229,9 @@ describe("Category endpoints", () => {
   });
 
   it("Should also unassign a cateogry from event when it gets deleted", async () => {
-    const eventRes = await request(app).get("/v1/events/40");
+    const eventRes = await request(app).get(
+      "/v1/events/5f8d0401b54764421b7155ff"
+    );
     expect(eventRes.status).toEqual(StatusCodes.OK);
     expect(eventRes.type).toBe("application/json");
     expect(eventRes.body.categories).toMatchObject([
@@ -239,10 +241,12 @@ describe("Category endpoints", () => {
     const res = await request(app).delete(
       "/v1/categories/5f8d04f7b54764421b7156e8"
     );
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
 
-    const eventRes2 = await request(app).get("/v1/events/40");
+    const eventRes2 = await request(app).get(
+      "/v1/events/5f8d0401b54764421b7155ff"
+    );
     expect(eventRes2.status).toEqual(StatusCodes.OK);
     expect(eventRes2.type).toBe("application/json");
     expect(eventRes2.body.categories).toMatchObject([]);
@@ -301,6 +305,17 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d04f7b54764421b7156e2",
+      name: {
+        short: "VL",
+        long: "Velo-Ligero",
+      },
+      participantsNumber: {
+        min: 2,
+        max: 5,
+      },
+    });
   });
 
   /**
@@ -363,5 +378,18 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d04f7b54764421b7156e9",
+      name: {
+        short: "U",
+        long: "To Update",
+      },
+      participantsNumber: {
+        min: 3,
+        max: 6,
+      },
+      minCheckpoints: 4,
+      maxTime: 9,
+    });
   });
 });

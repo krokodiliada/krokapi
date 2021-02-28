@@ -81,8 +81,8 @@ describe("Station endpoints", () => {
 
   it("Should return 200 when successfully deleted station", async () => {
     const res = await request(app).delete("/v1/stations/13");
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
   });
 
   it("Should return 404 when deleting station for the second time", async () => {
@@ -141,10 +141,16 @@ describe("Station endpoints", () => {
 
   it("Should return 200 when successfully updated station with status", async () => {
     const res = await request(app).patch("/v1/stations/29").send({
-      enbled: false,
+      enabled: false,
     });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8f8c44b54764421b715f59",
+      number: 29,
+      stationType: "regular",
+      enabled: false,
+    });
   });
 
   it("Should return 200 when successfully updated station with type", async () => {
@@ -153,14 +159,25 @@ describe("Station endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8f8c44b54764421b715f5a",
+      number: 30,
+      stationType: "finish",
+    });
   });
 
   it("Should return 200 when updated station with both status and type", async () => {
     const res = await request(app).patch("/v1/stations/31").send({
-      enbled: false,
+      enabled: false,
       stationType: StationType.Clear,
     });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8f8c44b54764421b715f5b",
+      number: 31,
+      stationType: "clear",
+      enabled: false,
+    });
   });
 });

@@ -95,7 +95,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
     participant
       .set(req.body)
       .save()
-      .then(() => res.status(StatusCodes.OK).json())
+      .then(() => res.status(StatusCodes.OK).json(participant))
       .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
   }
 };
@@ -110,7 +110,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 
   if (participant) {
     Participant.deleteOne(participant)
-      .then(() => res.status(StatusCodes.OK).json({}))
+      .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };
