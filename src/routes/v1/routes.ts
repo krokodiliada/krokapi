@@ -116,6 +116,8 @@ router.param(
  *                  type: array
  *                  items:
  *                    $ref: '#/components/schemas/Route'
+ *          '400':
+ *            $ref: '#/components/responses/BadRequest'
  *          '401':
  *            $ref: '#/components/responses/Unauthorized'
  *          '404':

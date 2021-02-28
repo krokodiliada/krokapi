@@ -120,8 +120,12 @@ router.param("id", CategoryController.validateCategoryExists);
  *                  type: array
  *                  items:
  *                    $ref: '#/components/schemas/Category'
+ *          '400':
+ *            $ref: '#/components/responses/BadRequest'
  *          '401':
  *            $ref: '#/components/responses/Unauthorized'
+ *          '404':
+ *            $ref: '#/components/responses/NotFound'
  */
 router.get("/", CategoryController.getAll);
 

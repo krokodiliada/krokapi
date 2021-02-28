@@ -215,7 +215,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
 
   team
     .save()
-    .then(() => res.status(StatusCodes.OK).json())
+    .then(() => res.status(StatusCodes.OK).json(team))
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
 };
 
@@ -227,7 +227,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 
   if (team) {
     Team.deleteOne(team)
-      .then(() => res.status(StatusCodes.OK).json({}))
+      .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };
@@ -262,10 +262,13 @@ const getRoute: RequestHandler = async (req: Request, res: Response) => {
   }
 
   const participantIds = team.participants;
+  const eventId = team.event;
 
-  const assignments: Array<ITagAssignment> = await TagAssignment.find().where({
-    participant: { $in: participantIds },
-  });
+  const assignments: Array<ITagAssignment> = await TagAssignment.find()
+    .where({
+      participant: { $in: participantIds },
+    })
+    .where({ event: eventId });
   const assignmentIds: Array<string> = assignments.map(
     (assignment) => assignment._id
   );
@@ -274,7 +277,7 @@ const getRoute: RequestHandler = async (req: Request, res: Response) => {
     tagAssignment: { $in: assignmentIds },
   });
 
-  res.status(StatusCodes.OK).json({ route: routes });
+  res.status(StatusCodes.OK).json(routes);
 };
 
 // GET /teams/:id/route-water
@@ -291,7 +294,7 @@ const getWaterRoute: RequestHandler = async (req: Request, res: Response) => {
     team: team._id,
   });
 
-  res.status(StatusCodes.OK).json({ route: routeWater });
+  res.status(StatusCodes.OK).json(routeWater || {});
 };
 
 export default {

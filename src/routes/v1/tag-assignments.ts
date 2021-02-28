@@ -95,8 +95,12 @@ router.param("id", TagAssignmentController.validateAssignmentExists);
  *                  type: array
  *                  items:
  *                    $ref: '#/components/schemas/TagAssignment'
+ *          '400':
+ *            $ref: '#/components/responses/BadRequest'
  *          '401':
  *            $ref: '#/components/responses/Unauthorized'
+ *          '404':
+ *            $ref: '#/components/responses/NotFound'
  */
 router.get("/", TagAssignmentController.getAll);
 
