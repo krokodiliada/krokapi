@@ -367,5 +367,8 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
+    expect(res.headers.location).toMatch(
+      /.*(\/v1\/routes\/5fd550a7b547649dd7e37820)$/
+    );
   });
 });

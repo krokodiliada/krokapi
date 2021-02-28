@@ -104,6 +104,13 @@ router.param("id", CategoryController.validateCategoryExists);
  *      get:
  *        summary: Get a list of categories.
  *        tags: [Categories]
+ *        parameters:
+ *          - in: query
+ *            name: event
+ *            schema:
+ *              type: string
+ *            required: false
+ *            description: Event unique identifier
  *        responses:
  *          '200':
  *            description: A JSON array of all categories

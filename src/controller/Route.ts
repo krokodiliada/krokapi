@@ -137,7 +137,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
     route
       .set(req.body)
       .save()
-      .then(() => res.status(StatusCodes.OK).json())
+      .then(() => res.status(StatusCodes.OK).json(route))
       .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
   }
 };
@@ -150,7 +150,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 
   if (route) {
     Route.deleteOne(route)
-      .then(() => res.status(StatusCodes.OK).json({}))
+      .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };
@@ -158,6 +158,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
 // PUT /routes/:id/actions
 const createActions: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
+  const version = utils.extractVersionFromUrl(req.originalUrl);
 
   const route: IRoute | null = await Route.findById(requestedId);
 
@@ -174,7 +175,12 @@ const createActions: RequestHandler = async (req: Request, res: Response) => {
       if (actionsValid) {
         route
           .save()
-          .then(() => res.status(StatusCodes.OK).json())
+          .then(() =>
+            res
+              .status(StatusCodes.OK)
+              .set("Location", `/${version}/routes/${route._id}`)
+              .json(route)
+          )
           .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
       } else {
         res.status(StatusCodes.BAD_REQUEST).json();
