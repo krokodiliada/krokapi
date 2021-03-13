@@ -35,6 +35,10 @@
  *            type: boolean
  *            default: false
  *            description: True when the team requested an additional map
+ *          amountPaid:
+ *            type: number
+ *            default: 0
+ *            description: How much the team paid
  *          createdAt:
  *            type: string
  *            format: date

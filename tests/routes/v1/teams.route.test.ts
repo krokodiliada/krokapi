@@ -515,6 +515,51 @@ describe("Team endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
+  it("Should return 400 when paid amount is not a number", async () => {
+    const res = await request(app)
+      .patch("/v1/teams/5f90acf8b54764421b716102")
+      .send({
+        amountPaid: "NotANumber",
+      });
+
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 when paid amount is negative", async () => {
+    const res = await request(app)
+      .patch("/v1/teams/5f90acf8b54764421b716102")
+      .send({
+        amountPaid: -15,
+      });
+
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 200 when successfully updated the amount paid", async () => {
+    const res = await request(app)
+      .patch("/v1/teams/5f90acf8b54764421b716139")
+      .send({
+        amountPaid: 1300,
+      });
+
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f90acf8b54764421b716139",
+      name: "Study group gun",
+      participants: [
+        "5f8d0d55b54764421b715cbd",
+        "5f8d0d55b54764421b715cbe",
+        "5f8d0d55b54764421b715cbf",
+      ],
+      event: "5f8d04b3b54764421b7156dc",
+      category: "5f8d04f7b54764421b7156e1",
+      amountPaid: 1300,
+    });
+  });
+
   // DELETE /teams/:id
   it("Should return 400 when deleting team with invalid id", async () => {
     const res = await request(app).delete("/v1/teams/5f90acf8b54764421162");

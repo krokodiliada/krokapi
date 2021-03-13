@@ -390,6 +390,51 @@ describe("Category endpoints", () => {
       },
       minCheckpoints: 4,
       maxTime: 9,
+      price: expect.any(Number),
+    });
+  });
+
+  it("Should return 400 if category price cannot be a string", async () => {
+    const res = await request(app)
+      .patch("/v1/categories/5f8d04f7b54764421b7156e2")
+      .send({
+        price: "Whatever",
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if category price cannot be negative", async () => {
+    const res = await request(app)
+      .patch("/v1/categories/5f8d04f7b54764421b7156e2")
+      .send({
+        price: -15,
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 200 if successfully updated category price", async () => {
+    const res = await request(app)
+      .patch("/v1/categories/5f8d04f7b54764421b7156e9")
+      .send({
+        price: 650,
+      });
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d04f7b54764421b7156e9",
+      name: {
+        short: "U",
+        long: "To Update",
+      },
+      participantsNumber: {
+        min: expect.any(Number),
+        max: expect.any(Number),
+      },
+      minCheckpoints: expect.any(Number),
+      maxTime: expect.any(Number),
+      price: 650,
     });
   });
 });

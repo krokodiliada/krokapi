@@ -9,6 +9,7 @@ export interface ITeam extends Document {
   event: IEvent["_id"];
   category: ICategory["_id"];
   extraMapRequired: boolean;
+  amountPaid: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -44,6 +45,17 @@ export const TeamSchema: Schema = new Schema(
       type: Boolean,
       required: false,
       default: false,
+    },
+    amountPaid: {
+      type: Number,
+      required: false,
+      default: 0,
+      validate: {
+        validator: (value: number) => {
+          return value >= 0;
+        },
+        message: (props) => `${props.value} must not be negative`,
+      },
     },
   },
   { timestamps: true }
