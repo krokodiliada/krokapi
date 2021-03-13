@@ -82,7 +82,8 @@ describe("Team model", () => {
       participants: expect.any(Array),
       event: expect.any(Object),
       category: expect.any(Object),
-      extraMapRequired: expect.any(Boolean),
+      extraMapRequired: false,
+      amountPaid: 0,
     });
 
     expect(savedTeam.extraMapRequired).toBe(false);

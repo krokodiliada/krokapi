@@ -29,6 +29,7 @@ export interface ICategory extends Document {
    * Teams that exceeded @p maxTime will be disqualified.
    */
   maxTime: number;
+  price: number;
   notes: string;
   createdAt: Date;
   updatedAt: Date;
@@ -88,6 +89,17 @@ export const CategorySchema: Schema = new Schema(
       type: Number,
       required: false,
       default: 10,
+    },
+    price: {
+      type: Number,
+      required: false,
+      default: 0,
+      validate: {
+        validator: (value: number) => {
+          return value >= 0;
+        },
+        message: (props) => `${props.value} must not be negative`,
+      },
     },
     notes: {
       type: String,

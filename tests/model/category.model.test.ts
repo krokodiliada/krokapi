@@ -40,6 +40,13 @@ describe("Category model", () => {
     await expect(Category.create(category)).rejects.toThrowError();
   });
 
+  it("Throws an error if category price is negative", async () => {
+    const category: ICategory = new Category(validCategory);
+
+    category.price = -154;
+    await expect(Category.create(category)).rejects.toThrowError();
+  });
+
   it("Should create a new category with the name", async () => {
     expect.assertions(7);
 
@@ -54,15 +61,16 @@ describe("Category model", () => {
 
     expect(savedCategory).toMatchObject({
       name: {
-        short: expect.any(String),
-        long: expect.any(String),
+        short: validCategory.name.short,
+        long: validCategory.name.long,
       },
       participantsNumber: {
-        min: expect.any(Number),
-        max: expect.any(Number),
+        min: 1,
+        max: 5,
       },
-      minCheckpoints: expect.any(Number),
-      maxTime: expect.any(Number),
+      minCheckpoints: 0,
+      maxTime: 10,
+      price: 0,
     });
 
     expect(savedCategory.description).toBeUndefined();

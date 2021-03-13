@@ -51,6 +51,10 @@
  *            default: 10
  *            description: Maximum time allowed for a team to finish
  *                         in this category. Specified in hours.
+ *          price:
+ *            type: number
+ *            default: 0
+ *            description: How much it costs to participate in this category.
  *          notes:
  *            type: string
  *            description: Some additional information for this category
