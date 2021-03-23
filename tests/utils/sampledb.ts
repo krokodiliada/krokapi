@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 import Category from "model/Category";
 import Checkpoint from "model/Checkpoint";
 import CheckpointAssignment from "model/CheckpointAssignment";
@@ -92,4 +94,6 @@ export const eraseSampleDatabase = async (): Promise<void> => {
   await Station.deleteMany({});
   await TagAssignment.deleteMany({});
   await Team.deleteMany({});
+
+  await mongoose.connection.db.dropDatabase();
 };
