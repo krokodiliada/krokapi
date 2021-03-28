@@ -36,8 +36,9 @@ describe("Team endpoints", () => {
       name: expect.any(String),
       participants: expect.any(Array),
       event: expect.any(String),
-      category: expect.any(String),
+      category: expect.any(Object),
       extraMapRequired: expect.any(Boolean),
+      routes: expect.any(Array),
     });
   });
 
@@ -53,9 +54,27 @@ describe("Team endpoints", () => {
     expect(res.body[0]).toMatchObject({
       _id: "5f90acf8b54764421a729193",
       name: "Sample Old",
-      participants: ["5f8d0d55b54764421b715d99"],
+      participants: [
+        {
+          _id: "5f8d0d55b54764421b715d99",
+          name: { first: "James", last: "Reeves" },
+          birthday: "2017-05-22T00:00:00.000Z",
+          phone: "+79125905212",
+          email: "tiffany87@allen.com",
+        },
+      ],
       event: "5f8d0401b54764421b7156da",
-      category: "5f8d04f7b54764421b7156de",
+      category: {
+        _id: "5f8d04f7b54764421b7156de",
+        name: {
+          short: "V",
+          long: "Velo",
+        },
+        participantsNumber: {
+          min: 1,
+          max: 1,
+        },
+      },
       extraMapRequired: false,
     });
   });
@@ -88,8 +107,9 @@ describe("Team endpoints", () => {
       name: expect.any(String),
       participants: expect.any(Array),
       event: expect.any(String),
-      category: expect.any(String),
+      category: expect.any(Object),
       extraMapRequired: expect.any(Boolean),
+      routes: expect.any(Array),
     });
   });
 
@@ -123,8 +143,9 @@ describe("Team endpoints", () => {
       name: expect.any(String),
       participants: expect.any(Array),
       event: expect.any(String),
-      category: expect.any(String),
+      category: expect.any(Object),
       extraMapRequired: expect.any(Boolean),
+      routes: expect.any(Array),
     });
   });
 
@@ -137,14 +158,42 @@ describe("Team endpoints", () => {
     expect(res.body).toMatchObject({
       _id: "5f90acf8b54764421b7160d7",
       name: "Deep fast argue",
-      participants: [
-        "5f8d0d55b54764421b715bca",
-        "5f8d0d55b54764421b715bcb",
-        "5f8d0d55b54764421b715bcc",
-      ],
+      participants: expect.any(Array),
       event: "5f8d04b3b54764421b7156dc",
-      category: "5f8d04f7b54764421b7156e2",
+      category: expect.any(Object),
       extraMapRequired: false,
+      routes: expect.any(Array),
+    });
+    expect(res.body.participants.length).toBe(3);
+    expect(res.body.participants[0]).toMatchObject({
+      _id: "5f8d0d55b54764421b715bca",
+      name: { first: "James", last: "Boyd" },
+      birthday: "1907-02-10T00:00:00.000Z",
+      phone: "+79576149141",
+      email: "kaiserelizabeth@yahoo.com",
+    });
+    expect(res.body.category).toMatchObject({
+      _id: "5f8d04f7b54764421b7156e2",
+      name: {
+        short: "VL",
+        long: "Velo-Ligero",
+      },
+      participantsNumber: {
+        min: 3,
+        max: 8,
+      },
+    });
+    expect(res.body.routes[0]).toMatchObject({
+      _id: "5fd550a7b547649dd7e376f9",
+      actions: expect.any(Array),
+      start: "2020-09-26T09:17:28.000Z",
+      finish: "2020-09-26T13:06:44.000Z",
+      tagAssignment: "5fcc1bd5b54764851111840d",
+    });
+    expect(res.body.routes[0].actions.length).toBe(10);
+    expect(res.body.routes[0].actions[0]).toMatchObject({
+      station: "5f8f8c44b54764421b715f4c",
+      timestamp: "2020-09-26T09:28:34.000Z",
     });
   });
 

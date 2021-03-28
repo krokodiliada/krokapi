@@ -103,6 +103,28 @@ const isTeamValid = async (team: ITeam): Promise<boolean> => {
     });
 };
 
+const getTeamRoutes = async (team: ITeam): Promise<Array<IRoute>> => {
+  // It's not really a list of participant ids we expect but rather
+  // participant objects themselves
+  const participantIds = team.participants.map(
+    (participant: IParticipant) => participant._id
+  );
+  const eventId = team.event;
+
+  const assignments: Array<ITagAssignment> = await TagAssignment.find()
+    .where({ participant: participantIds })
+    .where({ event: eventId });
+  const assignmentIds: Array<string> = assignments.map(
+    (assignment) => assignment._id
+  );
+
+  const routes: Array<IRoute> = await Route.find().where({
+    tagAssignment: assignmentIds,
+  });
+
+  return routes;
+};
+
 interface ParticipantAndEventParameters {
   participant: string;
   event: string;
@@ -157,17 +179,39 @@ const getAll: RequestHandler = async (req: Request, res: Response) => {
     filter.category = { $in: category._id };
   }
 
-  const teams: Array<ITeam> = await Team.find(filter);
-  res.status(StatusCodes.OK).json(teams);
+  const teams: Array<ITeam> = await Team.find(filter)
+    .populate("category")
+    .populate({
+      path: "participants",
+      model: "Participant",
+    })
+    .lean();
+
+  const teamsWithRoutes = await Promise.all(
+    teams.map(async (team) => {
+      const result = team;
+      result.routes = await getTeamRoutes(team);
+      return result;
+    })
+  );
+
+  res.status(StatusCodes.OK).json(teamsWithRoutes);
 };
 
 // GET /teams/:id
 const getById: RequestHandler = async (req: Request, res: Response) => {
   const requestedTeamId = req.params.id;
 
-  const team: ITeam | null = await Team.findById(requestedTeamId);
+  const team: ITeam | null = await Team.findById(requestedTeamId)
+    .populate("category")
+    .populate({
+      path: "participants",
+      model: "Participant",
+    })
+    .lean();
 
   if (team) {
+    team.routes = await getTeamRoutes(team);
     res.status(StatusCodes.OK).json(team);
   }
 };
@@ -255,27 +299,16 @@ const getParticipants: RequestHandler = async (req: Request, res: Response) => {
 const getRoute: RequestHandler = async (req: Request, res: Response) => {
   const requestedTeamId = req.params.id;
 
-  const team: ITeam | null = await Team.findById(requestedTeamId);
+  const team: ITeam | null = await Team.findById(requestedTeamId).populate({
+    path: "participants",
+    model: "Participant",
+  });
 
   if (!team) {
     return;
   }
 
-  const participantIds = team.participants;
-  const eventId = team.event;
-
-  const assignments: Array<ITagAssignment> = await TagAssignment.find()
-    .where({
-      participant: { $in: participantIds },
-    })
-    .where({ event: eventId });
-  const assignmentIds: Array<string> = assignments.map(
-    (assignment) => assignment._id
-  );
-
-  const routes: Array<IRoute> = await Route.find().where({
-    tagAssignment: { $in: assignmentIds },
-  });
+  const routes: Array<IRoute> = await getTeamRoutes(team);
 
   res.status(StatusCodes.OK).json(routes);
 };
