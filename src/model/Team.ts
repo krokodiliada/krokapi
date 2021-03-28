@@ -2,14 +2,16 @@ import mongoose, { Schema, Document } from "mongoose";
 import { IParticipant } from "model/Participant";
 import { IEvent } from "model/Event";
 import { ICategory } from "model/Category";
+import { IRoute } from "model/Route";
 
 export interface ITeam extends Document {
   name: string;
-  participants: IParticipant["_id"];
+  participants: Array<IParticipant["_id"]>;
   event: IEvent["_id"];
   category: ICategory["_id"];
   extraMapRequired: boolean;
   amountPaid: number;
+  routes: Array<IRoute["_id"]>;
   createdAt: Date;
   updatedAt: Date;
 }
