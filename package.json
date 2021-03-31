@@ -25,6 +25,7 @@
     "erase-db": "ts-node -r tsconfig-paths/register scripts/eraseDatabase.ts"
   },
   "dependencies": {
+    "@types/cors": "^2.8.10",
     "@types/express": "^4.17.8",
     "@types/lodash": "4.14.166",
     "@types/mongoose": "^5.7.36",
@@ -32,6 +33,7 @@
     "@types/swagger-ui-express": "4.1.2",
     "@types/validator": "^13.1.0",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "4.4.1",

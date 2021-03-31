@@ -1,10 +1,13 @@
 import express from "express";
+import cors from "cors";
 import bodyParser from "body-parser";
 import helmet from "helmet";
 
 import V1Router from "routes/v1";
 
 const app = express();
+
+app.use(cors({ origin: true }));
 
 // Configure helmet security best practices
 app.use(helmet());
