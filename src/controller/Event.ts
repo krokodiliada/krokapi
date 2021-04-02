@@ -102,7 +102,10 @@ const validateLocation: RequestHandler = async (
 
 // GET /events/
 const getAll: RequestHandler = async (_: Request, res: Response) => {
-  const events: Array<IEvent> = await Event.find();
+  const events: Array<IEvent> = await Event.find().populate({
+    path: "categories",
+    model: "Category",
+  });
 
   res.status(StatusCodes.OK).json(events);
 };
@@ -111,7 +114,10 @@ const getAll: RequestHandler = async (_: Request, res: Response) => {
 const getById: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const event: IEvent | null = await Event.findById(requestedId);
+  const event: IEvent | null = await Event.findById(requestedId).populate({
+    path: "categories",
+    model: "Category",
+  });
 
   if (event) {
     res.status(StatusCodes.OK).json(event);

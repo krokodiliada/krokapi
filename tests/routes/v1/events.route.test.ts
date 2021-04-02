@@ -49,20 +49,24 @@ describe("Event endpoints", () => {
     expect(res.body).toMatchObject({
       _id: "5f8d04b3b54764421b7156dc",
       name: "Event - 4",
-      categories: [
-        "5f8d04f7b54764421b7156dd",
-        "5f8d04f7b54764421b7156df",
-        "5f8d04f7b54764421b7156de",
-        "5f8d04f7b54764421b7156e0",
-        "5f8d04f7b54764421b7156e3",
-        "5f8d04f7b54764421b7156e2",
-        "5f8d04f7b54764421b7156e1",
-      ],
+      categories: expect.any(Array),
       date: {
         start: new Date("Sep 25, 2020").toISOString(),
         end: new Date("Sep 27, 2020").toISOString(),
       },
       location: "5f8f7daab54764421b715ee9",
+    });
+    expect(res.body.categories.length).toBe(7);
+    expect(res.body.categories[0]).toMatchObject({
+      _id: "5f8d04f7b54764421b7156dd",
+      name: {
+        short: "S",
+        long: "Sportivnaya",
+      },
+      participantsNumber: {
+        min: 2,
+        max: 2,
+      },
     });
   });
 

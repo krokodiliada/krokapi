@@ -235,7 +235,17 @@ describe("Category endpoints", () => {
     expect(eventRes.status).toEqual(StatusCodes.OK);
     expect(eventRes.type).toBe("application/json");
     expect(eventRes.body.categories).toMatchObject([
-      "5f8d04f7b54764421b7156e8",
+      {
+        _id: "5f8d04f7b54764421b7156e8",
+        name: {
+          short: "D4",
+          long: "To Delete 4",
+        },
+        participantsNumber: {
+          min: 3,
+          max: 6,
+        },
+      },
     ]);
 
     const res = await request(app).delete(
