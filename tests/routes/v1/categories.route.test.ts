@@ -149,6 +149,12 @@ describe("Category endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
+  it("Should return 400 if creating a category without name", async () => {
+    const res = await request(app).post("/v1/categories/").send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
   it("Should return 400 if creating a category with the same name", async () => {
     const res = await request(app)
       .post("/v1/categories/")
