@@ -50,6 +50,13 @@
  *          createdAt: "2019-09-22T06:00:00.000Z"
  *          updatedAt: "2019-09-22T06:00:00.000Z"
  *    parameters:
+ *      water:
+ *        in: query
+ *        name: water
+ *        schema:
+ *          type: boolean
+ *        required: false
+ *        description:
  *      checkpointId:
  *        in: path
  *        name: checkpointId
@@ -78,6 +85,8 @@ router.param("id", CheckpointController.validateCheckpointExists);
  *      get:
  *        summary: Get a list of checkpoints.
  *        tags: [Checkpoints]
+ *        parameters:
+ *          - $ref: '#/components/parameters/water'
  *        responses:
  *          '200':
  *            description: A JSON array of all checkpoints
@@ -87,6 +96,24 @@ router.param("id", CheckpointController.validateCheckpointExists);
  *                  type: array
  *                  items:
  *                    $ref: '#/components/schemas/Checkpoint'
+ *                  example:
+ *                    [
+ *                      {
+ *                        _id: "5f8f83f6b54764421b715eea",
+ *                        name: "Next to the road",
+ *                        location: {
+ *                          "_id": "5f8f83f6b54764421b715ef4",
+ *                          "name": "Data past fish marriage",
+ *                          "latitude": 55.892334,
+ *                          "longitude": 39.328505,
+ *                        },
+ *                        description: "Beautiful tree 30 degrees to the right of the road",
+ *                        water: false,
+ *                        note: "There are two trees, we pick the closest one",
+ *                        createdAt: "2019-09-22T06:00:00.000Z",
+ *                        updatedAt: "2019-09-22T06:00:00.000Z"
+ *                      }
+ *                    ]
  *          '401':
  *            $ref: '#/components/responses/Unauthorized'
  */
@@ -108,6 +135,22 @@ router.get("/", CheckpointController.getAll);
  *              application/json:
  *                schema:
  *                  $ref: '#/components/schemas/Checkpoint'
+ *                example:
+ *                  {
+ *                    _id: "5f8f83f6b54764421b715eea",
+ *                    name: "Next to the road",
+ *                    location: {
+ *                      "_id": "5f8f83f6b54764421b715ef4",
+ *                      "name": "Data past fish marriage",
+ *                      "latitude": 55.892334,
+ *                      "longitude": 39.328505,
+ *                    },
+ *                    description: "Beautiful tree 30 degrees to the right of the road",
+ *                    water: false,
+ *                    note: "There are two trees, we pick the closest one",
+ *                    createdAt: "2019-09-22T06:00:00.000Z",
+ *                    updatedAt: "2019-09-22T06:00:00.000Z"
+ *                  }
  *          '400':
  *            $ref: '#/components/responses/BadRequest'
  *          '401':

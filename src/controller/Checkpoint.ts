@@ -36,8 +36,19 @@ const hasUniqueLocation = async (checkpoint: ICheckpoint): Promise<boolean> => {
 };
 
 // GET /checkpoints/
-const getAll: RequestHandler = async (_: Request, res: Response) => {
-  const checkpoints: Array<ICheckpoint> = await Checkpoint.find();
+const getAll: RequestHandler = async (req: Request, res: Response) => {
+  let filter = {};
+  if (req.query.water) {
+    const isWater: boolean =
+      (req.query.water as string).toLowerCase() === "true";
+    filter = {
+      water: isWater,
+    };
+  }
+
+  const checkpoints: Array<ICheckpoint> = await Checkpoint.find()
+    .where(filter)
+    .populate("location");
   res.status(StatusCodes.OK).json(checkpoints);
 };
 
@@ -45,7 +56,9 @@ const getAll: RequestHandler = async (_: Request, res: Response) => {
 const getById: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
+  const checkpoint: ICheckpoint | null = await Checkpoint.findById(
+    requestedId
+  ).populate("location");
 
   if (checkpoint) {
     res.status(StatusCodes.OK).json(checkpoint);
