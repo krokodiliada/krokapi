@@ -1,20 +1,41 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IGpsLocation } from "model/GpsLocation";
+import { IEvent } from "model/Event";
+import { ICategory } from "model/Category";
+import { ILocation } from "model/Location";
+import { IStation } from "model/Station";
+
+export enum CheckpointCostMetric {
+  Points = "points",
+  Seconds = "seconds",
+  Minutes = "minutes",
+  Hours = "hours",
+}
 
 export interface ICheckpoint extends Document {
-  name: string;
-  location: IGpsLocation;
-  description: string;
+  event: IEvent["_id"];
+  category: ICategory["_id"];
+  location: ILocation["_id"];
+  station: IStation["_id"];
+  required: boolean;
 
   /**
-   * True if checkpoint is used for water stage
+   * @brief Check whether the checkpoint is linear or not.
+   * @details If true, then @p order field will be used to check the order of
+   * checkpoints. If false, then the order of this checkpoint does not matter
+   * and it won't be used to check the correctness of the route in @p category.
    */
-  water: boolean;
+  checkOrder: boolean;
 
   /**
-   * Organizator's notes about the checkpoint
+   * Number of the @p checkpoint in the route assigned to the @p category
    */
-  note: string;
+  order: number;
+
+  /**
+   * How much of bonus points the team receives if they take this checkpoint.
+   */
+  cost: number;
+  costMetric: CheckpointCostMetric;
 
   createdAt: Date;
   updatedAt: Date;
@@ -22,27 +43,48 @@ export interface ICheckpoint extends Document {
 
 export const CheckpointSchema: Schema = new Schema(
   {
-    name: {
-      type: String,
+    event: {
+      type: Schema.Types.ObjectId,
+      ref: "Event",
+      required: true,
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
     location: {
       type: Schema.Types.ObjectId,
-      ref: "GpsLocation",
+      ref: "Location",
+      required: true,
+    },
+    station: {
+      type: Schema.Types.ObjectId,
+      ref: "Station",
       required: false,
     },
-    description: {
-      type: String,
-      required: false,
-    },
-    water: {
+    required: {
       type: Boolean,
       required: false,
-      default: false,
+      default: true,
     },
-    note: {
-      type: String,
+    checkOrder: {
+      type: Boolean,
       required: false,
+      default: true,
+    },
+    order: {
+      type: Number,
+      required: false,
+    },
+    cost: {
+      type: Number,
+      required: false,
+    },
+    costMetric: {
+      type: String,
+      default: CheckpointCostMetric.Seconds,
+      enum: Object.values(CheckpointCostMetric),
     },
   },
   { timestamps: true }

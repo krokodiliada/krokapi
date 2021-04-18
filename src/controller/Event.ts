@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 import Category, { ICategory } from "model/Category";
 import Event, { IEvent } from "model/Event";
-import GpsLocation, { IGpsLocation } from "model/GpsLocation";
+import Location, { ILocation } from "model/Location";
 import Errors from "controller/Errors";
 import utils from "utils";
 
@@ -87,7 +87,7 @@ const validateLocation: RequestHandler = async (
 ) => {
   const requestedLocationId = req.params.locationId;
 
-  const location: IGpsLocation | null = await GpsLocation.findById(
+  const location: ILocation | null = await Location.findById(
     requestedLocationId
   );
 
@@ -280,7 +280,7 @@ const getLocation: RequestHandler = async (req: Request, res: Response) => {
   }
 
   if (event.location) {
-    const location: IGpsLocation | null = await GpsLocation.findById(
+    const location: ILocation | null = await Location.findById(
       event.location._id
     );
 

@@ -2,7 +2,7 @@
  * @openapi
  *  tags:
  *    name: Locations
- *    description: API to manage GPS locations.
+ *    description: API to manage locations.
  */
 
 /**
@@ -13,18 +13,28 @@
  *        type: object
  *        required:
  *          - name
- *          - latitude
- *          - longitude
  *        properties:
  *          name:
  *            type: string
  *            description: The short name of the location
  *          latitude:
  *            type: number
- *            description: Locations' latitude
+ *            description: Location's latitude
  *          longitude:
  *            type: number
  *            description: Location's longitude
+ *          description:
+ *            type: string
+ *            description: Full description of the location
+ *          water:
+ *            type: boolean
+ *            description: True if location is used for the water stage of the
+ *                         competition. For such locations there is no
+ *                         GPS location required to be set and locations are
+ *                         rather considered placeholders.
+ *          note:
+ *            type: string
+ *            description: A short note for the location
  *          createdAt:
  *            type: string
  *            format: date
@@ -35,12 +45,22 @@
  *            description: The date when the record was last updated.
  *        example:
  *          _id: "5f8f83f6b54764421b715eea"
- *          name: "Random location"
- *          latitude: 55.873966
- *          longitude: 39.362529
+ *          name: "Next to the road"
+ *          latitude: 55.825135
+ *          longitude: 39.212493
+ *          description: "Beautiful tree 30 degrees to the right of the road"
+ *          water: false
+ *          note: "There are two trees, we pick the closest one"
  *          createdAt: "2019-09-22T06:00:00.000Z"
  *          updatedAt: "2019-09-22T06:00:00.000Z"
  *    parameters:
+ *      water:
+ *        in: query
+ *        name: water
+ *        schema:
+ *          type: boolean
+ *        required: false
+ *        description:
  *      locationId:
  *        in: path
  *        name: locationId
@@ -52,16 +72,13 @@
 
 import express from "express";
 import GenericController from "controller/Common";
-import LocationController from "controller/GpsLocation";
+import LocationController from "controller/Location";
 
 // Router for /locations/ api
 const router = express.Router();
 
 router.param("id", GenericController.validateObjectId);
 router.param("id", LocationController.validateLocationExists);
-
-// Disallow the following methods
-router.post("/:id", GenericController.disallowMethod);
 
 // Router for /locations/
 
@@ -72,15 +89,31 @@ router.post("/:id", GenericController.disallowMethod);
  *      get:
  *        summary: Get a list of locations.
  *        tags: [Locations]
+ *        parameters:
+ *          - $ref: '#/components/parameters/water'
  *        responses:
  *          '200':
- *            description: A JSON array of GPS locations
+ *            description: A JSON array of all locations
  *            content:
  *              application/json:
  *                schema:
  *                  type: array
  *                  items:
  *                    $ref: '#/components/schemas/Location'
+ *                  example:
+ *                    [
+ *                      {
+ *                        _id: "5f8f83f6b54764421b715eea",
+ *                        name: "Next to the road",
+ *                        latitude: 55.892334,
+ *                        longitude: 39.328505,
+ *                        description: "Beautiful tree 30 degrees to the right of the road",
+ *                        water: false,
+ *                        note: "There are two trees, we pick the closest one",
+ *                        createdAt: "2019-09-22T06:00:00.000Z",
+ *                        updatedAt: "2019-09-22T06:00:00.000Z"
+ *                      }
+ *                    ]
  *          '401':
  *            $ref: '#/components/responses/Unauthorized'
  */
@@ -102,6 +135,18 @@ router.get("/", LocationController.getAll);
  *              application/json:
  *                schema:
  *                  $ref: '#/components/schemas/Location'
+ *                example:
+ *                  {
+ *                    _id: "5f8f83f6b54764421b715eea",
+ *                    name: "Next to the road",
+ *                    latitude: 55.892334,
+ *                    longitude: 39.328505,
+ *                    description: "Beautiful tree 30 degrees to the right of the road",
+ *                    water: false,
+ *                    note: "There are two trees, we pick the closest one",
+ *                    createdAt: "2019-09-22T06:00:00.000Z",
+ *                    updatedAt: "2019-09-22T06:00:00.000Z"
+ *                  }
  *          '400':
  *            $ref: '#/components/responses/BadRequest'
  *          '401':
@@ -126,9 +171,9 @@ router.get("/:id", LocationController.getById);
  *              schema:
  *                $ref: '#/components/schemas/Location'
  *              example:
- *                name: "New GPS Location"
- *                latitude: 55.873966
- *                longitude: 39.362529
+ *                name: "New Location"
+ *                latitude: 55.892334
+ *                longitude: 39.328505
  *        responses:
  *          '201':
  *            description: Location created
@@ -153,14 +198,14 @@ router.post("/", LocationController.create);
  *        parameters:
  *          - $ref: '#/components/parameters/locationId'
  *        requestBody:
- *          description: Location data
+ *          description: Location data to update
  *          required: true
  *          content:
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Location'
  *              example:
- *                latitude: 55.873966
+ *                name: "New Location Name"
  *        responses:
  *          '200':
  *            description: Location updated

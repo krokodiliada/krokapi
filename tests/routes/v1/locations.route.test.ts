@@ -7,7 +7,7 @@ import {
   eraseSampleDatabase,
 } from "../../utils/sampledb";
 
-describe("Location endpoints", () => {
+describe("Checkpoint endpoints", () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URL ?? "", {
       useCreateIndex: true,
@@ -25,240 +25,159 @@ describe("Location endpoints", () => {
 
   // GET methods
 
-  // GET /locations/
-  it("Should return a list of all locations", async () => {
-    const res = await request(app).get("/v1/locations/");
+  // GET /checkpoints/
+  it("Should return a list of all checkpoints", async () => {
+    const res = await request(app).get("/v1/checkpoints/");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBeGreaterThan(1);
+    expect(res.body.length).toBeGreaterThan(45);
+    expect(res.body.length).toBeLessThan(50);
     expect(res.body[0]).toMatchObject({
       _id: expect.any(String),
       name: expect.any(String),
-      latitude: expect.any(Number),
-      longitude: expect.any(Number),
+      water: expect.any(Boolean),
     });
   });
 
-  // GET /locations/:id
-  it("Should return a location by id and set status to 200", async () => {
+  it("Should return 400 if requestion checkpoint by invalid id", async () => {
+    const res = await request(app).get("/v1/checkpoints/5f8f87205474421b7151c");
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 if requestion checkpoint by inexistent id", async () => {
     const res = await request(app).get(
-      "/v1/locations/5f8f83f6b54764421b715f05"
+      "/v1/checkpoints/5f8f8720b54764321a615f1c"
+    );
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  // GET /checkpoints/:id
+  it("Should return a checkpoint by id", async () => {
+    const res = await request(app).get(
+      "/v1/checkpoints/5f8f8720b54764421b715f1c"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      _id: "5f8f83f6b54764421b715f05",
-      name: "Fear gas hot here our",
-      latitude: 55.862512,
-      longitude: 39.281975,
+      _id: "5f8f8720b54764421b715f1c",
+      name: "Son prevent who",
+      location: "5f8f83f6b54764421b715ef9",
+      water: false,
     });
   });
 
-  it("Should return 400 when requesting location by invalid id", async () => {
-    const res = await request(app).get("/v1/locations/5f8f8764421b715f05");
+  // POST /checkpoints/
+  it("Should return 400 if creating checkpoint without body", async () => {
+    const res = await request(app).post("/v1/checkpoints/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 404 when requesting inexistent location", async () => {
-    const res = await request(app).get(
-      "/v1/locations/5f8f83a6c53764421b715f05"
+  it("Should return 400 if creating checkpoint without name", async () => {
+    const res = await request(app).post("/v1/checkpoints/").send({
+      location: "5f8f83f6b54764421b715f0d",
+      description: "Some long description",
+    });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if creating checkpoint with location that already used", async () => {
+    const res = await request(app).post("/v1/checkpoints/").send({
+      name: "Duplicated location",
+      location: "5f8f83f6b54764421b715f07",
+    });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 201 if successfully created checkpoint", async () => {
+    const res = await request(app).post("/v1/checkpoints/").send({
+      name: "Duplicated location",
+      location: "5f8f83f6b54764421b715f0d",
+    });
+    expect(res.status).toEqual(StatusCodes.CREATED);
+    expect(res.type).toBe("application/json");
+    expect(res.headers.location).toMatch(
+      /.*(\/v1\/checkpoints\/)([a-f\d]{24})$/
+    );
+  });
+
+  // DELETE /checkpoints/:id
+  it("Should return 400 if deleting checkpoint by invalid id", async () => {
+    const res = await request(app).delete(
+      "/v1/checkpoints/5f8f80b547644215f33"
+    );
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 if deleting checkpoint by inexistent id", async () => {
+    const res = await request(app).delete(
+      "/v1/checkpoints/5f8f8720a54763421b714f33"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
-  // DELETE /locations/:id
-  it("Should return 400 when deleting location by invalid id", async () => {
-    const res = await request(app).delete("/v1/locations/5f8f8764421b715f05");
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 404 when deleting inexistent location", async () => {
+  it("Should return 200 if successfully deleted checkpoint", async () => {
     const res = await request(app).delete(
-      "/v1/locations/5f8f83a6c53764421b715f05"
-    );
-    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 200 when successfully deleted location", async () => {
-    const res = await request(app).delete(
-      "/v1/locations/5f8f83f6b54764421b715eeb"
+      "/v1/checkpoints/5f8f8720b54764421b715f33"
     );
     expect(res.status).toEqual(StatusCodes.NO_CONTENT);
     expect(res.type).toBe("");
   });
 
-  it("Should return 404 when deleting the same location twice", async () => {
-    await request(app).delete("/v1/locations/5f8f83f6b54764421b715eec");
+  it("Should return 404 if trying to delete the same checkpoint twice", async () => {
+    await request(app).delete("/v1/checkpoints/5f8f8720b54764421b715f23");
     const res = await request(app).delete(
-      "/v1/locations/5f8f83f6b54764421b715eec"
+      "/v1/checkpoints/5f8f8720b54764421b715f23"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
-  // POST /locations/
-  it("Should return 405 if post is not allowed to update location", async () => {
-    const res = await request(app).post(
-      "/v1/locations/5f8f83f6b54764421b715ef1"
-    );
-    expect(res.status).toEqual(StatusCodes.METHOD_NOT_ALLOWED);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 if creating location without data", async () => {
-    const res = await request(app).post("/v1/locations/").send({});
+  // PATCH /checkpoints/:id
+  it("Should return 400 if updating checkpoint by invalid id", async () => {
+    const res = await request(app).patch("/v1/checkpoints/5f8f80b547644215f33");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if creating location with name only", async () => {
-    const res = await request(app).post("/v1/locations/").send({
-      name: "Location name",
-    });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 if creating location with latitude only", async () => {
-    const res = await request(app).post("/v1/locations/").send({
-      latitude: 55.830387,
-    });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 if creating location with longitude only", async () => {
-    const res = await request(app).post("/v1/locations/").send({
-      longitude: 39.411245,
-    });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 201 if successfully created location", async () => {
-    const res = await request(app).post("/v1/locations/").send({
-      name: "Test location name",
-      latitude: 55.855072,
-      longitude: 39.242487,
-    });
-    expect(res.status).toEqual(StatusCodes.CREATED);
-    expect(res.type).toBe("application/json");
-    // regex for response like /participants/5f8d0d55b54764421b715d5d
-    expect(res.headers.location).toMatch(/.*(\/v1\/locations\/)([a-f\d]{24})$/);
-    expect(res.body).toMatchObject({
-      _id: expect.any(String),
-      name: "Test location name",
-      latitude: 55.855072,
-      longitude: 39.242487,
-    });
-  });
-
-  it("Should return 400 if creating location with existent lat/long", async () => {
-    const res = await request(app).post("/v1/locations/").send({
-      name: "Test location name",
-      latitude: 55.828526,
-      longitude: 39.376358,
-    });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 if creating location with invalid data", async () => {
-    const res = await request(app).post("/v1/locations/").send({
-      name: "Test location name",
-      latitude: "Omnomnom",
-      longitude: "Boooo",
-    });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  // PATCH /locations/:id
-  it("Should return 400 when updating location by invalid id", async () => {
-    const res = await request(app).patch("/v1/locations/5f8f8764421b715f05");
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 404 when updating inexistent location", async () => {
+  it("Should return 404 if updating checkpoint by inexistent id", async () => {
     const res = await request(app).patch(
-      "/v1/locations/5f8f83a6c53764421b715f05"
+      "/v1/checkpoints/5f8f8710b54764321b415f33"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 when updating location with invalid latitude", async () => {
+  it("Should return 400 if setting location that is already used", async () => {
     const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715eff")
+      .patch("/v1/checkpoints/5f8f8720b54764421b715f1f")
       .send({
-        latitude: "Hoo-hoo!",
+        location: "5f8f83f6b54764421b715efe",
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 when updating location with invalid longitude", async () => {
+  it("Should return 200 if successfully updated checkpoint", async () => {
     const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715eff")
+      .patch("/v1/checkpoints/5f8f8720b54764421b715f1d")
       .send({
-        longitude: "Hoo-hoo!",
-      });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 200 when successfully updated location name", async () => {
-    const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715eff")
-      .send({
-        name: "New location name",
+        name: "New updated name",
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      _id: "5f8f83f6b54764421b715eff",
-      name: "New location name",
-      latitude: 55.825614,
-      longitude: 39.260248,
-    });
-  });
-
-  it("Should return 200 when successfully updated latitude", async () => {
-    const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715f08")
-      .send({
-        latitude: 55.825612,
-      });
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
-    expect(res.body).toMatchObject({
-      _id: "5f8f83f6b54764421b715f08",
-      name: "Rule card management",
-      latitude: 55.825612,
-      longitude: 39.389303,
-    });
-  });
-
-  it("Should return 200 when successfully updated longitude", async () => {
-    const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715f0c")
-      .send({
-        longitude: 39.260247,
-      });
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
-    expect(res.body).toMatchObject({
-      _id: "5f8f83f6b54764421b715f0c",
-      name: "If position go choose",
-      latitude: 55.822349,
-      longitude: 39.260247,
+      _id: "5f8f8720b54764421b715f1d",
+      name: "New updated name",
+      location: "5f8f83f6b54764421b715efa",
     });
   });
 });

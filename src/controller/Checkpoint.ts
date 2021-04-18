@@ -4,138 +4,86 @@ import { StatusCodes } from "http-status-codes";
 import Checkpoint, { ICheckpoint } from "model/Checkpoint";
 import utils from "utils";
 
-const validateCheckpointExists: RequestHandler = async (
+const validateAssignmentExists: RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const requestedId = req.params.id;
 
-  const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
+  const assignment: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
-  if (!checkpoint) {
+  if (!assignment) {
     return res.status(StatusCodes.NOT_FOUND).json({});
   }
 
   return next();
 };
 
-const hasUniqueLocation = async (checkpoint: ICheckpoint): Promise<boolean> => {
-  const checkpoints: Array<ICheckpoint> = await Checkpoint.find().where({
-    location: checkpoint.location,
-  });
-
-  if (
-    checkpoints.length > 0 &&
-    String(checkpoints[0]._id) !== String(checkpoint._id)
-  ) {
-    return false;
-  }
-
-  return true;
+// GET /checkpoint-assignments/
+const getAll: RequestHandler = async (_: Request, res: Response) => {
+  const assignments: Array<ICheckpoint> = await Checkpoint.find();
+  res.status(StatusCodes.OK).json(assignments);
 };
 
-// GET /checkpoints/
-const getAll: RequestHandler = async (req: Request, res: Response) => {
-  let filter = {};
-  if (req.query.water) {
-    const isWater: boolean =
-      (req.query.water as string).toLowerCase() === "true";
-    filter = {
-      water: isWater,
-    };
-  }
-
-  const checkpoints: Array<ICheckpoint> = await Checkpoint.find()
-    .where(filter)
-    .populate("location");
-  res.status(StatusCodes.OK).json(checkpoints);
-};
-
-// GET /checkpoints/:id
+// GET /checkpoint-assignments/:id
 const getById: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const checkpoint: ICheckpoint | null = await Checkpoint.findById(
-    requestedId
-  ).populate("location");
+  const assignment: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
-  if (checkpoint) {
-    res.status(StatusCodes.OK).json(checkpoint);
+  if (assignment) {
+    res.status(StatusCodes.OK).json(assignment);
   }
 };
 
-// PUT /checkpoints/
+// PUT /checkpoint-assignments/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
   const version = utils.extractVersionFromUrl(req.originalUrl);
 
-  const newCheckpoint: ICheckpoint = new Checkpoint(data);
+  const newAssignment: ICheckpoint = new Checkpoint(data);
 
-  newCheckpoint
-    .validate()
-    .then(async () => {
-      const isUniqueLocation: boolean = await hasUniqueLocation(newCheckpoint);
-
-      if (isUniqueLocation) {
-        Checkpoint.create(newCheckpoint)
-          .then((checkpoint: ICheckpoint) =>
-            res
-              .status(StatusCodes.CREATED)
-              .set("Location", `/${version}/checkpoints/${checkpoint._id}`)
-              .json(checkpoint)
-          )
-          .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
-      } else {
-        res.status(StatusCodes.BAD_REQUEST).json({});
-      }
-    })
+  Checkpoint.create(newAssignment)
+    .then((assignment: ICheckpoint) =>
+      res
+        .status(StatusCodes.CREATED)
+        .set("Location", `/${version}/checkpoint-assignments/${assignment._id}`)
+        .json(assignment)
+    )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
 };
 
-// PATCH /checkpoints/:id
+// PATCH /checkpoint-assignments/:id
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
+  const assignment: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
-  if (!checkpoint) {
-    return;
+  if (assignment) {
+    assignment
+      .set(req.body)
+      .save()
+      .then(() => res.status(StatusCodes.OK).json(assignment))
+      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
   }
-
-  checkpoint
-    .set(req.body)
-    .validate()
-    .then(async () => {
-      const isUniqueLocation: boolean = await hasUniqueLocation(checkpoint);
-
-      if (isUniqueLocation) {
-        checkpoint
-          .save()
-          .then(() => res.status(StatusCodes.OK).json(checkpoint))
-          .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
-      } else {
-        res.status(StatusCodes.BAD_REQUEST).json({});
-      }
-    })
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
 };
 
-// DELETE /checkpoints/:id
+// DELETE /checkpoint-assignments/:id
 const deleteById: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
+  const assignment: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
-  if (checkpoint) {
-    Checkpoint.deleteOne(checkpoint)
+  if (assignment) {
+    Checkpoint.deleteOne(assignment)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
 };
 
 export default {
-  validateCheckpointExists,
+  validateAssignmentExists,
   getAll,
   getById,
   create,

@@ -2,7 +2,12 @@
  * @openapi
  *  tags:
  *    name: Checkpoints
- *    description: API to manage checkpoints.
+ *    description: API to manage checkpoint assignments. A checkpoint is
+ *                 a unique link between location, event, category, and
+ *                 a station. Checkpoints in a category can be set in a specific
+ *                 order or w/o any order. They can be mandatory or optional and
+ *                 also can have a cost associated with it, e.g. in case of the
+ *                 rogaining.
  */
 
 /**
@@ -12,26 +17,46 @@
  *      Checkpoint:
  *        type: object
  *        required:
- *          - name
+ *          - event
+ *          - category
+ *          - location
  *        properties:
- *          name:
+ *          event:
  *            type: string
- *            description: The short name of the checkpoint
+ *            description: Unique identifier of the event
+ *          category:
+ *            type: string
+ *            description: Unique identifier of the category
  *          location:
  *            type: string
- *            description: Unique id of the location
- *          description:
+ *            description: Unique identifier of the checkpoint
+ *          station:
  *            type: string
- *            description: Full description of the checkpoint
- *          water:
+ *            description: Unique identifier of the station
+ *          required:
  *            type: boolean
- *            description: True if checkpoint is used for the water stage of the
- *                         competition. For such checkpoints there is no
- *                         GPS location required to be set and checkpoints are
- *                         rather considered placeholders.
- *          note:
+ *            default: true
+ *            description: True if checkpoint is required to be taken
+ *          checkOrder:
+ *            type: boolean
+ *            default: true
+ *            description: True if the order in which this checkpoint is taken
+ *                         will matter
+ *          order:
+ *            type: integer
+ *            description: Order number in which this checkpoint must be taken.
+ *                         This parameter takes effect when checkOrder is set
+ *                         to true.
+ *          cost:
+ *            type: number
+ *            description: Describes how much it will cost to take
+ *                         (or not to take) this checkpoint.
+ *          costMetric:
  *            type: string
- *            description: A short note for the checkpoint
+ *            default: seconds
+ *            enum: [points, seconds, minutes, hours]
+ *            description: Metric that the checkpoint's cost will be considered
+ *                         with
  *          createdAt:
  *            type: string
  *            format: date
@@ -41,22 +66,17 @@
  *            format: date
  *            description: The date when the record was last updated.
  *        example:
- *          _id: "5f8f83f6b54764421b715eea"
- *          name: "Next to the road"
- *          location: "5f8f83f6b54764421b715ef4"
- *          description: "Beautiful tree 30 degrees to the right of the road"
- *          water: false
- *          note: "There are two trees, we pick the closest one"
+ *          _id: "5f907c38b54764421b71609e"
+ *          event: "5f8d04b3b54764421b7156dc"
+ *          category: "5f8d04f7b54764421b7156e1"
+ *          location: "5f8f8720b54764421b715f21"
+ *          station: "5f8f8c44b54764421b715f51"
+ *          required: true
+ *          checkOrder: true
+ *          order: 4
  *          createdAt: "2019-09-22T06:00:00.000Z"
  *          updatedAt: "2019-09-22T06:00:00.000Z"
  *    parameters:
- *      water:
- *        in: query
- *        name: water
- *        schema:
- *          type: boolean
- *        required: false
- *        description:
  *      checkpointId:
  *        in: path
  *        name: checkpointId
@@ -74,7 +94,7 @@ import CheckpointController from "controller/Checkpoint";
 const router = express.Router();
 
 router.param("id", GenericController.validateObjectId);
-router.param("id", CheckpointController.validateCheckpointExists);
+router.param("id", CheckpointController.validateAssignmentExists);
 
 // Router for /checkpoints/
 
@@ -85,8 +105,6 @@ router.param("id", CheckpointController.validateCheckpointExists);
  *      get:
  *        summary: Get a list of checkpoints.
  *        tags: [Checkpoints]
- *        parameters:
- *          - $ref: '#/components/parameters/water'
  *        responses:
  *          '200':
  *            description: A JSON array of all checkpoints
@@ -96,24 +114,6 @@ router.param("id", CheckpointController.validateCheckpointExists);
  *                  type: array
  *                  items:
  *                    $ref: '#/components/schemas/Checkpoint'
- *                  example:
- *                    [
- *                      {
- *                        _id: "5f8f83f6b54764421b715eea",
- *                        name: "Next to the road",
- *                        location: {
- *                          "_id": "5f8f83f6b54764421b715ef4",
- *                          "name": "Data past fish marriage",
- *                          "latitude": 55.892334,
- *                          "longitude": 39.328505,
- *                        },
- *                        description: "Beautiful tree 30 degrees to the right of the road",
- *                        water: false,
- *                        note: "There are two trees, we pick the closest one",
- *                        createdAt: "2019-09-22T06:00:00.000Z",
- *                        updatedAt: "2019-09-22T06:00:00.000Z"
- *                      }
- *                    ]
  *          '401':
  *            $ref: '#/components/responses/Unauthorized'
  */
@@ -135,22 +135,6 @@ router.get("/", CheckpointController.getAll);
  *              application/json:
  *                schema:
  *                  $ref: '#/components/schemas/Checkpoint'
- *                example:
- *                  {
- *                    _id: "5f8f83f6b54764421b715eea",
- *                    name: "Next to the road",
- *                    location: {
- *                      "_id": "5f8f83f6b54764421b715ef4",
- *                      "name": "Data past fish marriage",
- *                      "latitude": 55.892334,
- *                      "longitude": 39.328505,
- *                    },
- *                    description: "Beautiful tree 30 degrees to the right of the road",
- *                    water: false,
- *                    note: "There are two trees, we pick the closest one",
- *                    createdAt: "2019-09-22T06:00:00.000Z",
- *                    updatedAt: "2019-09-22T06:00:00.000Z"
- *                  }
  *          '400':
  *            $ref: '#/components/responses/BadRequest'
  *          '401':
@@ -165,21 +149,22 @@ router.get("/:id", CheckpointController.getById);
  *  paths:
  *    /checkpoints:
  *      post:
- *        summary: Create checkpoint.
+ *        summary: Create a checkpoint.
  *        tags: [Checkpoints]
  *        requestBody:
- *          description: Checkpoint data
+ *          description: Assignment data
  *          required: true
  *          content:
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Checkpoint'
  *              example:
- *                name: "New Checkpoint"
- *                location: "5f8f83f6b54764421b715ef4"
+ *                event: "5f8d04b3b54764421b7156dc"
+ *                category: "5f8d04f7b54764421b7156e1"
+ *                location: "5f8f8720b54764421b715f21"
  *        responses:
  *          '201':
- *            description: Checkpoint created
+ *            description: Assignment created
  *            content:
  *              application/json:
  *                schema:
@@ -201,17 +186,18 @@ router.post("/", CheckpointController.create);
  *        parameters:
  *          - $ref: '#/components/parameters/checkpointId'
  *        requestBody:
- *          description: Checkpoint data to update
+ *          description: Assignment data to update
  *          required: true
  *          content:
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Checkpoint'
  *              example:
- *                location: "5f8f83f6b54764421b715ef4"
+ *                checkOrder: true
+ *                order: 4
  *        responses:
  *          '200':
- *            description: Checkpoint updated
+ *            description: Assignment updated
  *            content:
  *              application/json:
  *                schema:
@@ -236,7 +222,7 @@ router.patch("/:id", CheckpointController.update);
  *          - $ref: '#/components/parameters/checkpointId'
  *        responses:
  *          '204':
- *            description: Checkpoint has been deleted
+ *            description: Assignment has been deleted
  *          '401':
  *            $ref: '#/components/responses/Unauthorized'
  *          '404':
