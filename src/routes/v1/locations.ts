@@ -13,6 +13,8 @@
  *        type: object
  *        required:
  *          - name
+ *          - latitude
+ *          - longitude
  *        properties:
  *          name:
  *            type: string

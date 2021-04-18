@@ -53,6 +53,66 @@ describe("Location model", () => {
     await expect(Location.create(location)).rejects.toThrowError();
   });
 
+  it("Throws an error if location latitude is out of range", async () => {
+    const location: ILocation = new Location({
+      name: "New Test Location",
+      latitude: -90.000001,
+      longitude: 39.123456,
+    });
+    await expect(Location.create(location)).rejects.toThrowError();
+
+    const location2: ILocation = new Location({
+      name: "New Test Location",
+      latitude: -180.0,
+      longitude: 39.123456,
+    });
+    await expect(Location.create(location2)).rejects.toThrowError();
+
+    const location3: ILocation = new Location({
+      name: "New Test Location",
+      latitude: 90.000001,
+      longitude: 39.123456,
+    });
+    await expect(Location.create(location3)).rejects.toThrowError();
+
+    const location4: ILocation = new Location({
+      name: "New Test Location",
+      latitude: 180.0,
+      longitude: 39.123456,
+    });
+    await expect(Location.create(location4)).rejects.toThrowError();
+  });
+
+  it("Throws an error if location longitude is out of range", async () => {
+    const location: ILocation = new Location({
+      name: "New Test Location",
+      latitude: 55.123456,
+      longitude: -180.000001,
+    });
+    await expect(Location.create(location)).rejects.toThrowError();
+
+    const location2: ILocation = new Location({
+      name: "New Test Location",
+      latitude: 55.123456,
+      longitude: 180.000001,
+    });
+    await expect(Location.create(location2)).rejects.toThrowError();
+
+    const location3: ILocation = new Location({
+      name: "New Test Location",
+      latitude: 55.123456,
+      longitude: -200.0,
+    });
+    await expect(Location.create(location3)).rejects.toThrowError();
+
+    const location4: ILocation = new Location({
+      name: "New Test Location",
+      latitude: 55.123456,
+      longitude: 200.0,
+    });
+    await expect(Location.create(location4)).rejects.toThrowError();
+  });
+
   it("Should create a new location with a name and coordinates", async () => {
     expect.assertions(5);
 
