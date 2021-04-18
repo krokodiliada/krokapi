@@ -25,9 +25,9 @@ describe("Checkpoint Assignment endpoints", () => {
 
   // GET methods
 
-  // GET /checkpoint-assignments/
-  it("Should return a list of all assignments", async () => {
-    const res = await request(app).get("/v1/checkpoint-assignments/");
+  // GET /checkpoints/
+  it("Should return a list of all checkpoints", async () => {
+    const res = await request(app).get("/v1/checkpoints/");
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -37,33 +37,31 @@ describe("Checkpoint Assignment endpoints", () => {
       _id: expect.any(String),
       event: expect.any(String),
       category: expect.any(String),
-      checkpoint: expect.any(String),
+      location: expect.any(String),
       station: expect.any(String),
       required: expect.any(Boolean),
       checkOrder: expect.any(Boolean),
     });
   });
 
-  // GET /checkpoint-assignments/:id
-  it("Should return 400 if requesting assignment by invalid id", async () => {
-    const res = await request(app).get(
-      "/v1/checkpoint-assignments/585476b7160a4"
-    );
+  // GET /checkpoints/:id
+  it("Should return 400 if requesting checkpoint by invalid id", async () => {
+    const res = await request(app).get("/v1/checkpoints/585476b7160a4");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 404 if requesting assignment by invalid id", async () => {
+  it("Should return 404 if requesting checkpoint by invalid id", async () => {
     const res = await request(app).get(
-      "/v1/checkpoint-assignments/5f907c38b54754321a7160a4"
+      "/v1/checkpoints/5f907c38b54754321a7160a4"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 200 if requesting assignment by invalid id", async () => {
+  it("Should return 200 if requesting checkpoint by invalid id", async () => {
     const res = await request(app).get(
-      "/v1/checkpoint-assignments/5f907c38b54764421b7160a4"
+      "/v1/checkpoints/5f907c38b54764421b7160a4"
     );
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
@@ -71,7 +69,7 @@ describe("Checkpoint Assignment endpoints", () => {
       _id: "5f907c38b54764421b7160a4",
       event: "5f8d04b3b54764421b7156dc",
       category: "5f8d04f7b54764421b7156df",
-      checkpoint: "5f8f8720b54764421b715f24",
+      location: "5f8f8720b54764421b715f24",
       station: "5f8f8c44b54764421b715f54",
       required: true,
       checkOrder: true,
@@ -79,33 +77,33 @@ describe("Checkpoint Assignment endpoints", () => {
     });
   });
 
-  // POST /checkpoint-assignments/
-  it("Should return 400 if creating assignment with empty body", async () => {
-    const res = await request(app).post("/v1/checkpoint-assignments/").send({});
+  // POST /checkpoints/
+  it("Should return 400 if creating checkpoint with empty body", async () => {
+    const res = await request(app).post("/v1/checkpoints/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if creating assignment without event", async () => {
-    const res = await request(app).post("/v1/checkpoint-assignments/").send({
+  it("Should return 400 if creating checkpoint without event", async () => {
+    const res = await request(app).post("/v1/checkpoints/").send({
       category: "5f8d04f7b54764421b7156df",
-      checkpoint: "5f8f8720b54764421b715f21",
+      location: "5f8f8720b54764421b715f21",
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if creating assignment without category", async () => {
-    const res = await request(app).post("/v1/checkpoint-assignments/").send({
+  it("Should return 400 if creating checkpoint without category", async () => {
+    const res = await request(app).post("/v1/checkpoints/").send({
       event: "5f8d0401b54764421b7156da",
-      checkpoint: "5f8f8720b54764421b715f21",
+      location: "5f8f8720b54764421b715f21",
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if creating assignment without checkpoint", async () => {
-    const res = await request(app).post("/v1/checkpoint-assignments/").send({
+  it("Should return 400 if creating checkpoint without checkpoint", async () => {
+    const res = await request(app).post("/v1/checkpoints/").send({
       event: "5f8d0401b54764421b7156da",
       category: "5f8d04f7b54764421b7156df",
     });
@@ -113,50 +111,48 @@ describe("Checkpoint Assignment endpoints", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 201 if successfully created assignment", async () => {
-    const res = await request(app).post("/v1/checkpoint-assignments/").send({
+  it("Should return 201 if successfully created checkpoint", async () => {
+    const res = await request(app).post("/v1/checkpoints/").send({
       event: "5f8d0401b54764421b7156da",
       category: "5f8d04f7b54764421b7156df",
-      checkpoint: "5f8f8720b54764421b715f21",
+      location: "5f8f8720b54764421b715f21",
     });
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
     expect(res.headers.location).toMatch(
-      /.*(\/v1\/checkpoint-assignments\/)([a-f\d]{24})$/
+      /.*(\/v1\/checkpoints\/)([a-f\d]{24})$/
     );
   });
 
-  // DELETE /checkpoint-assignments/:id
-  it("Should return 400 if deleting assignment by invalid id", async () => {
+  // DELETE /checkpoints/:id
+  it("Should return 400 if deleting checkpoint by invalid id", async () => {
     const res = await request(app).delete(
-      "/v1/checkpoint-assignments/5f907c387644b716095"
+      "/v1/checkpoints/5f907c387644b716095"
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 404 if deleting assignment by invalid id", async () => {
+  it("Should return 404 if deleting checkpoint by invalid id", async () => {
     const res = await request(app).delete(
-      "/v1/checkpoint-assignments/5f907c38b54724421a715095"
+      "/v1/checkpoints/5f907c38b54724421a715095"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 200 if successfully deleted assignment by id", async () => {
+  it("Should return 200 if successfully deleted checkpoint by id", async () => {
     const res = await request(app).delete(
-      "/v1/checkpoint-assignments/5f907c38b54764421b716095"
+      "/v1/checkpoints/5f907c38b54764421b716095"
     );
     expect(res.status).toEqual(StatusCodes.NO_CONTENT);
     expect(res.type).toBe("");
   });
 
-  it("Should return 404 if trying to delete the same assignment twice", async () => {
-    await request(app).delete(
-      "/v1/checkpoint-assignments/5f907c38b54764421b716092"
-    );
+  it("Should return 404 if trying to delete the same checkpoint twice", async () => {
+    await request(app).delete("/v1/checkpoints/5f907c38b54764421b716092");
     const res = await request(app).delete(
-      "/v1/checkpoint-assignments/5f907c38b54764421b716092"
+      "/v1/checkpoints/5f907c38b54764421b716092"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");

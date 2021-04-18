@@ -11,33 +11,33 @@ const validateAssignmentExists: RequestHandler = async (
 ) => {
   const requestedId = req.params.id;
 
-  const assignment: ICheckpoint | null = await Checkpoint.findById(requestedId);
+  const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
-  if (!assignment) {
+  if (!checkpoint) {
     return res.status(StatusCodes.NOT_FOUND).json({});
   }
 
   return next();
 };
 
-// GET /checkpoint-assignments/
+// GET /checkpoints/
 const getAll: RequestHandler = async (_: Request, res: Response) => {
-  const assignments: Array<ICheckpoint> = await Checkpoint.find();
-  res.status(StatusCodes.OK).json(assignments);
+  const checkpoints: Array<ICheckpoint> = await Checkpoint.find();
+  res.status(StatusCodes.OK).json(checkpoints);
 };
 
-// GET /checkpoint-assignments/:id
+// GET /checkpoints/:id
 const getById: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const assignment: ICheckpoint | null = await Checkpoint.findById(requestedId);
+  const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
-  if (assignment) {
-    res.status(StatusCodes.OK).json(assignment);
+  if (checkpoint) {
+    res.status(StatusCodes.OK).json(checkpoint);
   }
 };
 
-// PUT /checkpoint-assignments/
+// PUT /checkpoints/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
   const version = utils.extractVersionFromUrl(req.originalUrl);
@@ -45,38 +45,38 @@ const create: RequestHandler = async (req: Request, res: Response) => {
   const newAssignment: ICheckpoint = new Checkpoint(data);
 
   Checkpoint.create(newAssignment)
-    .then((assignment: ICheckpoint) =>
+    .then((checkpoint: ICheckpoint) =>
       res
         .status(StatusCodes.CREATED)
-        .set("Location", `/${version}/checkpoint-assignments/${assignment._id}`)
-        .json(assignment)
+        .set("Location", `/${version}/checkpoints/${checkpoint._id}`)
+        .json(checkpoint)
     )
     .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
 };
 
-// PATCH /checkpoint-assignments/:id
+// PATCH /checkpoints/:id
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const assignment: ICheckpoint | null = await Checkpoint.findById(requestedId);
+  const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
-  if (assignment) {
-    assignment
+  if (checkpoint) {
+    checkpoint
       .set(req.body)
       .save()
-      .then(() => res.status(StatusCodes.OK).json(assignment))
+      .then(() => res.status(StatusCodes.OK).json(checkpoint))
       .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
   }
 };
 
-// DELETE /checkpoint-assignments/:id
+// DELETE /checkpoints/:id
 const deleteById: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const assignment: ICheckpoint | null = await Checkpoint.findById(requestedId);
+  const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
-  if (assignment) {
-    Checkpoint.deleteOne(assignment)
+  if (checkpoint) {
+    Checkpoint.deleteOne(checkpoint)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }
