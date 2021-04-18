@@ -53,8 +53,8 @@ describe("Location model", () => {
     await expect(Location.create(location)).rejects.toThrowError();
   });
 
-  it("Should create a new location with name only", async () => {
-    expect.assertions(6);
+  it("Should create a new location with a name and coordinates", async () => {
+    expect.assertions(5);
 
     const location: ILocation = new Location(validLocation);
     const spy = jest.spyOn(location, "save");
