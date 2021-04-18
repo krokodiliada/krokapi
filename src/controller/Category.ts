@@ -6,9 +6,7 @@ import GenericController from "controller/Common";
 import Category, { ICategory } from "model/Category";
 import Event, { IEvent } from "model/Event";
 import Team, { ITeam } from "model/Team";
-import CheckpointAssignment, {
-  ICheckpointAssignment,
-} from "model/CheckpointAssignment";
+import Checkpoint, { ICheckpoint } from "model/Checkpoint";
 import Route, { IRoute } from "model/Route";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 import utils from "utils";
@@ -56,11 +54,9 @@ const isTeamRegisteredInCategory = async (
 const isCheckpointAssignedToCategory = async (
   categoryId: string
 ): Promise<boolean> => {
-  const checkpoints: Array<ICheckpointAssignment> = await CheckpointAssignment.find(
-    {
-      category: categoryId,
-    }
-  );
+  const checkpoints: Array<ICheckpoint> = await Checkpoint.find({
+    category: categoryId,
+  });
 
   if (checkpoints.length > 0) {
     return true;

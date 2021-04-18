@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { IGpsLocation } from "model/GpsLocation";
+import { ILocation } from "model/Location";
 import { ICategory } from "model/Category";
 
 export interface IEventDate extends Document {
@@ -11,7 +11,7 @@ export interface IEvent extends Document {
   name: string;
   categories: Array<ICategory["_id"]>;
   date: IEventDate;
-  location?: IGpsLocation["_id"];
+  location?: ILocation["_id"];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -53,7 +53,7 @@ export const EventSchema: Schema = new Schema(
     },
     location: {
       type: Schema.Types.ObjectId,
-      ref: "GpsLocation",
+      ref: "Location",
       required: false,
     },
   },

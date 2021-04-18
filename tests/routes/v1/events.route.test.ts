@@ -570,7 +570,7 @@ describe("Event endpoints", () => {
 
   it("Should return 200 if deleted existent location", async () => {
     await request(app).put(
-      "/v1/events/5f8d0401b54764421b7156da/location/5f8f83f6b54764421b715ef7"
+      "/v1/events/5f8d0401b54764421b7156da/location/5f8f8720b54764421b715f16"
     );
 
     const res = await request(app).delete(
@@ -630,12 +630,12 @@ describe("Event endpoints", () => {
     await request(app).delete("/v1/events/5f8d04b3b54764421b7156dd/location");
 
     const resInsert = await request(app).put(
-      "/v1/events/5f8d04b3b54764421b7156dd/location/5f8f83f6b54764421b715ef7"
+      "/v1/events/5f8d04b3b54764421b7156dd/location/5f8f8720b54764421b715f1e"
     );
     expect(resInsert.status).toEqual(StatusCodes.OK);
 
     const resReplace = await request(app).put(
-      "/v1/events/5f8d04b3b54764421b7156dd/location/5f8f83f6b54764421b715ef7"
+      "/v1/events/5f8d04b3b54764421b7156dd/location/5f8f8720b54764421b715f1e"
     );
     expect(resReplace.status).toEqual(StatusCodes.OK);
   });
@@ -644,7 +644,7 @@ describe("Event endpoints", () => {
     await request(app).delete("/v1/events/5f8d04b3b54764421b7156dd/location");
 
     const resInsert = await request(app).put(
-      "/v1/events/5f8d04b3b54764421b7156dd/location/5f8f83f6b54764421b715ef7"
+      "/v1/events/5f8d04b3b54764421b7156dd/location/5f8f8720b54764421b715f23"
     );
     expect(resInsert.status).toEqual(StatusCodes.OK);
   });

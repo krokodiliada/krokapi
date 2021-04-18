@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import GpsLocation, { IGpsLocation } from "model/GpsLocation";
+import Location, { ILocation } from "model/Location";
 import utils from "utils";
 
 const validateLocationExists: RequestHandler = async (
@@ -11,7 +11,7 @@ const validateLocationExists: RequestHandler = async (
 ) => {
   const requestedId = req.params.id;
 
-  const location: IGpsLocation | null = await GpsLocation.findById(requestedId);
+  const location: ILocation | null = await Location.findById(requestedId);
 
   if (!location) {
     return res.status(StatusCodes.NOT_FOUND).json({});
@@ -21,8 +21,17 @@ const validateLocationExists: RequestHandler = async (
 };
 
 // GET /locations/
-const getAll: RequestHandler = async (_: Request, res: Response) => {
-  const locations: Array<IGpsLocation> = await GpsLocation.find();
+const getAll: RequestHandler = async (req: Request, res: Response) => {
+  let filter = {};
+  if (req.query.water) {
+    const isWater: boolean =
+      (req.query.water as string).toLowerCase() === "true";
+    filter = {
+      water: isWater,
+    };
+  }
+
+  const locations: Array<ILocation> = await Location.find().where(filter);
   res.status(StatusCodes.OK).json(locations);
 };
 
@@ -30,22 +39,20 @@ const getAll: RequestHandler = async (_: Request, res: Response) => {
 const getById: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const location: IGpsLocation | null = await GpsLocation.findById(requestedId);
+  const location: ILocation | null = await Location.findById(requestedId);
 
   if (location) {
     res.status(StatusCodes.OK).json(location);
   }
 };
 
-// POST /locations/
+// PUT /locations/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
   const version = utils.extractVersionFromUrl(req.originalUrl);
 
-  const newLocation: IGpsLocation = new GpsLocation(data);
-
-  GpsLocation.create(newLocation)
-    .then((location: IGpsLocation) =>
+  Location.create(data)
+    .then((location: ILocation) =>
       res
         .status(StatusCodes.CREATED)
         .set("Location", `/${version}/locations/${location._id}`)
@@ -58,25 +65,27 @@ const create: RequestHandler = async (req: Request, res: Response) => {
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const location: IGpsLocation | null = await GpsLocation.findById(requestedId);
+  const location: ILocation | null = await Location.findById(requestedId);
 
-  if (location) {
-    location
-      .set(req.body)
-      .save()
-      .then(() => res.status(StatusCodes.OK).json(location))
-      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+  if (!location) {
+    return;
   }
+
+  location
+    .set(req.body)
+    .save()
+    .then(() => res.status(StatusCodes.OK).json(location))
+    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
 };
 
 // DELETE /locations/:id
 const deleteById: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
-  const location: IGpsLocation | null = await GpsLocation.findById(requestedId);
+  const location: ILocation | null = await Location.findById(requestedId);
 
   if (location) {
-    GpsLocation.deleteOne(location)
+    Location.deleteOne(location)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
   }

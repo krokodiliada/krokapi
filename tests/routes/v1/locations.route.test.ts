@@ -7,7 +7,7 @@ import {
   eraseSampleDatabase,
 } from "../../utils/sampledb";
 
-describe("Location endpoints", () => {
+describe("Checkpoint endpoints", () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URL ?? "", {
       useCreateIndex: true,
@@ -31,111 +31,97 @@ describe("Location endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBeGreaterThan(1);
+    expect(res.body.length).toBeGreaterThan(45);
+    expect(res.body.length).toBeLessThan(50);
     expect(res.body[0]).toMatchObject({
       _id: expect.any(String),
       name: expect.any(String),
       latitude: expect.any(Number),
       longitude: expect.any(Number),
+      water: expect.any(Boolean),
     });
   });
 
-  // GET /locations/:id
-  it("Should return a location by id and set status to 200", async () => {
+  it("Should return 400 if requestion location by invalid id", async () => {
+    const res = await request(app).get("/v1/locations/5f8f87205474421b7151c");
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 if requestion location by inexistent id", async () => {
     const res = await request(app).get(
-      "/v1/locations/5f8f83f6b54764421b715f05"
+      "/v1/locations/5f8f8720b54764321a615f1c"
+    );
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  // GET /locations/:id
+  it("Should return a location by id", async () => {
+    const res = await request(app).get(
+      "/v1/locations/5f8f8720b54764421b715f1c"
     );
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      _id: "5f8f83f6b54764421b715f05",
-      name: "Fear gas hot here our",
-      latitude: 55.862512,
-      longitude: 39.281975,
+      _id: "5f8f8720b54764421b715f1c",
+      name: "Son prevent who",
+      latitude: 55.824484,
+      longitude: 39.258996,
+      water: false,
     });
   });
 
-  it("Should return 400 when requesting location by invalid id", async () => {
-    const res = await request(app).get("/v1/locations/5f8f8764421b715f05");
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 404 when requesting inexistent location", async () => {
-    const res = await request(app).get(
-      "/v1/locations/5f8f83a6c53764421b715f05"
-    );
-    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
-    expect(res.type).toBe("application/json");
-  });
-
-  // DELETE /locations/:id
-  it("Should return 400 when deleting location by invalid id", async () => {
-    const res = await request(app).delete("/v1/locations/5f8f8764421b715f05");
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 404 when deleting inexistent location", async () => {
-    const res = await request(app).delete(
-      "/v1/locations/5f8f83a6c53764421b715f05"
-    );
-    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 200 when successfully deleted location", async () => {
-    const res = await request(app).delete(
-      "/v1/locations/5f8f83f6b54764421b715eeb"
-    );
-    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
-    expect(res.type).toBe("");
-  });
-
-  it("Should return 404 when deleting the same location twice", async () => {
-    await request(app).delete("/v1/locations/5f8f83f6b54764421b715eec");
-    const res = await request(app).delete(
-      "/v1/locations/5f8f83f6b54764421b715eec"
-    );
-    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
-    expect(res.type).toBe("application/json");
-  });
-
   // POST /locations/
-  it("Should return 405 if post is not allowed to update location", async () => {
-    const res = await request(app).post(
-      "/v1/locations/5f8f83f6b54764421b715ef1"
-    );
-    expect(res.status).toEqual(StatusCodes.METHOD_NOT_ALLOWED);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 400 if creating location without data", async () => {
+  it("Should return 400 if creating location without body", async () => {
     const res = await request(app).post("/v1/locations/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if creating location with name only", async () => {
+  it("Should return 400 if creating location without name", async () => {
     const res = await request(app).post("/v1/locations/").send({
-      name: "Location name",
+      latitude: 55.123456,
+      longitude: 39.123456,
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if creating location with latitude only", async () => {
+  it("Should return 400 if creating location without latitude", async () => {
     const res = await request(app).post("/v1/locations/").send({
-      latitude: 55.830387,
+      name: "Brand new location that does not exist yet",
+      longitude: 39.123456,
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if creating location with longitude only", async () => {
+  it("Should return 400 if creating location without longitude", async () => {
     const res = await request(app).post("/v1/locations/").send({
-      longitude: 39.411245,
+      name: "Brand new location that does not exist yet",
+      latitude: 55.123456,
+    });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if creating location with existing name", async () => {
+    const res = await request(app).post("/v1/locations/").send({
+      name: "Congress enter choice",
+      latitude: 55.123456,
+      longitude: 39.123456,
+    });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if creating location with existing coordinates", async () => {
+    const res = await request(app).post("/v1/locations/").send({
+      name: "Brand new location that does not exist yet",
+      latitude: 55.825614,
+      longitude: 39.260248,
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -143,122 +129,96 @@ describe("Location endpoints", () => {
 
   it("Should return 201 if successfully created location", async () => {
     const res = await request(app).post("/v1/locations/").send({
-      name: "Test location name",
-      latitude: 55.855072,
-      longitude: 39.242487,
+      name: "Brand new location that does not exist yet",
+      latitude: 55.123456,
+      longitude: 39.123456,
     });
     expect(res.status).toEqual(StatusCodes.CREATED);
     expect(res.type).toBe("application/json");
-    // regex for response like /participants/5f8d0d55b54764421b715d5d
     expect(res.headers.location).toMatch(/.*(\/v1\/locations\/)([a-f\d]{24})$/);
-    expect(res.body).toMatchObject({
-      _id: expect.any(String),
-      name: "Test location name",
-      latitude: 55.855072,
-      longitude: 39.242487,
-    });
   });
 
-  it("Should return 400 if creating location with existent lat/long", async () => {
-    const res = await request(app).post("/v1/locations/").send({
-      name: "Test location name",
-      latitude: 55.828526,
-      longitude: 39.376358,
-    });
+  // DELETE /locations/:id
+  it("Should return 400 if deleting location by invalid id", async () => {
+    const res = await request(app).delete("/v1/locations/5f8f80b547644215f33");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 if creating location with invalid data", async () => {
-    const res = await request(app).post("/v1/locations/").send({
-      name: "Test location name",
-      latitude: "Omnomnom",
-      longitude: "Boooo",
-    });
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  // PATCH /locations/:id
-  it("Should return 400 when updating location by invalid id", async () => {
-    const res = await request(app).patch("/v1/locations/5f8f8764421b715f05");
-    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
-    expect(res.type).toBe("application/json");
-  });
-
-  it("Should return 404 when updating inexistent location", async () => {
-    const res = await request(app).patch(
-      "/v1/locations/5f8f83a6c53764421b715f05"
+  it("Should return 404 if deleting location by inexistent id", async () => {
+    const res = await request(app).delete(
+      "/v1/locations/5f8f8720a54763421b714f33"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 when updating location with invalid latitude", async () => {
+  it("Should return 200 if successfully deleted location", async () => {
+    const res = await request(app).delete(
+      "/v1/locations/5f8f8720b54764421b715f33"
+    );
+    expect(res.status).toEqual(StatusCodes.NO_CONTENT);
+    expect(res.type).toBe("");
+  });
+
+  it("Should return 404 if trying to delete the same location twice", async () => {
+    await request(app).delete("/v1/locations/5f8f8720b54764421b715f23");
+    const res = await request(app).delete(
+      "/v1/locations/5f8f8720b54764421b715f23"
+    );
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  // PATCH /locations/:id
+  it("Should return 400 if updating location by invalid id", async () => {
+    const res = await request(app).patch("/v1/locations/5f8f80b547644215f33");
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 404 if updating location by inexistent id", async () => {
+    const res = await request(app).patch(
+      "/v1/locations/5f8f8710b54764321b415f33"
+    );
+    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.type).toBe("application/json");
+  });
+
+  it("Should return 400 if setting location that is already used", async () => {
     const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715eff")
+      .patch("/v1/locations/5f8f8720b54764421b715f1f")
       .send({
-        latitude: "Hoo-hoo!",
+        latitude: 55.850383,
+        longitude: 39.263923,
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 400 when updating location with invalid longitude", async () => {
+  it("Should return 400 if setting name that is already used", async () => {
     const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715eff")
+      .patch("/v1/locations/5f8f8720b54764421b715f14")
       .send({
-        longitude: "Hoo-hoo!",
+        name: "Past low radio",
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
   });
 
-  it("Should return 200 when successfully updated location name", async () => {
+  it("Should return 200 if successfully updated location", async () => {
     const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715eff")
+      .patch("/v1/locations/5f8f8720b54764421b715f1d")
       .send({
-        name: "New location name",
+        name: "New updated name",
       });
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      _id: "5f8f83f6b54764421b715eff",
-      name: "New location name",
-      latitude: 55.825614,
-      longitude: 39.260248,
-    });
-  });
-
-  it("Should return 200 when successfully updated latitude", async () => {
-    const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715f08")
-      .send({
-        latitude: 55.825612,
-      });
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
-    expect(res.body).toMatchObject({
-      _id: "5f8f83f6b54764421b715f08",
-      name: "Rule card management",
-      latitude: 55.825612,
-      longitude: 39.389303,
-    });
-  });
-
-  it("Should return 200 when successfully updated longitude", async () => {
-    const res = await request(app)
-      .patch("/v1/locations/5f8f83f6b54764421b715f0c")
-      .send({
-        longitude: 39.260247,
-      });
-    expect(res.status).toEqual(StatusCodes.OK);
-    expect(res.type).toBe("application/json");
-    expect(res.body).toMatchObject({
-      _id: "5f8f83f6b54764421b715f0c",
-      name: "If position go choose",
-      latitude: 55.822349,
-      longitude: 39.260247,
+      _id: "5f8f8720b54764421b715f1d",
+      name: "New updated name",
+      latitude: 55.828526,
+      longitude: 39.376358,
     });
   });
 });
