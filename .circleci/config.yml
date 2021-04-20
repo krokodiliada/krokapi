@@ -79,7 +79,7 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: docker build -t krok/api .
+      - run: docker build -t krok/api -f docker/Dockerfile .
 
   build-docker-and-deploy:
     machine: true
