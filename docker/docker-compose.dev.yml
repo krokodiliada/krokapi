@@ -11,8 +11,11 @@ services:
     restart: unless-stopped
 
   krokapi:
-    image: krokapi:latest
-    container_name: krok-krokapi
+    image: krok/api-dev
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile-dev
+    container_name: krok-krokapi-dev
     environment:
       - MONGO_URL=mongodb://krok-mongodb:27017
     ports:

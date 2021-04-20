@@ -85,10 +85,13 @@ Follow these steps to run in Docker:
 
 1) Install `docker` and `docker-compose`.
 2) Clone `krokapi` git repo.
-3) Build docker image with `docker build -t krokapi -f docker/Dockerfile .`.
-4) Run `docker-compose up` within a directory with `docker-compose.yml` file.
+3) Run application in `development` or `production` modes:
 
-Software will run in developer mode.
+- dev mode:
+docker-compose -f ./docker/docker-compose.dev.yml up
+
+- prod mode:
+docker-compose -f ./docker/docker-compose.yml up
 
 ## [Optional] Development
 
