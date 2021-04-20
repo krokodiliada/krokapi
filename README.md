@@ -81,13 +81,14 @@ This will spin the API server and will enable it at the address http://localhost
 
 ### Running in Docker
 
-To be able to run the service in docker, we still need to specify
+Follow these steps to run in Docker:
 
-```bash
-$ docker build -t krok/api .
+1) Install `docker` and `docker-compose`.
+2) Clone `krokapi` git repo.
+3) Build docker image with `docker build -t krokapi -f docker/Dockerfile .`.
+4) Run `docker-compose up` within a directory with `docker-compose.yml` file.
 
-$ docker run -p 8080:8080 -e MONGO_URL='mongodb://host.docker.internal:27017' krok/api:latest
-```
+Software will run in developer mode.
 
 ## [Optional] Development
 
@@ -96,7 +97,7 @@ To be able to contribute to this API, for example when a bug was found, a develo
 ### Install dev dependencies
 
 ```bash
-$ npm isntall
+$ npm install
 ```
 
 This will install both, production and development dependencies.
