@@ -20,13 +20,3 @@ services:
     depends_on:
       - mongodb
     restart: unless-stopped
-
-  krokui:
-    image: krokui:latest
-    container_name: krok-krokui
-    depends_on:
-      - krokapi
-    environment:
-      - REACT_APP_KROKAPI_URL=http://localhost:8080/v1
-    ports:
-      - "3000:3000"
