@@ -5,7 +5,7 @@ services:
     image : mongo:3.6.8
     container_name: krok-mongodb
     volumes:
-      - ./data/db:/data/db
+      - ../volumes/mongodb/data/db:/data/db
     ports:
       - '27017:27017'
     restart: unless-stopped
