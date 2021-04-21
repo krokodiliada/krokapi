@@ -3,9 +3,11 @@ services:
 
   mongodb:
     image : mongo:3.6.8
-    container_name: krok-mongodb
+    container_name: krok-mongodb-dev
     volumes:
-      - ../volumes/mongodb/data/db:/data/db
+      - type: volume
+        source: mongodb_dev_data_volume
+        target: /data/db
     ports:
       - '27017:27017'
     restart: unless-stopped
@@ -17,9 +19,13 @@ services:
       dockerfile: ./docker/Dockerfile-dev
     container_name: krok-krokapi-dev
     environment:
-      - MONGO_URL=mongodb://krok-mongodb:27017
+      - MONGO_URL=mongodb://krok-mongodb-dev:27017
     ports:
       - '8080:8080'
     depends_on:
       - mongodb
     restart: unless-stopped
+
+volumes:
+  mongodb_dev_data_volume:
+    external: true
