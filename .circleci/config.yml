@@ -85,7 +85,7 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: docker build -t krok/api .
+      - run: docker build -t krok/api -f docker/Dockerfile .
       - run: echo "$GH_REGISTRY_TOKEN" | docker login -u "$GH_REGISTRY_USER" --password-stdin ghcr.io
       - run: docker tag krok/api:latest ghcr.io/krokodiliada/krokapi:latest
       - run: docker push ghcr.io/krokodiliada/krokapi:latest
