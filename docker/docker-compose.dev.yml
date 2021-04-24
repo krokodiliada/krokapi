@@ -5,9 +5,7 @@ services:
     image : mongo:3.6.8
     container_name: krok-mongodb-dev
     volumes:
-      - type: volume
-        source: mongodb_dev_data_volume
-        target: /data/db
+      - ../volumes/mongodb-dev/data/db:/data/db
     ports:
       - '27017:27017'
     restart: unless-stopped
@@ -25,7 +23,3 @@ services:
     depends_on:
       - mongodb
     restart: unless-stopped
-
-volumes:
-  mongodb_dev_data_volume:
-    external: true
