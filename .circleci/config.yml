@@ -127,6 +127,7 @@ workflows:
           requires:
             - build-production
             - test
+            - docker-prod-spin-check
           filters:
             branches:
               only:
