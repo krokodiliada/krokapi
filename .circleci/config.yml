@@ -111,27 +111,12 @@ workflows:
     jobs:
       - build
       - build-production
-      - build-docker:
-          requires:
-            - build-production
-          filters:
-            branches:
-              ignore:
-                - main
       - docker-dev-spin-check:
           requires:
-            - build-production
-          filters:
-            branches:
-              ignore:
-                - main
+            - build
       - docker-prod-spin-check:
           requires:
             - build-production
-          filters:
-            branches:
-              ignore:
-                - main
       - prettier:
           requires:
             - build
