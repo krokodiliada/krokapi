@@ -113,6 +113,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-# Docker container volumes
-volumes/
