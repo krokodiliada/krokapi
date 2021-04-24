@@ -75,12 +75,6 @@ jobs:
       - codecov/upload:
           file: "reports/coverage/clover.xml"
 
-  build-docker:
-    machine: true
-    steps:
-      - checkout
-      - run: docker build -t krok/api -f docker/Dockerfile .
-
   docker-dev-spin-check:
     machine: true
     steps:
