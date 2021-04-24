@@ -1,9 +1,9 @@
-version: '3.5'
+version: '3.2'
 services:
 
   mongodb:
     image : mongo:3.6.8
-    container_name: krok-mongodb-prod
+    container_name: krok-mongodb
     volumes:
       - type: volume
         source: mongodb_data_volume
@@ -17,9 +17,9 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
-    container_name: krok-krokapi-prod
+    container_name: krok-krokapi
     environment:
-      - MONGO_URL=mongodb://krok-mongodb-prod:27017
+      - MONGO_URL=mongodb://krok-mongodb:27017
     ports:
       - '8080:8080'
     depends_on:
@@ -28,4 +28,3 @@ services:
 
 volumes:
   mongodb_data_volume:
-    external: true

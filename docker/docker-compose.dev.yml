@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.2'
 services:
 
   mongodb:
@@ -28,4 +28,3 @@ services:
 
 volumes:
   mongodb_dev_data_volume:
-    external: true
