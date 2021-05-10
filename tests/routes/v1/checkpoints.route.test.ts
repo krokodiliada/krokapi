@@ -7,7 +7,7 @@ import {
   eraseSampleDatabase,
 } from "../../utils/sampledb";
 
-describe("Checkpoint Assignment endpoints", () => {
+describe("Checkpoint endpoints", () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URL ?? "", {
       useCreateIndex: true,

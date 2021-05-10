@@ -7,7 +7,7 @@ import {
   eraseSampleDatabase,
 } from "../../utils/sampledb";
 
-describe("Checkpoint endpoints", () => {
+describe("Location endpoints", () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URL ?? "", {
       useCreateIndex: true,
@@ -67,8 +67,8 @@ describe("Checkpoint endpoints", () => {
     expect(res.body).toMatchObject({
       _id: "5f8f8720b54764421b715f1c",
       name: "Son prevent who",
-      latitude: 55.824484,
-      longitude: 39.258996,
+      latitude: 55.8616,
+      longitude: 39.232,
       water: false,
     });
   });
@@ -120,8 +120,8 @@ describe("Checkpoint endpoints", () => {
   it("Should return 400 if creating location with existing coordinates", async () => {
     const res = await request(app).post("/v1/locations/").send({
       name: "Brand new location that does not exist yet",
-      latitude: 55.825614,
-      longitude: 39.260248,
+      latitude: 55.8332,
+      longitude: 39.2471,
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -189,8 +189,8 @@ describe("Checkpoint endpoints", () => {
     const res = await request(app)
       .patch("/v1/locations/5f8f8720b54764421b715f1f")
       .send({
-        latitude: 55.850383,
-        longitude: 39.263923,
+        latitude: 55.825135,
+        longitude: 39.212493,
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
@@ -217,8 +217,8 @@ describe("Checkpoint endpoints", () => {
     expect(res.body).toMatchObject({
       _id: "5f8f8720b54764421b715f1d",
       name: "New updated name",
-      latitude: 55.828526,
-      longitude: 39.376358,
+      latitude: 55.8552,
+      longitude: 39.2795,
     });
   });
 });
