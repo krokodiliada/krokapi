@@ -156,9 +156,7 @@ describe("Event endpoints", () => {
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      error:
-        "Could not create an event. " +
-        "Check your input data format and required fields",
+      error: "Event validation failed: name: Name is required",
     });
   });
 
@@ -176,8 +174,8 @@ describe("Event endpoints", () => {
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
       error:
-        "Could not create an event. " +
-        "Check your input data format and required fields",
+        "Event validation failed: date.end: End date is required, " +
+        "date: Validation failed: end: End date is required",
     });
   });
 
@@ -189,9 +187,7 @@ describe("Event endpoints", () => {
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      error:
-        "Could not create an event. " +
-        "Check your input data format and required fields",
+      error: "Event validation failed: date: Start/End date is required",
     });
   });
 
@@ -248,8 +244,7 @@ describe("Event endpoints", () => {
     expect(res2.type).toBe("application/json");
     expect(res2.body).toMatchObject({
       error:
-        "Could not create an event. " +
-        "Check your input data format and required fields",
+        "E11000 duplicate key error dup key: { : new Date(2134785600000) }",
     });
   });
 
@@ -262,7 +257,7 @@ describe("Event endpoints", () => {
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
-      error: "No data to update with",
+      error: "Empty request body is received",
     });
   });
 
@@ -322,9 +317,9 @@ describe("Event endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
-    expect(res.body).toMatchObject({
-      error: "Could not update. Check your input data",
-    });
+    expect(res.body.error).toContain(
+      'Cast to date failed for value "hz" at path "start"'
+    );
   });
 
   // GET /events/:id/categories
