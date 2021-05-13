@@ -58,12 +58,18 @@ describe("Station endpoints", () => {
     const res = await request(app).get("/v1/stations/505Aaab");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "505Aaab is not a number",
+    });
   });
 
   it("Should return 404 when requesting inexistent station", async () => {
     const res = await request(app).get("/v1/stations/40012");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Station with this id does not exist",
+    });
   });
 
   // DELETE /stations/:station
@@ -71,12 +77,18 @@ describe("Station endpoints", () => {
     const res = await request(app).delete("/v1/stations/505Aaab");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "505Aaab is not a number",
+    });
   });
 
   it("Should return 404 when deleting inexistent station", async () => {
     const res = await request(app).delete("/v1/stations/40012");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Station with this id does not exist",
+    });
   });
 
   it("Should return 200 when successfully deleted station", async () => {
@@ -90,6 +102,9 @@ describe("Station endpoints", () => {
     const res = await request(app).delete("/v1/stations/15");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Station with this id does not exist",
+    });
   });
 
   // PUT /stations/:station
@@ -97,6 +112,9 @@ describe("Station endpoints", () => {
     const res = await request(app).put("/v1/stations/505Aaab");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "505Aaab is not a number",
+    });
   });
 
   it("Should return 201 when adding station with number only", async () => {
@@ -131,12 +149,18 @@ describe("Station endpoints", () => {
     const res = await request(app).patch("/v1/stations/515Aab");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "515Aab is not a number",
+    });
   });
 
   it("Should return 404 when updating inexistent station", async () => {
     const res = await request(app).patch("/v1/stations/900");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Station with this id does not exist",
+    });
   });
 
   it("Should return 200 when successfully updated station with status", async () => {

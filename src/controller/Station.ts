@@ -18,7 +18,9 @@ const validateStationExists: RequestHandler = async (
 
   // If inserting inexisting station, then PUT should be allowed.
   if (!station && req.method !== "PUT") {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Stations.DOES_NOT_EXIST,
+    });
   }
 
   return next();
@@ -59,7 +61,15 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .set("Location", `/${version}/stations/${station._id}`)
         .json(station)
     )
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // PATCH /stations/:number
@@ -82,7 +92,15 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .set(req.body)
       .save()
       .then(() => res.status(StatusCodes.OK).json(station))
-      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+      .catch((error) => {
+        if (error.message) {
+          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+        } else {
+          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: Errors.INTERNAL_SERVER_ERROR,
+          });
+        }
+      });
   }
 };
 
@@ -97,7 +115,11 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   if (station) {
     Station.deleteOne(station)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
-      .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
+      .catch(() =>
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        })
+      );
   }
 };
 
