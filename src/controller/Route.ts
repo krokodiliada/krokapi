@@ -19,7 +19,9 @@ const validateRouteExists: RequestHandler = async (
   const route: IRoute | null = await Route.findById(requestedId);
 
   if (!route) {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Routes.DOES_NOT_EXIST,
+    });
   }
 
   return next();
@@ -60,7 +62,9 @@ const getAll: RequestHandler = async (req: Request, res: Response) => {
   const assignmentId: string = req.query.tagAssignment as string;
 
   if (assignmentId && !GenericController.isValidObjectId(assignmentId)) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: `'${assignmentId}' is not a valid tag assignment id`,
+    });
     return;
   }
 
@@ -69,7 +73,9 @@ const getAll: RequestHandler = async (req: Request, res: Response) => {
   );
 
   if (assignmentId && !assignment) {
-    res.status(StatusCodes.NOT_FOUND).json({});
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.TagAssignments.DOES_NOT_EXIST,
+    });
     return;
   }
 
@@ -101,9 +107,19 @@ const create: RequestHandler = async (req: Request, res: Response) => {
 
   if ("tagAssignment" in data) {
     const assignmentId: string = data.tagAssignment as string;
+
+    if (assignmentId && !GenericController.isValidObjectId(assignmentId)) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        error: `'${assignmentId}' is not a valid tag assignment id`,
+      });
+      return;
+    }
+
     const tagAssignment = await getTagAssignmentById(assignmentId);
     if (!tagAssignment) {
-      res.status(StatusCodes.BAD_REQUEST).json({});
+      res.status(StatusCodes.BAD_REQUEST).json({
+        error: Errors.TagAssignments.DOES_NOT_EXIST,
+      });
       return;
     }
   }
@@ -117,7 +133,15 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .set("Location", `/${version}/routes/${route._id}`)
         .json(route)
     )
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // PATCH /routes/:id
@@ -137,6 +161,9 @@ const update: RequestHandler = async (req: Request, res: Response) => {
     const assignmentId: string = req.body.tagAssignment as string;
     const tagAssignment = await getTagAssignmentById(assignmentId);
     if (!tagAssignment) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        error: Errors.TagAssignments.DOES_NOT_EXIST,
+      });
       return;
     }
   }
@@ -146,7 +173,15 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .set(req.body)
       .save()
       .then(() => res.status(StatusCodes.OK).json(route))
-      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+      .catch((error) => {
+        if (error.message) {
+          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+        } else {
+          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: Errors.INTERNAL_SERVER_ERROR,
+          });
+        }
+      });
   }
 };
 
@@ -159,7 +194,11 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   if (route) {
     Route.deleteOne(route)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
-      .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
+      .catch(() =>
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        })
+      );
   }
 };
 
@@ -189,12 +228,32 @@ const createActions: RequestHandler = async (req: Request, res: Response) => {
               .set("Location", `/${version}/routes/${route._id}`)
               .json(route)
           )
-          .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+          .catch((error) => {
+            if (error.message) {
+              res
+                .status(StatusCodes.BAD_REQUEST)
+                .json({ error: error.message });
+            } else {
+              res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                error: Errors.INTERNAL_SERVER_ERROR,
+              });
+            }
+          });
       } else {
-        res.status(StatusCodes.BAD_REQUEST).json();
+        res.status(StatusCodes.BAD_REQUEST).json({
+          error: Errors.Routes.INVALID_ACTIONS,
+        });
       }
     })
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 export default {

@@ -76,6 +76,9 @@ describe("Route endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d13a764421b7156ab' is not a valid tag assignment id",
+    });
   });
 
   it("Should return 404 if requesting a route by inexistent assignment", async () => {
@@ -84,6 +87,9 @@ describe("Route endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Tag assignment with this id does not exist",
+    });
   });
 
   // POST /routes/
@@ -91,6 +97,11 @@ describe("Route endpoints", () => {
     const res = await request(app).post("/v1/routes/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Route validation failed: start: Start date/time is required, " +
+        "tagAssignment: Tag assignment ID is required",
+    });
   });
 
   it("Should return 400 if creating a route without tag assignment", async () => {
@@ -101,6 +112,10 @@ describe("Route endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Route validation failed: tagAssignment: Tag assignment ID is required",
+    });
   });
 
   it("Should return 400 if creating a route with tag assignment that already exists", async () => {
@@ -112,6 +127,11 @@ describe("Route endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        "{ : ObjectId('5fcc1bd5b5476485111183e4') }",
+    });
   });
 
   it("Should return 400 if creating a route with invalid tag assignment", async () => {
@@ -123,6 +143,9 @@ describe("Route endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d13a3b4421b7156ab' is not a valid tag assignment id",
+    });
   });
 
   it("Should return 400 if creating a route with inexistent tag assignment", async () => {
@@ -134,6 +157,9 @@ describe("Route endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Tag assignment with this id does not exist",
+    });
   });
 
   it("Should return 400 if creating a route with invalid start timestamp", async () => {
@@ -143,6 +169,11 @@ describe("Route endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Route validation failed: start: " +
+        'Cast to date failed for value "NotReallyATimestamp" at path "start"',
+    });
   });
 
   it("Should return 201 if successfully created a route", async () => {
@@ -172,6 +203,9 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5fd550649dd7e37820' is not a valid object id",
+    });
   });
 
   it("Should return 404 when updating a route with inexistent id", async () => {
@@ -183,6 +217,9 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Route with this id does not exist",
+    });
   });
 
   it("Should return 400 when updating a route with invalid finish timestamp", async () => {
@@ -194,6 +231,11 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Route validation failed: finish: " +
+        'Cast to date failed for value "NotATimestamp" at path "finish"',
+    });
   });
 
   it("Should return 400 when setting finish time earlier than start time", async () => {
@@ -205,6 +247,11 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Route validation failed: finish: " +
+        "Finish timestamp must be later or equal to start one",
+    });
   });
 
   it("Should return 400 when setting start time later that finish time", async () => {
@@ -216,6 +263,11 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Route validation failed: finish: " +
+        "Finish timestamp must be later or equal to start one",
+    });
   });
 
   it("Should update a route's finish time", async () => {
@@ -258,6 +310,9 @@ describe("Route endpoints", () => {
     const res = await request(app).delete("/v1/routes/5fd550649dd7e37765");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5fd550649dd7e37765' is not a valid object id",
+    });
   });
 
   it("Should return 404 when deleting a route by inexistent id", async () => {
@@ -266,6 +321,9 @@ describe("Route endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Route with this id does not exist",
+    });
   });
 
   it("Should return 200 when successfully deleted a route", async () => {
@@ -288,6 +346,9 @@ describe("Route endpoints", () => {
     );
     expect(resSecond.status).toEqual(StatusCodes.NOT_FOUND);
     expect(resSecond.type).toBe("application/json");
+    expect(resSecond.body).toMatchObject({
+      error: "Route with this id does not exist",
+    });
   });
 
   // PUT /routes/:tag/actions
@@ -305,6 +366,9 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5fd550649dd7e37820' is not a valid object id",
+    });
   });
 
   it("Should return 404 when setting actions for inexistent route", async () => {
@@ -321,6 +385,9 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Route with this id does not exist",
+    });
   });
 
   it("Should return 400 when one of the actions has invalid id", async () => {
@@ -341,6 +408,11 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Route validation failed: actions.1.station: " +
+        'Cast to ObjectId failed for value "5f864421b715f49" at path "station"',
+    });
   });
 
   it("Should return 400 when one of the actions has inexistent id", async () => {
@@ -361,6 +433,11 @@ describe("Route endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Some actions are invalid. " +
+        "Check that all stations have valid and existent identifiers",
+    });
   });
 
   it("Should update a route with all actions", async () => {

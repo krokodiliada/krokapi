@@ -34,4 +34,19 @@ export default {
   Participants: {
     DOES_NOT_EXIST: "Participant with this id does not exist",
   },
+  Routes: {
+    DOES_NOT_EXIST: "Route with this id does not exist",
+    INVALID_ACTIONS:
+      "Some actions are invalid. " +
+      "Check that all stations have valid and existent identifiers",
+  },
+  Stations: {
+    DOES_NOT_EXIST: "Station with this id does not exist",
+  },
+  TagAssignments: {
+    DOES_NOT_EXIST: "Tag assignment with this id does not exist",
+  },
+  Teams: {
+    DOES_NOT_EXIST: "Team with this id does not exist",
+  },
 };

@@ -20,11 +20,11 @@ const RouteActionSchema: Schema = new Schema({
   station: {
     type: Schema.Types.ObjectId,
     ref: "Station",
-    required: true,
+    required: [true, "Station ID is required"],
   },
   timestamp: {
     type: Date,
-    required: true,
+    required: [true, "Action date/time is required"],
   },
 });
 
@@ -33,12 +33,12 @@ export const RouteSchema: Schema = new Schema(
     tagAssignment: {
       type: Schema.Types.ObjectId,
       ref: "TagAssignment",
-      required: true,
+      required: [true, "Tag assignment ID is required"],
       unique: true,
     },
     start: {
       type: Date,
-      required: true,
+      required: [true, "Start date/time is required"],
     },
     finish: {
       type: Date,
