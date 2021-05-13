@@ -49,17 +49,23 @@ describe("Checkpoint endpoints", () => {
     const res = await request(app).get("/v1/checkpoints/585476b7160a4");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'585476b7160a4' is not a valid object id",
+    });
   });
 
-  it("Should return 404 if requesting checkpoint by invalid id", async () => {
+  it("Should return 404 if requesting checkpoint by inexistent id", async () => {
     const res = await request(app).get(
       "/v1/checkpoints/5f907c38b54754321a7160a4"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Checkpoint with this id does not exist",
+    });
   });
 
-  it("Should return 200 if requesting checkpoint by invalid id", async () => {
+  it("Should return 200 if requesting checkpoint by id", async () => {
     const res = await request(app).get(
       "/v1/checkpoints/5f907c38b54764421b7160a4"
     );
@@ -82,6 +88,13 @@ describe("Checkpoint endpoints", () => {
     const res = await request(app).post("/v1/checkpoints/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Checkpoint validation failed: " +
+        "location: Location id is required, " +
+        "category: Category id is required, " +
+        "event: Event id is required",
+    });
   });
 
   it("Should return 400 if creating checkpoint without event", async () => {
@@ -91,6 +104,9 @@ describe("Checkpoint endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Checkpoint validation failed: event: Event id is required",
+    });
   });
 
   it("Should return 400 if creating checkpoint without category", async () => {
@@ -100,6 +116,9 @@ describe("Checkpoint endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Checkpoint validation failed: category: Category id is required",
+    });
   });
 
   it("Should return 400 if creating checkpoint without checkpoint", async () => {
@@ -109,6 +128,9 @@ describe("Checkpoint endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Checkpoint validation failed: location: Location id is required",
+    });
   });
 
   it("Should return 201 if successfully created checkpoint", async () => {
@@ -131,6 +153,9 @@ describe("Checkpoint endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f907c387644b716095' is not a valid object id",
+    });
   });
 
   it("Should return 404 if deleting checkpoint by invalid id", async () => {
@@ -139,6 +164,9 @@ describe("Checkpoint endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Checkpoint with this id does not exist",
+    });
   });
 
   it("Should return 200 if successfully deleted checkpoint by id", async () => {
@@ -156,5 +184,8 @@ describe("Checkpoint endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Checkpoint with this id does not exist",
+    });
   });
 });

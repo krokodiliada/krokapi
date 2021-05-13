@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Checkpoint, { ICheckpoint } from "model/Checkpoint";
+import Errors from "Errors";
 import utils from "utils";
 
 const validateAssignmentExists: RequestHandler = async (
@@ -14,7 +15,9 @@ const validateAssignmentExists: RequestHandler = async (
   const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
   if (!checkpoint) {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Checkpoints.DOES_NOT_EXIST,
+    });
   }
 
   return next();
@@ -51,7 +54,15 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .set("Location", `/${version}/checkpoints/${checkpoint._id}`)
         .json(checkpoint)
     )
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // PATCH /checkpoints/:id
@@ -65,7 +76,15 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .set(req.body)
       .save()
       .then(() => res.status(StatusCodes.OK).json(checkpoint))
-      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+      .catch((error) => {
+        if (error.message) {
+          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+        } else {
+          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: Errors.INTERNAL_SERVER_ERROR,
+          });
+        }
+      });
   }
 };
 
@@ -78,7 +97,11 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   if (checkpoint) {
     Checkpoint.deleteOne(checkpoint)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
-      .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
+      .catch(() =>
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        })
+      );
   }
 };
 

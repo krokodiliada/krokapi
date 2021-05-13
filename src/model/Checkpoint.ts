@@ -46,17 +46,17 @@ export const CheckpointSchema: Schema = new Schema(
     event: {
       type: Schema.Types.ObjectId,
       ref: "Event",
-      required: true,
+      required: [true, "Event id is required"],
     },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
+      required: [true, "Category id is required"],
     },
     location: {
       type: Schema.Types.ObjectId,
       ref: "Location",
-      required: true,
+      required: [true, "Location id is required"],
     },
     station: {
       type: Schema.Types.ObjectId,

@@ -25,4 +25,7 @@ export default {
       "or a checkpoint was already assigned to this category. " +
       "Make sure it is not used anywhere before deleting it.",
   },
+  Checkpoints: {
+    DOES_NOT_EXIST: "Checkpoint with this id does not exist",
+  },
 };
