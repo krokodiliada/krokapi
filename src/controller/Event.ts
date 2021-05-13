@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import Category, { ICategory } from "model/Category";
 import Event, { IEvent } from "model/Event";
 import Location, { ILocation } from "model/Location";
-import Errors from "controller/Errors";
+import Errors from "Errors";
 import utils from "utils";
 
 /**

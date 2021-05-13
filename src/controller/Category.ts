@@ -9,6 +9,7 @@ import Team, { ITeam } from "model/Team";
 import Checkpoint, { ICheckpoint } from "model/Checkpoint";
 import Route, { IRoute } from "model/Route";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
+import Errors from "Errors";
 import utils from "utils";
 
 const validateCategoryExists: RequestHandler = async (
@@ -23,7 +24,9 @@ const validateCategoryExists: RequestHandler = async (
   );
 
   if (!category) {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Categories.DOES_NOT_EXIST,
+    });
   }
 
   return next();
@@ -136,7 +139,7 @@ const canSetParticipantsNumber = async (
 const canSetCategoryParameters = async (
   currentCategory: ICategory,
   newCategory: ICategory
-): Promise<boolean> => {
+): Promise<[boolean, string]> => {
   const minNumberChanged =
     newCategory.participantsNumber.min !==
     currentCategory.participantsNumber.min;
@@ -147,7 +150,7 @@ const canSetCategoryParameters = async (
   if (minNumberChanged || maxNumberChanged) {
     const canSave: boolean = await canSetParticipantsNumber(newCategory);
     if (!canSave) {
-      return false;
+      return [false, Errors.Categories.CANT_CHANGE_PARTICIPANTS_NUMBER];
     }
   }
 
@@ -157,11 +160,11 @@ const canSetCategoryParameters = async (
   ) {
     const hasRoutes: boolean = await categoryHasRoutes(newCategory);
     if (hasRoutes) {
-      return false;
+      return [false, Errors.Categories.CANT_CHANGE_TIME_OR_CHECKPOINTS];
     }
   }
 
-  return true;
+  return [true, ""];
 };
 
 // GET /categories/
@@ -169,14 +172,18 @@ const getAll: RequestHandler = async (req: Request, res: Response) => {
   const eventId: string = req.query.event as string;
 
   if (eventId && !GenericController.isValidObjectId(eventId)) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: `'${eventId}' is not a valid object id`,
+    });
     return;
   }
 
   const event: IEvent | null = await Event.findById(eventId);
 
   if (eventId && !event) {
-    res.status(StatusCodes.NOT_FOUND).json({});
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Events.DOES_NOT_EXIST,
+    });
     return;
   }
 
@@ -219,7 +226,15 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .set("Location", `/${version}/categories/${category._id}`)
         .json(category)
     )
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // PATCH /categories/:id
@@ -231,7 +246,9 @@ const update: RequestHandler = async (req: Request, res: Response) => {
   );
 
   if (!category) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Categories.DOES_NOT_EXIST,
+    });
     return;
   }
 
@@ -241,21 +258,39 @@ const update: RequestHandler = async (req: Request, res: Response) => {
     .set(req.body)
     .validate()
     .then(async () => {
-      const canSetParameters: boolean = await canSetCategoryParameters(
-        originalCategory,
-        category
-      );
+      const [canSetParameters, setParametersError]: [
+        boolean,
+        string
+      ] = await canSetCategoryParameters(originalCategory, category);
 
       if (canSetParameters) {
         category
           .save()
           .then(() => res.status(StatusCodes.OK).json(category))
-          .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+          .catch((error) => {
+            if (error.message) {
+              res
+                .status(StatusCodes.BAD_REQUEST)
+                .json({ error: error.message });
+            } else {
+              res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                error: Errors.INTERNAL_SERVER_ERROR,
+              });
+            }
+          });
       } else {
-        res.status(StatusCodes.BAD_REQUEST).json({});
+        res.status(StatusCodes.BAD_REQUEST).json({ error: setParametersError });
       }
     })
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // DELETE /categories/:id
@@ -267,7 +302,9 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   );
 
   if (!category) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Categories.DOES_NOT_EXIST,
+    });
     return;
   }
 
@@ -279,7 +316,9 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   );
 
   if (teamRegistered || checkpointAssigned) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.Categories.CATEGORY_IN_USE,
+    });
     return;
   }
 
@@ -288,7 +327,11 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
       unassignCategoryFromEvent(requestedCategoryId);
       res.status(StatusCodes.NO_CONTENT).send();
     })
-    .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
+    .catch(() =>
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: Errors.INTERNAL_SERVER_ERROR,
+      })
+    );
 };
 
 export default {
