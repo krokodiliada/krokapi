@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 import Participant, { IParticipant } from "model/Participant";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
+import Errors from "Errors";
 import utils from "utils";
 
 const validateParticipantExists: RequestHandler = async (
@@ -17,7 +18,9 @@ const validateParticipantExists: RequestHandler = async (
   );
 
   if (!participant) {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Participants.DOES_NOT_EXIST,
+    });
   }
 
   return next();
@@ -80,12 +83,27 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .set("Location", `/${version}/participants/${participant._id}`)
         .json(participant)
     )
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // PATCH /participants/:id
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedParticipantId = req.params.id;
+
+  if (Object.keys(req.body).length === 0) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.EMPTY_REQUEST_BODY,
+    });
+    return;
+  }
 
   const participant: IParticipant | null = await Participant.findById(
     requestedParticipantId
@@ -96,7 +114,15 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .set(req.body)
       .save()
       .then(() => res.status(StatusCodes.OK).json(participant))
-      .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+      .catch((error) => {
+        if (error.message) {
+          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+        } else {
+          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: Errors.INTERNAL_SERVER_ERROR,
+          });
+        }
+      });
   }
 };
 
@@ -111,7 +137,11 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   if (participant) {
     Participant.deleteOne(participant)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
-      .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
+      .catch(() =>
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        })
+      );
   }
 };
 

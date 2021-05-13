@@ -65,6 +65,9 @@ describe("Participant endpoints", () => {
     const res = await request(app).get("/v1/participants/5f8d0d554421b715d8d");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d0d554421b715d8d' is not a valid object id",
+    });
   });
 
   it("Should return 404 if participant is not found", async () => {
@@ -73,6 +76,9 @@ describe("Participant endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Participant with this id does not exist",
+    });
   });
 
   // DELETE /participants/:id
@@ -82,6 +88,9 @@ describe("Participant endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d0d554421b715d8d' is not a valid object id",
+    });
   });
 
   it("Should return 404 if deleting inexistent participant", async () => {
@@ -90,6 +99,9 @@ describe("Participant endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Participant with this id does not exist",
+    });
   });
 
   it("Should return 200 if successfully deleted participant", async () => {
@@ -107,6 +119,9 @@ describe("Participant endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Participant with this id does not exist",
+    });
   });
 
   // POST /participants/
@@ -116,12 +131,20 @@ describe("Participant endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.METHOD_NOT_ALLOWED);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Method is not allowed. Check the API documentation",
+    });
   });
 
   it("Should return 400 if creating participant without data", async () => {
     const res = await request(app).post("/v1/participants/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Participant validation failed: birthday: Birthday is required, " +
+        "name: Participant name is required",
+    });
   });
 
   it("Should return 400 if creating participant with name only", async () => {
@@ -135,6 +158,9 @@ describe("Participant endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Participant validation failed: birthday: Birthday is required",
+    });
   });
 
   it("Should return 400 if creating participant with birthday only", async () => {
@@ -145,6 +171,10 @@ describe("Participant endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Participant validation failed: name: Participant name is required",
+    });
   });
 
   it("Should return 400 if creating participant with invalid name", async () => {
@@ -159,6 +189,15 @@ describe("Participant endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Participant validation failed: name.first: " +
+        "Name must not contain digits or special characters, " +
+        "name.last: Name must not contain digits or special characters, " +
+        "name: Validation failed: first: " +
+        "Name must not contain digits or special characters, " +
+        "last: Name must not contain digits or special characters",
+    });
   });
 
   it("Should return 400 if creating participant with invalid birthday", async () => {
@@ -169,10 +208,16 @@ describe("Participant endpoints", () => {
           first: "Ivan",
           last: "Petrov",
         },
-        birthday: "That's not a date variable",
+        birthday: "Not a date",
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Participant validation failed: birthday: " +
+        "Cast to date failed for value " +
+        '"Not a date" at path "birthday"',
+    });
   });
 
   it("Should return 201 if successfully created a participant", async () => {
@@ -255,6 +300,11 @@ describe("Participant endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        '{ : new Date(495432000000), : "Ivanov", : "Petr" }',
+    });
   });
 
   // PATCH /participants/:id
@@ -264,6 +314,9 @@ describe("Participant endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d0d554421b715d8d' is not a valid object id",
+    });
   });
 
   it("Should return 404 if updating participant by inexistent id", async () => {
@@ -272,14 +325,20 @@ describe("Participant endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Participant with this id does not exist",
+    });
   });
 
   it("Should return 400 if updating participant with empty data", async () => {
     const res = await request(app)
-      .patch("/v1/participants/5f8d0d554421b715d8d")
+      .patch("/v1/participants/5f8d0d55b54764421b715c08")
       .send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Empty request body is received",
+    });
   });
 
   it("Should return 200 if updating participant's full name", async () => {
@@ -352,6 +411,12 @@ describe("Participant endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Participant validation failed: " +
+        "name.last: Last name is required, " +
+        "name: Validation failed: last: Last name is required",
+    });
   });
 
   it("Should return 400 if updating participant's birthday with invalid data", async () => {
@@ -362,6 +427,11 @@ describe("Participant endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Participant validation failed: birthday: " +
+        'Cast to date failed for value "Pssss" at path "birthday"',
+    });
   });
 
   it("Should return 400 if updating participant's email with invalid data", async () => {
@@ -371,6 +441,9 @@ describe("Participant endpoints", () => {
         email: "Haha",
       });
     expect(res1.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res1.body).toMatchObject({
+      error: "Participant validation failed: email: Invalid email",
+    });
 
     const res2 = await request(app)
       .patch("/v1/participants/5f8d0d55b54764421b715d4a")
@@ -378,6 +451,9 @@ describe("Participant endpoints", () => {
         email: "moo@mail",
       });
     expect(res2.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res2.body).toMatchObject({
+      error: "Participant validation failed: email: Invalid email",
+    });
 
     const res3 = await request(app)
       .patch("/v1/participants/5f8d0d55b54764421b715d4a")
@@ -385,6 +461,9 @@ describe("Participant endpoints", () => {
         email: 13,
       });
     expect(res3.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res3.body).toMatchObject({
+      error: "Participant validation failed: email: Invalid email",
+    });
   });
 
   it("Should return 400 if updating participant's phone with invalid data", async () => {
@@ -394,6 +473,11 @@ describe("Participant endpoints", () => {
         phone: "-7-916-438-1356",
       });
     expect(res1.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res1.body).toMatchObject({
+      error:
+        "Participant validation failed: phone: " +
+        "-7-916-438-1356 is not a valid phone number",
+    });
 
     const res2 = await request(app)
       .patch("/v1/participants/5f8d0d55b54764421b715d4a")
@@ -401,6 +485,10 @@ describe("Participant endpoints", () => {
         phone: "Haha",
       });
     expect(res2.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res2.body).toMatchObject({
+      error:
+        "Participant validation failed: phone: Haha is not a valid phone number",
+    });
 
     const res3 = await request(app)
       .patch("/v1/participants/5f8d0d55b54764421b715d4a")
@@ -408,6 +496,11 @@ describe("Participant endpoints", () => {
         phone: 89096847263,
       });
     expect(res3.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res3.body).toMatchObject({
+      error:
+        "Participant validation failed: phone: " +
+        "89096847263 is not a valid phone number",
+    });
   });
 
   it("Should return 200 if successfully updated phone and email", async () => {

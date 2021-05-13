@@ -31,4 +31,7 @@ export default {
   Locations: {
     DOES_NOT_EXIST: "Location with this id does not exist",
   },
+  Participants: {
+    DOES_NOT_EXIST: "Participant with this id does not exist",
+  },
 };
