@@ -6,6 +6,7 @@ import GenericController from "controller/Common";
 import Route, { IRoute, IRouteAction } from "model/Route";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 import Station, { IStation } from "model/Station";
+import Errors from "Errors";
 import utils from "utils";
 
 const validateRouteExists: RequestHandler = async (
@@ -122,6 +123,13 @@ const create: RequestHandler = async (req: Request, res: Response) => {
 // PATCH /routes/:id
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
+
+  if (Object.keys(req.body).length === 0) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.EMPTY_REQUEST_BODY,
+    });
+    return;
+  }
 
   const route: IRoute | null = await Route.findById(requestedId);
 

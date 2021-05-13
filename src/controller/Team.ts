@@ -10,6 +10,7 @@ import Participant, { IParticipant } from "model/Participant";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 import Route, { IRoute } from "model/Route";
 import RouteWater, { IRouteWater } from "model/RouteWater";
+import Errors from "Errors";
 import utils from "utils";
 
 const validateTeamExists: RequestHandler = async (
@@ -242,6 +243,13 @@ const create: RequestHandler = async (req: Request, res: Response) => {
 // PATCH /teams/:id
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedTeamId = req.params.id;
+
+  if (Object.keys(req.body).length === 0) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.EMPTY_REQUEST_BODY,
+    });
+    return;
+  }
 
   const team: ITeam | null = await Team.findById(requestedTeamId);
 

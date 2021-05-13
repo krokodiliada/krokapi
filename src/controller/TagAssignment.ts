@@ -6,6 +6,7 @@ import GenericController from "controller/Common";
 import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 import Event, { IEvent } from "model/Event";
 import Participant, { IParticipant } from "model/Participant";
+import Errors from "Errors";
 import utils from "utils";
 
 const validateAssignmentExists: RequestHandler = async (
@@ -183,6 +184,13 @@ const create: RequestHandler = async (req: Request, res: Response) => {
 // PATCH /tag-assignments/:id
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
+
+  if (Object.keys(req.body).length === 0) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.EMPTY_REQUEST_BODY,
+    });
+    return;
+  }
 
   const assignment: ITagAssignment | null = await TagAssignment.findById(
     requestedId

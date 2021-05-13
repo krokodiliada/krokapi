@@ -321,6 +321,18 @@ describe("Category endpoints", () => {
   });
 
   // PATCH /categories/:id
+
+  it("Should return 400 if trying to update category with no data", async () => {
+    const res = await request(app)
+      .patch("/v1/categories/5f8d04f7b54764421b7156e2")
+      .send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Empty request body is received",
+    });
+  });
+
   it("Should return 400 if updating a category by invalid id", async () => {
     const res = await request(app).patch("/v1/categories/5f04f7b5476441b716e5");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);

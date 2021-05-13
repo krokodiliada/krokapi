@@ -69,6 +69,13 @@ const create: RequestHandler = async (req: Request, res: Response) => {
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
 
+  if (Object.keys(req.body).length === 0) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.EMPTY_REQUEST_BODY,
+    });
+    return;
+  }
+
   const checkpoint: ICheckpoint | null = await Checkpoint.findById(requestedId);
 
   if (checkpoint) {

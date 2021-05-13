@@ -209,6 +209,17 @@ describe("Location endpoints", () => {
   });
 
   // PATCH /locations/:id
+  it("Should return 400 if updating location with no data", async () => {
+    const res = await request(app)
+      .patch("/v1/locations/5f8f8720b54764421b715f1d")
+      .send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Empty request body is received",
+    });
+  });
+
   it("Should return 400 if updating location by invalid id", async () => {
     const res = await request(app).patch("/v1/locations/5f8f80b547644215f33");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);

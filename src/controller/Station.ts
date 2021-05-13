@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Station, { IStation } from "model/Station";
+import Errors from "Errors";
 import utils from "utils";
 
 const validateStationExists: RequestHandler = async (
@@ -64,6 +65,13 @@ const create: RequestHandler = async (req: Request, res: Response) => {
 // PATCH /stations/:number
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedNumber = Number(req.params.number);
+
+  if (Object.keys(req.body).length === 0) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.EMPTY_REQUEST_BODY,
+    });
+    return;
+  }
 
   const station: IStation | null = await Station.findOne({
     number: requestedNumber,
