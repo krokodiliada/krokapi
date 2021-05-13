@@ -46,6 +46,9 @@ describe("Location endpoints", () => {
     const res = await request(app).get("/v1/locations/5f8f87205474421b7151c");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8f87205474421b7151c' is not a valid object id",
+    });
   });
 
   it("Should return 404 if requestion location by inexistent id", async () => {
@@ -54,6 +57,9 @@ describe("Location endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Location with this id does not exist",
+    });
   });
 
   // GET /locations/:id
@@ -78,6 +84,13 @@ describe("Location endpoints", () => {
     const res = await request(app).post("/v1/locations/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Location validation failed: " +
+        "longitude: Longitude is required, " +
+        "latitude: Latitude is required, " +
+        "name: Location name is required",
+    });
   });
 
   it("Should return 400 if creating location without name", async () => {
@@ -87,6 +100,9 @@ describe("Location endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Location validation failed: name: Location name is required",
+    });
   });
 
   it("Should return 400 if creating location without latitude", async () => {
@@ -96,6 +112,9 @@ describe("Location endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Location validation failed: latitude: Latitude is required",
+    });
   });
 
   it("Should return 400 if creating location without longitude", async () => {
@@ -105,6 +124,9 @@ describe("Location endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Location validation failed: longitude: Longitude is required",
+    });
   });
 
   it("Should return 400 if creating location with existing name", async () => {
@@ -115,6 +137,10 @@ describe("Location endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        'E11000 duplicate key error dup key: { : "Congress enter choice" }',
+    });
   });
 
   it("Should return 400 if creating location with existing coordinates", async () => {
@@ -125,6 +151,9 @@ describe("Location endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "E11000 duplicate key error dup key: { : 55.8332, : 39.2471 }",
+    });
   });
 
   it("Should return 201 if successfully created location", async () => {
@@ -143,6 +172,9 @@ describe("Location endpoints", () => {
     const res = await request(app).delete("/v1/locations/5f8f80b547644215f33");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8f80b547644215f33' is not a valid object id",
+    });
   });
 
   it("Should return 404 if deleting location by inexistent id", async () => {
@@ -151,6 +183,9 @@ describe("Location endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Location with this id does not exist",
+    });
   });
 
   it("Should return 200 if successfully deleted location", async () => {
@@ -168,6 +203,9 @@ describe("Location endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Location with this id does not exist",
+    });
   });
 
   // PATCH /locations/:id
@@ -175,6 +213,9 @@ describe("Location endpoints", () => {
     const res = await request(app).patch("/v1/locations/5f8f80b547644215f33");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8f80b547644215f33' is not a valid object id",
+    });
   });
 
   it("Should return 404 if updating location by inexistent id", async () => {
@@ -183,6 +224,9 @@ describe("Location endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Location with this id does not exist",
+    });
   });
 
   it("Should return 400 if setting location that is already used", async () => {
@@ -194,6 +238,9 @@ describe("Location endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "E11000 duplicate key error dup key: { : 55.825135, : 39.212493 }",
+    });
   });
 
   it("Should return 400 if setting name that is already used", async () => {
@@ -204,6 +251,9 @@ describe("Location endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: 'E11000 duplicate key error dup key: { : "Past low radio" }',
+    });
   });
 
   it("Should return 200 if successfully updated location", async () => {
