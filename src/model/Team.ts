@@ -20,12 +20,12 @@ export const TeamSchema: Schema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Team name is required"],
     },
     participants: {
       type: [Schema.Types.ObjectId],
       ref: "Participant",
-      required: true,
+      required: [true, "List of participant identifiers is required"],
       validate: {
         validator: (participants: Array<Schema.Types.ObjectId>) => {
           return participants !== undefined && participants.length !== 0;
@@ -36,12 +36,12 @@ export const TeamSchema: Schema = new Schema(
     event: {
       type: Schema.Types.ObjectId,
       ref: "Event",
-      required: true,
+      required: [true, "Event id is required"],
     },
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
+      required: [true, "Category id is required"],
     },
     extraMapRequired: {
       type: Boolean,

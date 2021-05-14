@@ -23,7 +23,9 @@ const validateTeamExists: RequestHandler = async (
   const team: ITeam | null = await Team.findById(requestedTeamId);
 
   if (!team) {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Teams.DOES_NOT_EXIST,
+    });
   }
 
   return next();
@@ -72,34 +74,61 @@ const areParticipantsUniqueForTeam = async (team: ITeam): Promise<boolean> => {
   return teams.length === 0;
 };
 
-const isTeamValid = async (team: ITeam): Promise<boolean> => {
+const isTeamValid = async (res: Response, team: ITeam): Promise<boolean> => {
   return team
     .validate()
     .then(async () => {
-      const teamSizeValid: boolean = await isValidTeamSize(team);
+      const event: IEvent | null = await Event.findById(team.event);
 
+      if (!event) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+          error: Errors.Events.DOES_NOT_EXIST,
+        });
+
+        return false;
+      }
+
+      const category: ICategory | null = await Category.findById(team.category);
+
+      if (!category) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+          error: Errors.Categories.DOES_NOT_EXIST,
+        });
+
+        return false;
+      }
+
+      const teamSizeValid: boolean = await isValidTeamSize(team);
       if (!teamSizeValid) {
-        throw new Error("The team does not have a valid size");
+        res.status(StatusCodes.BAD_REQUEST).json({
+          error: Errors.Teams.INVALID_PARTICIPANTS_NUMBER,
+        });
+
+        return false;
       }
 
       const teamHasUniqueParticipants: boolean = await areParticipantsUniqueForTeam(
         team
       );
-
       if (!teamHasUniqueParticipants) {
-        throw new Error("The team shares participants with another team");
-      }
+        res.status(StatusCodes.BAD_REQUEST).json({
+          error: Errors.Teams.NOT_UNIQUE_PARTICIPANTS,
+        });
 
-      const event: IEvent | null = await Event.findById(team.event);
-      const category: ICategory | null = await Category.findById(team.category);
-
-      if (!event || !category) {
-        throw new Error("Either event or category id does not exist");
+        return false;
       }
 
       return true;
     })
-    .catch(() => {
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+
       return false;
     });
 };
@@ -154,19 +183,33 @@ const getAll: RequestHandler = async (req: Request, res: Response) => {
   const eventId: string = req.query.event as string;
   const categoryId: string = req.query.category as string;
 
-  if (
-    (eventId && !GenericController.isValidObjectId(eventId)) ||
-    (categoryId && !GenericController.isValidObjectId(categoryId))
-  ) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
+  if (eventId && !GenericController.isValidObjectId(eventId)) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: `'${eventId}' is not a valid event id`,
+    });
+    return;
+  }
+
+  if (categoryId && !GenericController.isValidObjectId(categoryId)) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: `'${categoryId}' is not a valid category id`,
+    });
     return;
   }
 
   const event: IEvent | null = await Event.findById(eventId);
-  const category: ICategory | null = await Category.findById(categoryId);
+  if (eventId && !event) {
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Events.DOES_NOT_EXIST,
+    });
+    return;
+  }
 
-  if ((eventId && !event) || (categoryId && !category)) {
-    res.status(StatusCodes.NOT_FOUND).json({});
+  const category: ICategory | null = await Category.findById(categoryId);
+  if (categoryId && !category) {
+    res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Categories.DOES_NOT_EXIST,
+    });
     return;
   }
 
@@ -222,11 +265,17 @@ const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
   const version = utils.extractVersionFromUrl(req.originalUrl);
 
+  if (Object.keys(data).length === 0) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.EMPTY_REQUEST_BODY,
+    });
+    return;
+  }
+
   const newTeam: ITeam = new Team(data);
-  const isValid: boolean = await isTeamValid(newTeam);
+  const isValid: boolean = await isTeamValid(res, newTeam);
 
   if (!isValid) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
     return;
   }
 
@@ -237,7 +286,15 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .set("Location", `/${version}/teams/${team._id}`)
         .json(team)
     )
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // PATCH /teams/:id
@@ -258,17 +315,24 @@ const update: RequestHandler = async (req: Request, res: Response) => {
   }
 
   team.set(req.body);
-  const isValid: boolean = await isTeamValid(team);
+  const isValid: boolean = await isTeamValid(res, team);
 
   if (!isValid) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
     return;
   }
 
   team
     .save()
     .then(() => res.status(StatusCodes.OK).json(team))
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // DELETE /teams/:id
@@ -280,7 +344,11 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   if (team) {
     Team.deleteOne(team)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
-      .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
+      .catch(() =>
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        })
+      );
   }
 };
 

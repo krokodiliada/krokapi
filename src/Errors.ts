@@ -51,5 +51,11 @@ export default {
   },
   Teams: {
     DOES_NOT_EXIST: "Team with this id does not exist",
+    INVALID_PARTICIPANTS_NUMBER:
+      "The team does not have a valid number of participants. " +
+      "Check participant limits for this category",
+    NOT_UNIQUE_PARTICIPANTS:
+      "The team shares participants with another team. " +
+      "All participants must be unique within the same event.",
   },
 };
