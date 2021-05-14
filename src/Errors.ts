@@ -44,7 +44,10 @@ export default {
     DOES_NOT_EXIST: "Station with this id does not exist",
   },
   TagAssignments: {
+    CANNOT_GENERATE_TAG_NUMBER: "Cannot generate a tag number",
     DOES_NOT_EXIST: "Tag assignment with this id does not exist",
+    EVENT_AND_PARTICIPANT_REQUIRED:
+      "Both `event` and `participant` parameters are required",
   },
   Teams: {
     DOES_NOT_EXIST: "Team with this id does not exist",

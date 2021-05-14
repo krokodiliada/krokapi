@@ -21,40 +21,63 @@ const validateAssignmentExists: RequestHandler = async (
   );
 
   if (!assignment) {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.TagAssignments.DOES_NOT_EXIST,
+    });
   }
 
   return next();
 };
 
 interface TagAssignmentData {
-  event: string;
-  participant: string;
+  res: Response;
+  eventId: string;
+  participantId: string;
 }
 
-const isAssignmentDataValid = async (
-  data: TagAssignmentData
-): Promise<boolean> => {
-  if (!("event" in data) || !("participant" in data)) {
+const isAssignmentDataValid = async ({
+  res,
+  eventId,
+  participantId,
+}: TagAssignmentData): Promise<boolean> => {
+  if (eventId && !GenericController.isValidObjectId(eventId)) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: `'${eventId}' is not a valid event id`,
+    });
     return false;
   }
 
-  const eventId: string = data.event;
-  const participantId: string = data.participant;
+  if (participantId && !GenericController.isValidObjectId(participantId)) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: `'${participantId}' is not a valid participant id`,
+    });
+    return false;
+  }
 
-  if (
-    !GenericController.isValidObjectId(eventId) ||
-    !GenericController.isValidObjectId(participantId)
-  ) {
+  if ((eventId && !participantId) || (participantId && !eventId)) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.TagAssignments.EVENT_AND_PARTICIPANT_REQUIRED,
+    });
     return false;
   }
 
   const event: IEvent | null = await Event.findById(eventId);
+
+  if (eventId && !event) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.Events.DOES_NOT_EXIST,
+    });
+    return false;
+  }
+
   const participant: IParticipant | null = await Participant.findById(
     participantId
   );
 
-  if (!event || !participant) {
+  if (participantId && !participant) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.Participants.DOES_NOT_EXIST,
+    });
     return false;
   }
 
@@ -105,28 +128,17 @@ const getAll: RequestHandler = async (req: Request, res: Response) => {
   const eventId: string = req.query.event as string;
   const participantId: string = req.query.participant as string;
 
-  if (
-    (eventId && !GenericController.isValidObjectId(eventId)) ||
-    (participantId && !GenericController.isValidObjectId(participantId)) ||
-    (eventId && !participantId) ||
-    (participantId && !eventId)
-  ) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
-    return;
-  }
+  if (await isAssignmentDataValid({ res, eventId, participantId })) {
+    const event: IEvent | null = await Event.findById(eventId);
+    const participant: IParticipant | null = await Participant.findById(
+      participantId
+    );
 
-  const event: IEvent | null = await Event.findById(eventId);
-  const participant: IParticipant | null = await Participant.findById(
-    participantId
-  );
-
-  if ((eventId && !event) || (participantId && !participant)) {
-    res.status(StatusCodes.NOT_FOUND).json({});
-    return;
-  }
-
-  if (event && participant) {
-    getByEventAndParticipant(event, participant, res);
+    if (event && participant) {
+      getByEventAndParticipant(event, participant, res);
+      return;
+    }
+  } else if (eventId || participantId) {
     return;
   }
 
@@ -152,17 +164,23 @@ const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
   const version = utils.extractVersionFromUrl(req.originalUrl);
 
-  const isDataValid = await isAssignmentDataValid(data);
+  const isDataValid = await isAssignmentDataValid({
+    res,
+    eventId: data.event,
+    participantId: data.participant,
+  });
+
   if (!isDataValid) {
-    res.status(StatusCodes.BAD_REQUEST).json({});
     return;
   }
 
-  if (!("tag" in data)) {
+  if (!data.tag) {
     const tag = await getNextAvailableTag(data.event);
 
     if (tag === -1) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({});
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: Errors.TagAssignments.CANNOT_GENERATE_TAG_NUMBER,
+      });
       return;
     }
 
@@ -178,7 +196,15 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .set("Location", `/${version}/tag-assignments/${assignment._id}`)
         .json(assignment)
     )
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // PATCH /tag-assignments/:id
@@ -205,8 +231,9 @@ const update: RequestHandler = async (req: Request, res: Response) => {
     .validate()
     .then(async () => {
       const updateData: TagAssignmentData = {
-        event: assignment.event,
-        participant: assignment.participant,
+        res,
+        eventId: assignment.event,
+        participantId: assignment.participant,
       };
 
       const isDataValid = await isAssignmentDataValid(updateData);
@@ -215,12 +242,28 @@ const update: RequestHandler = async (req: Request, res: Response) => {
         assignment
           .save()
           .then(() => res.status(StatusCodes.OK).json(assignment))
-          .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
-      } else {
-        res.status(StatusCodes.BAD_REQUEST).json({});
+          .catch((error) => {
+            if (error.message) {
+              res
+                .status(StatusCodes.BAD_REQUEST)
+                .json({ error: error.message });
+            } else {
+              res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                error: Errors.INTERNAL_SERVER_ERROR,
+              });
+            }
+          });
       }
     })
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // DELETE /tag-assignments/:id
@@ -234,7 +277,11 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   if (assignment) {
     TagAssignment.deleteOne(assignment)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
-      .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
+      .catch(() =>
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        })
+      );
   }
 };
 
