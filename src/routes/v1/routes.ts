@@ -238,7 +238,7 @@ router.delete("/:id", RouteController.deleteById);
  * @openapi
  *  paths:
  *    /routes/{routeId}/actions:
- *      patch:
+ *      put:
  *        summary: Update route actions.
  *        tags: [Routes]
  *        parameters:

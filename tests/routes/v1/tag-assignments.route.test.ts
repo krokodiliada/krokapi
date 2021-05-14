@@ -47,6 +47,9 @@ describe("Tag Assignment endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8e35464421b71e6b' is not a valid object id",
+    });
   });
 
   it("Should return 404 if requesting assignment by inexistent id", async () => {
@@ -55,6 +58,9 @@ describe("Tag Assignment endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Tag assignment with this id does not exist",
+    });
   });
 
   it("Should return 200 if successfully got assignments by id", async () => {
@@ -78,14 +84,20 @@ describe("Tag Assignment endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d0401b54421b7156da' is not a valid event id",
+    });
   });
 
   it("Should return 404 if requesting assignment with inexistent event filter", async () => {
     const res = await request(app).get(
       "/v1/tag-assignments/?event=5f8d0401b54524421b7136da&participant=5f8d0d55b54764421b715d98"
     );
-    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Event with this id does not exist",
+    });
   });
 
   it("Should return 400 if requesting assignment with invalid participant filter", async () => {
@@ -94,14 +106,20 @@ describe("Tag Assignment endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d0d55b53764b715d98' is not a valid participant id",
+    });
   });
 
   it("Should return 404 if requesting assignment with inexistent participant filter", async () => {
     const res = await request(app).get(
       "/v1/tag-assignments/?event=5f8d0401b54764421b7156da&participant=5f8d0d55b53764411b715d98"
     );
-    expect(res.status).toEqual(StatusCodes.NOT_FOUND);
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Participant with this id does not exist",
+    });
   });
 
   it("Should return 200 if requesting assignment by event and participant", async () => {
@@ -127,6 +145,11 @@ describe("Tag Assignment endpoints", () => {
     const res = await request(app).post("/v1/tag-assignments/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "TagAssignment validation failed: event: " +
+        "Event id is required, participant: Participant id is required",
+    });
   });
 
   it("Should return 400 if creating assignment with pair tag-event that already exists", async () => {
@@ -137,6 +160,11 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        "{ : 339, : ObjectId('5f8d04b3b54764421b7156dc') }",
+    });
   });
 
   it("Should return 400 if creating assignment with pair participant-event that already exists", async () => {
@@ -146,6 +174,12 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        "{ : ObjectId('5f8d0d55b54764421b715d8f')" +
+        ", : ObjectId('5f8d04b3b54764421b7156dc') }",
+    });
   });
 
   it("Should return 400 if trying to create assignment with invalid tag", async () => {
@@ -156,6 +190,11 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "TagAssignment validation failed: tag: " +
+        'Cast to Number failed for value "notEvenANumber" at path "tag"',
+    });
   });
 
   it("Should return 400 if trying to create assignment with invalid participant", async () => {
@@ -165,6 +204,9 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d05b5476442715d66' is not a valid participant id",
+    });
   });
 
   it("Should return 400 if trying to create assignment with invalid event", async () => {
@@ -174,6 +216,9 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d0401b54621b7156da' is not a valid event id",
+    });
   });
 
   it("Should return 400 if trying to create assignment with inexistent participant", async () => {
@@ -183,6 +228,9 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Participant with this id does not exist",
+    });
   });
 
   it("Should return 400 if trying to create assignment with inexistent event", async () => {
@@ -192,6 +240,9 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Event with this id does not exist",
+    });
   });
 
   it("Should return 400 if creating assignment without participant", async () => {
@@ -200,6 +251,9 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Both `event` and `participant` parameters are required",
+    });
   });
 
   it("Should return 400 if creating assignment without event", async () => {
@@ -208,6 +262,9 @@ describe("Tag Assignment endpoints", () => {
     });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Both `event` and `participant` parameters are required",
+    });
   });
 
   it("Should return 201 if successfully created assignment", async () => {
@@ -238,6 +295,9 @@ describe("Tag Assignment endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5fcc1b5b5685118e3' is not a valid object id",
+    });
   });
 
   it("Should return 404 if deleting assignment with inexistent id", async () => {
@@ -246,6 +306,9 @@ describe("Tag Assignment endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Tag assignment with this id does not exist",
+    });
   });
 
   it("Should return 200 if successfully deleted assignment", async () => {
@@ -263,6 +326,9 @@ describe("Tag Assignment endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Tag assignment with this id does not exist",
+    });
   });
 
   // PATCH /tag-assignment/:id
@@ -274,6 +340,9 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5fcc1b5b5685118e3' is not a valid object id",
+    });
   });
 
   it("Should return 404 if updating assignment with inexistent id", async () => {
@@ -284,6 +353,9 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Tag assignment with this id does not exist",
+    });
   });
 
   it("Should return 400 if updating assignment with invalid tag", async () => {
@@ -294,6 +366,11 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "TagAssignment validation failed: tag: " +
+        'Cast to Number failed for value "TagShouldBeANumber" at path "tag"',
+    });
   });
 
   it("Should return 400 if updating assignment with invalid participant", async () => {
@@ -304,6 +381,11 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "TagAssignment validation failed: participant: " +
+        'Cast to ObjectId failed for value "5f0d55b54764421b71b8f" at path "participant"',
+    });
   });
 
   it("Should return 400 if updating assignment with invalid event", async () => {
@@ -314,6 +396,11 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "TagAssignment validation failed: event: " +
+        'Cast to ObjectId failed for value "5f8d3b54764421b7dc" at path "event"',
+    });
   });
 
   it("Should return 400 if updating assignment with tag that is already used", async () => {
@@ -324,6 +411,11 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        "{ : 113, : ObjectId('5f8d04b3b54764421b7156dc') }",
+    });
   });
 
   it("Should return 400 if updating assignment with inexistent participant", async () => {
@@ -334,6 +426,9 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Participant with this id does not exist",
+    });
   });
 
   it("Should return 400 if updating assignment with inexistent event", async () => {
@@ -344,6 +439,9 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Event with this id does not exist",
+    });
   });
 
   it("Should return 400 if updating assignment's event fails because pair tag-event already exists", async () => {
@@ -354,6 +452,11 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        "{ : 317, : ObjectId('5f8d04b3b54764421b7156dc') }",
+    });
   });
 
   it("Should return 400 if updating assignment's participant fails because pair participant-event already exists", async () => {
@@ -364,16 +467,28 @@ describe("Tag Assignment endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        "{ : ObjectId('5f8d0d55b54764421b715d98')" +
+        ", : ObjectId('5f8d0401b54764421b7156da') }",
+    });
   });
 
   it("Should return 400 if updating assignment's event fails because pair participant-event already exists", async () => {
     const res = await request(app)
       .patch("/v1/tag-assignments/5fcc1bd5b54764851111852e")
       .send({
-        event: "5f8d04b3b54764421b7156dc",
+        event: "5f8d0448b54764421b7156db",
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        "{ : ObjectId('5f8d0d55b54764421b715d99')" +
+        ", : ObjectId('5f8d0448b54764421b7156db') }",
+    });
   });
 
   it("Should return 200 if successfully updated assignment's tag", async () => {

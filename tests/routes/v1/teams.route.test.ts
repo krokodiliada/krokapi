@@ -83,14 +83,20 @@ describe("Team endpoints", () => {
     const res = await request(app).get("/v1/teams/?event=5f8d0401b547641b71da");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d0401b547641b71da' is not a valid event id",
+    });
   });
 
-  it("Should return 404 if event number does not exist", async () => {
+  it("Should return 404 if event does not exist", async () => {
     const res = await request(app).get(
       "/v1/teams/?event=5f8d0401b54764421a7136da"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Event with this id does not exist",
+    });
   });
 
   // GET /teams/?category=:categoryId
@@ -119,14 +125,20 @@ describe("Team endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f84f7b5476442156df' is not a valid category id",
+    });
   });
 
-  it("Should return 404 if category id does not exist", async () => {
+  it("Should return 404 if category does not exist", async () => {
     const res = await request(app).get(
       "/v1/teams/?category=5f8d04f7b32764421a7156df"
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Category with this id does not exist",
+    });
   });
 
   // GET /teams/?event=:eventId&category=:categoryId
@@ -201,12 +213,18 @@ describe("Team endpoints", () => {
     const res = await request(app).get("/v1/teams/5f90acf8b54421b716d7");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f90acf8b54421b716d7' is not a valid object id",
+    });
   });
 
   it("Should return 404 if team id does not exist", async () => {
     const res = await request(app).get("/v1/teams/5f90acf8b54764421b7150b7");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team with this id does not exist",
+    });
   });
 
   // POST /teams/
@@ -214,12 +232,18 @@ describe("Team endpoints", () => {
     const res = await request(app).post("/v1/teams/5f90acf8b54764421b7160e4");
     expect(res.status).toEqual(StatusCodes.METHOD_NOT_ALLOWED);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Method is not allowed. Check the API documentation",
+    });
   });
 
   it("Should return 400 if creating a team without data", async () => {
     const res = await request(app).post("/v1/teams/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Empty request body is received",
+    });
   });
 
   it("Should return 201 if successfully created a team", async () => {
@@ -249,12 +273,18 @@ describe("Team endpoints", () => {
       .post("/v1/teams/")
       .send({
         name: "Eye describe attention",
-        participants: ["5f8d0d55b54764421b715bf9", "5f8d0d55b54764421b715bfa"],
+        participants: ["5f8d0d55b54764421b715e00", "5f8d0d55b54764421b715e01"],
         event: "5f8d04b3b54764421b7156dc",
-        category: "5f8d04f7b54764421b7156e3",
+        category: "5f8d04f7b54764421b7156e1",
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        '{ : "Eye describe attention"' +
+        ", : ObjectId('5f8d04b3b54764421b7156dc') }",
+    });
   });
 
   it("Should return 400 if team is larger than allowed in cateogry", async () => {
@@ -272,6 +302,11 @@ describe("Team endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "The team does not have a valid number of participants. " +
+        "Check participant limits for this category",
+    });
   });
 
   it("Should return 400 if team is smaller than allowed in cateogry", async () => {
@@ -285,6 +320,11 @@ describe("Team endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "The team does not have a valid number of participants. " +
+        "Check participant limits for this category",
+    });
   });
 
   it("Should return 400 if one of the participants is already included in another team", async () => {
@@ -299,6 +339,11 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "The team shares participants with another team. " +
+        "All participants must be unique within the same event.",
+    });
   });
 
   it("Should return 400 when creating a team without name", async () => {
@@ -312,6 +357,9 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team validation failed: name: Team name is required",
+    });
   });
 
   it("Should return 400 when creating a team without participants", async () => {
@@ -323,6 +371,11 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Team validation failed: participants: " +
+        "Participants array cannot be empty",
+    });
   });
 
   it("Should return 400 when creating a team without event", async () => {
@@ -336,6 +389,9 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team validation failed: event: Event id is required",
+    });
   });
 
   it("Should return 400 when creating a team without category", async () => {
@@ -349,6 +405,9 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team validation failed: category: Category id is required",
+    });
   });
 
   // PATCH /teams/:id
@@ -361,6 +420,9 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f9af8b54764421b7161' is not a valid object id",
+    });
   });
 
   it("Should return 404 when updating a team with inexistent id", async () => {
@@ -372,6 +434,9 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team with this id does not exist",
+    });
   });
 
   it("Should return 200 when successfully updated team name", async () => {
@@ -474,6 +539,12 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Team validation failed: event: " +
+        'Cast to ObjectId failed for value "5f8d0401476421b7156da" ' +
+        'at path "event"',
+    });
   });
 
   it("Should return 400 when updating team with invalid category", async () => {
@@ -485,6 +556,12 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Team validation failed: category: " +
+        'Cast to ObjectId failed for value "5f8d04b5476441b7156e2" ' +
+        'at path "category"',
+    });
   });
 
   it("Should return 400 when updating team with inexistent event", async () => {
@@ -496,6 +573,9 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Event with this id does not exist",
+    });
   });
 
   it("Should return 400 when updating team with inexistent category", async () => {
@@ -507,6 +587,9 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Category with this id does not exist",
+    });
   });
 
   it("Should return 400 when updating team name that already exists", async () => {
@@ -518,6 +601,11 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "E11000 duplicate key error dup key: " +
+        "{ : \"Of character money\", : ObjectId('5f8d04b3b54764421b7156dc') }",
+    });
   });
 
   it("Should return 200 when updating team name that already exists in the previous event", async () => {
@@ -551,6 +639,11 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "The team does not have a valid number of participants. " +
+        "Check participant limits for this category",
+    });
   });
 
   it("Should return 400 when updated team category has lower number of participants", async () => {
@@ -562,6 +655,11 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "The team does not have a valid number of participants. " +
+        "Check participant limits for this category",
+    });
   });
 
   it("Should return 400 when paid amount is not a number", async () => {
@@ -573,6 +671,11 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Team validation failed: amountPaid: " +
+        'Cast to Number failed for value "NotANumber" at path "amountPaid"',
+    });
   });
 
   it("Should return 400 when paid amount is negative", async () => {
@@ -584,6 +687,9 @@ describe("Team endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team validation failed: amountPaid: -15 must not be negative",
+    });
   });
 
   it("Should return 200 when successfully updated the amount paid", async () => {
@@ -614,12 +720,18 @@ describe("Team endpoints", () => {
     const res = await request(app).delete("/v1/teams/5f90acf8b54764421162");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f90acf8b54764421162' is not a valid object id",
+    });
   });
 
   it("Should return 404 when deleting team with inexistent id", async () => {
     const res = await request(app).delete("/v1/teams/5f90acf8b54764321c726130");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team with this id does not exist",
+    });
   });
 
   it("Should return 200 when successfully deleted team by id", async () => {
@@ -633,6 +745,9 @@ describe("Team endpoints", () => {
     const res = await request(app).delete("/v1/teams/5f90acf8b54764421b71613a");
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team with this id does not exist",
+    });
   });
 
   // GET /teams/:id/participants
@@ -640,6 +755,9 @@ describe("Team endpoints", () => {
     const res = await request(app).get("/v1/teams/5f90a51b716138/participants");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f90a51b716138' is not a valid object id",
+    });
   });
 
   it("Should return 404 when requesting participants of a team with inexistent id", async () => {
@@ -648,6 +766,9 @@ describe("Team endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team with this id does not exist",
+    });
   });
 
   it("Should return a list of participants for team", async () => {
@@ -679,12 +800,18 @@ describe("Team endpoints", () => {
     const res = await request(app).get("/v1/teams/5f90a51b716138/route");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f90a51b716138' is not a valid object id",
+    });
   });
 
   it("Should return 400 when requesting team's water route by invalid id", async () => {
     const res = await request(app).get("/v1/teams/5f90a51b716138/route-water");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f90a51b716138' is not a valid object id",
+    });
   });
 
   it("Should return 404 when requesting team's route by inexistent id", async () => {
@@ -693,6 +820,9 @@ describe("Team endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team with this id does not exist",
+    });
   });
 
   it("Should return 404 when requesting team's water route by inexistent id", async () => {
@@ -701,6 +831,9 @@ describe("Team endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Team with this id does not exist",
+    });
   });
 
   it("Should return 200 when requesting a team's route", async () => {

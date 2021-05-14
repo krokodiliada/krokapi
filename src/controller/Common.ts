@@ -46,7 +46,7 @@ const validateNumber: RequestHandler = async (
 
   if (Number.isNaN(requestedNumber)) {
     return res.status(StatusCodes.BAD_REQUEST).json({
-      error: `${requestedNumber} is not a number`,
+      error: `${req.params.number} is not a number`,
     });
   }
 

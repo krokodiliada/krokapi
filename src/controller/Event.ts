@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import Category, { ICategory } from "model/Category";
 import Event, { IEvent } from "model/Event";
 import Location, { ILocation } from "model/Location";
-import Errors from "controller/Errors";
+import Errors from "Errors";
 import utils from "utils";
 
 /**
@@ -32,7 +32,7 @@ const validateEventExists: RequestHandler = async (
   // If inserting inexisting event, then PUT should be allowed.
   if (!event) {
     return res.status(StatusCodes.NOT_FOUND).json({
-      error: "Event with this id does not exist",
+      error: Errors.Events.DOES_NOT_EXIST,
     });
   }
 
@@ -57,7 +57,7 @@ const validateCategory: RequestHandler = async (
     !event?.categories.includes(requestedCategoryId)
   ) {
     return res.status(StatusCodes.NOT_FOUND).json({
-      error: "Event does not have a category with this id",
+      error: Errors.Events.DOES_NOT_HAVE_CATEGORY,
     });
   }
 
@@ -68,7 +68,7 @@ const validateCategory: RequestHandler = async (
 
     if (!category) {
       return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Category with this id does not exist",
+        error: Errors.Events.CATEGORY_DOES_NOT_EXIST,
       });
     }
   }
@@ -93,7 +93,7 @@ const validateLocation: RequestHandler = async (
 
   if (!location) {
     return res.status(StatusCodes.NOT_FOUND).json({
-      error: "Location with this id does not exist",
+      error: Errors.Events.LOCATION_DOES_NOT_EXIST,
     });
   }
 
@@ -138,13 +138,15 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .set("Location", `/${version}/events/${event._id}`)
         .json(event)
     )
-    .catch(() =>
-      res.status(StatusCodes.BAD_REQUEST).json({
-        error:
-          "Could not create an event." +
-          " Check your input data format and required fields",
-      })
-    );
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // PATCH /events/:id
@@ -153,7 +155,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
 
   if (Object.keys(req.body).length === 0) {
     res.status(StatusCodes.BAD_REQUEST).json({
-      error: "No data to update with",
+      error: Errors.EMPTY_REQUEST_BODY,
     });
     return;
   }
@@ -167,11 +169,15 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .then((updatedEvent: IEvent) =>
         res.status(StatusCodes.OK).json(updatedEvent)
       )
-      .catch(() =>
-        res.status(StatusCodes.BAD_REQUEST).json({
-          error: "Could not update. Check your input data",
-        })
-      );
+      .catch((error) => {
+        if (error.message) {
+          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+        } else {
+          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            error: Errors.INTERNAL_SERVER_ERROR,
+          });
+        }
+      });
   }
 };
 
@@ -186,7 +192,7 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
       .catch(() =>
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: Errors.internalServerError,
+          error: Errors.INTERNAL_SERVER_ERROR,
         })
       );
   }
@@ -231,7 +237,7 @@ const deleteCategory: RequestHandler = async (req: Request, res: Response) => {
       .catch(() => {
         res
           .status(StatusCodes.INTERNAL_SERVER_ERROR)
-          .json({ error: Errors.internalServerError });
+          .json({ error: Errors.INTERNAL_SERVER_ERROR });
       });
   }
 };
@@ -245,7 +251,7 @@ const addCategory: RequestHandler = async (req: Request, res: Response) => {
 
   if (!event) {
     res.status(StatusCodes.NOT_FOUND).json({
-      error: "Event with this id does not exist",
+      error: Errors.Events.DOES_NOT_EXIST,
     });
     return;
   }
@@ -261,7 +267,7 @@ const addCategory: RequestHandler = async (req: Request, res: Response) => {
     })
     .catch(() => {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        error: Errors.internalServerError,
+        error: Errors.INTERNAL_SERVER_ERROR,
       });
     });
 };
@@ -274,7 +280,7 @@ const getLocation: RequestHandler = async (req: Request, res: Response) => {
 
   if (!event) {
     res.status(StatusCodes.NOT_FOUND).json({
-      error: "Event with this id does not exist",
+      error: Errors.Events.DOES_NOT_EXIST,
     });
     return;
   }
@@ -288,12 +294,12 @@ const getLocation: RequestHandler = async (req: Request, res: Response) => {
       res.status(StatusCodes.OK).json(location);
     } else {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        error: Errors.internalServerError,
+        error: Errors.INTERNAL_SERVER_ERROR,
       });
     }
   } else {
     res.status(StatusCodes.NOT_FOUND).json({
-      error: "No location assigned to this event",
+      error: Errors.Events.LOCATION_IS_NOT_ASSIGNED,
     });
   }
 };
@@ -306,14 +312,14 @@ const deleteLocation: RequestHandler = async (req: Request, res: Response) => {
 
   if (!event) {
     res.status(StatusCodes.NOT_FOUND).json({
-      error: "Event with this id does not exist",
+      error: Errors.Events.DOES_NOT_EXIST,
     });
     return;
   }
 
   if (!event.location) {
     res.status(StatusCodes.NOT_FOUND).json({
-      error: "No location assigned to this event",
+      error: Errors.Events.LOCATION_IS_NOT_ASSIGNED,
     });
     return;
   }
@@ -327,7 +333,7 @@ const deleteLocation: RequestHandler = async (req: Request, res: Response) => {
     })
     .catch(() => {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        error: Errors.internalServerError,
+        error: Errors.INTERNAL_SERVER_ERROR,
       });
     });
 };
@@ -341,7 +347,7 @@ const addLocation: RequestHandler = async (req: Request, res: Response) => {
 
   if (!event) {
     res.status(StatusCodes.NOT_FOUND).json({
-      error: "Event with this id does not exist",
+      error: Errors.Events.DOES_NOT_EXIST,
     });
     return;
   }
@@ -355,7 +361,7 @@ const addLocation: RequestHandler = async (req: Request, res: Response) => {
     })
     .catch(() => {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        error: Errors.internalServerError,
+        error: Errors.INTERNAL_SERVER_ERROR,
       });
     });
 };

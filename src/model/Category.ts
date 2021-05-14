@@ -38,11 +38,11 @@ export interface ICategory extends Document {
 const CategoryNameSchema: Schema = new Schema({
   short: {
     type: String,
-    required: true,
+    required: [true, "Short name is required"],
   },
   long: {
     type: String,
-    required: true,
+    required: [true, "Long name is required"],
   },
 });
 
@@ -68,7 +68,7 @@ export const CategorySchema: Schema = new Schema(
   {
     name: {
       type: CategoryNameSchema,
-      required: true,
+      required: [true, "Category name is required"],
       unique: true,
     },
     description: {

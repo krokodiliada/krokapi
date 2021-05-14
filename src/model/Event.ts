@@ -19,12 +19,12 @@ export interface IEvent extends Document {
 const EventDateSchema: Schema = new Schema({
   start: {
     type: Date,
-    required: true,
+    required: [true, "Start date is required"],
     unique: true,
   },
   end: {
     type: Date,
-    required: true,
+    required: [true, "End date is required"],
     unique: true,
     validate: {
       validator(this: IEventDate, value: Date) {
@@ -39,7 +39,7 @@ export const EventSchema: Schema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Name is required"],
     },
     categories: {
       type: [Schema.Types.ObjectId],
@@ -48,7 +48,7 @@ export const EventSchema: Schema = new Schema(
     },
     date: {
       type: EventDateSchema,
-      required: true,
+      required: [true, "Start/End date is required"],
       unique: true,
     },
     location: {

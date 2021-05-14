@@ -3989,4 +3989,18 @@ export default [
     _id: "5f8d0d55b54764421b715d99",
     name: { first: "James", last: "Reeves" },
   },
+  {
+    birthday: new Date("2010-05-22"),
+    phone: "+79057203045",
+    email: "warjot87@bobby.com",
+    _id: "5f8d0d55b54764421b715e00",
+    name: { first: "Jonah", last: "Kelsey" },
+  },
+  {
+    birthday: new Date("2000-05-22"),
+    phone: "+79093002112",
+    email: "marmot@whatsup.com",
+    _id: "5f8d0d55b54764421b715e01",
+    name: { first: "Amy", last: "Sosa" },
+  },
 ];

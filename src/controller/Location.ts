@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Location, { ILocation } from "model/Location";
+import Errors from "Errors";
 import utils from "utils";
 
 const validateLocationExists: RequestHandler = async (
@@ -14,7 +15,9 @@ const validateLocationExists: RequestHandler = async (
   const location: ILocation | null = await Location.findById(requestedId);
 
   if (!location) {
-    return res.status(StatusCodes.NOT_FOUND).json({});
+    return res.status(StatusCodes.NOT_FOUND).json({
+      error: Errors.Locations.DOES_NOT_EXIST,
+    });
   }
 
   return next();
@@ -58,12 +61,27 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .set("Location", `/${version}/locations/${location._id}`)
         .json(location)
     )
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // PATCH /locations/:id
 const update: RequestHandler = async (req: Request, res: Response) => {
   const requestedId = req.params.id;
+
+  if (Object.keys(req.body).length === 0) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.EMPTY_REQUEST_BODY,
+    });
+    return;
+  }
 
   const location: ILocation | null = await Location.findById(requestedId);
 
@@ -75,7 +93,15 @@ const update: RequestHandler = async (req: Request, res: Response) => {
     .set(req.body)
     .save()
     .then(() => res.status(StatusCodes.OK).json(location))
-    .catch(() => res.status(StatusCodes.BAD_REQUEST).json({}));
+    .catch((error) => {
+      if (error.message) {
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      } else {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        });
+      }
+    });
 };
 
 // DELETE /locations/:id
@@ -87,7 +113,11 @@ const deleteById: RequestHandler = async (req: Request, res: Response) => {
   if (location) {
     Location.deleteOne(location)
       .then(() => res.status(StatusCodes.NO_CONTENT).send())
-      .catch(() => res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({}));
+      .catch(() =>
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: Errors.INTERNAL_SERVER_ERROR,
+        })
+      );
   }
 };
 

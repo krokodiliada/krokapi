@@ -30,12 +30,12 @@ const nameValidator = {
 const ParticipantNameSchema: Schema = new Schema({
   first: {
     type: String,
-    required: true,
+    required: [true, "First name is required"],
     validate: nameValidator,
   },
   last: {
     type: String,
-    required: true,
+    required: [true, "Last name is required"],
     validate: nameValidator,
   },
   middle: {
@@ -49,11 +49,11 @@ export const ParticipantSchema: Schema = new Schema(
   {
     name: {
       type: ParticipantNameSchema,
-      required: true,
+      required: [true, "Participant name is required"],
     },
     birthday: {
       type: Date,
-      required: true,
+      required: [true, "Birthday is required"],
     },
     phone: {
       type: String,

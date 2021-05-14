@@ -19,7 +19,7 @@ export const StationSchema: Schema = new Schema(
   {
     number: {
       type: Number,
-      required: true,
+      required: [true, "Station number is required"],
       unique: true,
     },
     enabled: {

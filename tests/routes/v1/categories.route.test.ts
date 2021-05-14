@@ -77,6 +77,9 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f8d04b3b54721b76dc' is not a valid object id",
+    });
   });
 
   it("Should return 404 if event number does not exist", async () => {
@@ -85,6 +88,9 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Event with this id does not exist",
+    });
   });
 
   // GET /categories/:id
@@ -114,6 +120,9 @@ describe("Category endpoints", () => {
     const res = await request(app).get("/v1/categories/5f84f7b54764421b71de");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f84f7b54764421b71de' is not a valid object id",
+    });
   });
 
   it("Should return 404 if requesting a category by inexistent id", async () => {
@@ -122,10 +131,13 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Category with this id does not exist",
+    });
   });
 
   // POST /categories/
-  it("Should return 400 if creating a category wihtout short name", async () => {
+  it("Should return 400 if creating a category wihtout long name", async () => {
     const res = await request(app)
       .post("/v1/categories/")
       .send({
@@ -135,9 +147,14 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Category validation failed: name.long: Long name is required, " +
+        "name: Validation failed: long: Long name is required",
+    });
   });
 
-  it("Should return 400 if creating a category wihtout long name", async () => {
+  it("Should return 400 if creating a category wihtout short name", async () => {
     const res = await request(app)
       .post("/v1/categories/")
       .send({
@@ -147,12 +164,20 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Category validation failed: name.short: Short name is required, " +
+        "name: Validation failed: short: Short name is required",
+    });
   });
 
   it("Should return 400 if creating a category without name", async () => {
     const res = await request(app).post("/v1/categories/").send({});
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Category validation failed: name: Category name is required",
+    });
   });
 
   it("Should return 400 if creating a category with the same name", async () => {
@@ -166,6 +191,10 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        'E11000 duplicate key error dup key: { : "Che", : "Chempionskaya" }',
+    });
   });
 
   it("Should return 201 if successfully created a category", async () => {
@@ -191,6 +220,9 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f04f7b5476441b716e5' is not a valid object id",
+    });
   });
 
   it("Should return 404 if deleting a category by inexistent id", async () => {
@@ -199,6 +231,9 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Category with this id does not exist",
+    });
   });
 
   it("Should return 200 if successfully deleted a category", async () => {
@@ -216,6 +251,9 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Category with this id does not exist",
+    });
   });
 
   it("Should return 400 if deleting a category with at least one team in it", async () => {
@@ -224,6 +262,13 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Cannot delete category because it is being used, e.g. a team is " +
+        "already registered in this category or a checkpoint was already " +
+        "assigned to this category. Make sure it is not used anywhere " +
+        "before deleting it.",
+    });
   });
 
   it("Should return 400 if deleting a category with at least one CP assigned to it", async () => {
@@ -232,6 +277,13 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Cannot delete category because it is being used, e.g. a team is " +
+        "already registered in this category or a checkpoint was already " +
+        "assigned to this category. Make sure it is not used anywhere " +
+        "before deleting it.",
+    });
   });
 
   it("Should also unassign a cateogry from event when it gets deleted", async () => {
@@ -269,10 +321,25 @@ describe("Category endpoints", () => {
   });
 
   // PATCH /categories/:id
+
+  it("Should return 400 if trying to update category with no data", async () => {
+    const res = await request(app)
+      .patch("/v1/categories/5f8d04f7b54764421b7156e2")
+      .send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Empty request body is received",
+    });
+  });
+
   it("Should return 400 if updating a category by invalid id", async () => {
     const res = await request(app).patch("/v1/categories/5f04f7b5476441b716e5");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5f04f7b5476441b716e5' is not a valid object id",
+    });
   });
 
   it("Should return 404 if updating a category by inexistent id", async () => {
@@ -281,6 +348,9 @@ describe("Category endpoints", () => {
     );
     expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Category with this id does not exist",
+    });
   });
 
   /**
@@ -298,6 +368,11 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Cannot change participants number for this category because it " +
+        "will affect existing teams. Consider creating a new category instead.",
+    });
   });
 
   it("Should return 400 if cannot decrease maximum number of participants", async () => {
@@ -308,6 +383,11 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Cannot change participants number for this category because it " +
+        "will affect existing teams. Consider creating a new category instead.",
+    });
   });
 
   it("Should return 200 if new number of participants won't affect any teams", async () => {
@@ -349,6 +429,9 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: 'E11000 duplicate key error dup key: { : "B", : "Bambini" }',
+    });
   });
 
   /**
@@ -370,6 +453,12 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Cannot change category max time or minimum number of checkpoints " +
+        "because it will affect the results of previous competitions. " +
+        "Consider creating a new category instead.",
+    });
   });
 
   /**
@@ -383,6 +472,12 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Cannot change category max time or minimum number of checkpoints " +
+        "because it will affect the results of previous competitions. " +
+        "Consider creating a new category instead.",
+    });
   });
 
   it("Should return 200 if updating minCheckpoints and maxTime won't affect any teams", async () => {
@@ -418,6 +513,11 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Category validation failed: price: " +
+        'Cast to Number failed for value "Whatever" at path "price"',
+    });
   });
 
   it("Should return 400 if category price cannot be negative", async () => {
@@ -428,6 +528,9 @@ describe("Category endpoints", () => {
       });
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Category validation failed: price: -15 must not be negative",
+    });
   });
 
   it("Should return 200 if successfully updated category price", async () => {

@@ -24,12 +24,12 @@ export const LocationSchema: Schema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Location name is required"],
       unique: true,
     },
     latitude: {
       type: Number,
-      required: true,
+      required: [true, "Latitude is required"],
       validate: {
         validator(value: number) {
           return value >= -90.0 && value <= 90.0;
@@ -39,7 +39,7 @@ export const LocationSchema: Schema = new Schema(
     },
     longitude: {
       type: Number,
-      required: true,
+      required: [true, "Longitude is required"],
       validate: {
         validator(value: number) {
           return value >= -180.0 && value <= 180.0;
