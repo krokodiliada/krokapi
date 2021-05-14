@@ -300,11 +300,7 @@ describe("Participant endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res.type).toBe("application/json");
-    expect(res.body).toMatchObject({
-      error:
-        "E11000 duplicate key error dup key: " +
-        '{ : new Date(495432000000), : "Ivanov", : "Petr" }',
-    });
+    expect(res.body.error).toContain("E11000 duplicate key error dup key: ");
   });
 
   // PATCH /participants/:id

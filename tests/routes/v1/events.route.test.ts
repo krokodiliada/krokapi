@@ -242,10 +242,7 @@ describe("Event endpoints", () => {
 
     expect(res2.status).toEqual(StatusCodes.BAD_REQUEST);
     expect(res2.type).toBe("application/json");
-    expect(res2.body).toMatchObject({
-      error:
-        "E11000 duplicate key error dup key: { : new Date(2134785600000) }",
-    });
+    expect(res2.body.error).toContain("E11000 duplicate key error dup key");
   });
 
   // PATCH methods
