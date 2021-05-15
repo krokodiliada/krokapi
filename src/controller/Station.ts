@@ -62,13 +62,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .json(station)
     )
     .catch((error) => {
-      if (error.message) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-      } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: Errors.INTERNAL_SERVER_ERROR,
-        });
-      }
+      res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
     });
 };
 
@@ -93,13 +87,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .save()
       .then(() => res.status(StatusCodes.OK).json(station))
       .catch((error) => {
-        if (error.message) {
-          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-        } else {
-          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            error: Errors.INTERNAL_SERVER_ERROR,
-          });
-        }
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
       });
   }
 };

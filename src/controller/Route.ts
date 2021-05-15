@@ -134,13 +134,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .json(route)
     )
     .catch((error) => {
-      if (error.message) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-      } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: Errors.INTERNAL_SERVER_ERROR,
-        });
-      }
+      res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
     });
 };
 
@@ -174,13 +168,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .save()
       .then(() => res.status(StatusCodes.OK).json(route))
       .catch((error) => {
-        if (error.message) {
-          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-        } else {
-          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            error: Errors.INTERNAL_SERVER_ERROR,
-          });
-        }
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
       });
   }
 };
@@ -229,15 +217,7 @@ const createActions: RequestHandler = async (req: Request, res: Response) => {
               .json(route)
           )
           .catch((error) => {
-            if (error.message) {
-              res
-                .status(StatusCodes.BAD_REQUEST)
-                .json({ error: error.message });
-            } else {
-              res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-                error: Errors.INTERNAL_SERVER_ERROR,
-              });
-            }
+            res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
           });
       } else {
         res.status(StatusCodes.BAD_REQUEST).json({
@@ -246,13 +226,7 @@ const createActions: RequestHandler = async (req: Request, res: Response) => {
       }
     })
     .catch((error) => {
-      if (error.message) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-      } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: Errors.INTERNAL_SERVER_ERROR,
-        });
-      }
+      res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
     });
 };
 
