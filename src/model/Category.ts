@@ -10,6 +10,11 @@ export interface ICategoryParticipantsNumber extends Document {
   max: number;
 }
 
+export interface ICategoryActiveTime extends Document {
+  open: Date;
+  close: Date;
+}
+
 export interface ICategory extends Document {
   name: ICategoryName;
   description: string;
@@ -30,7 +35,8 @@ export interface ICategory extends Document {
    */
   maxTime: number;
   price: number;
-  notes: string;
+  activeTime: ICategoryActiveTime;
+  notes?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -59,10 +65,22 @@ const ParticipantsNumberSchema: Schema = new Schema({
   },
 });
 
-const ParticipantsNumber = mongoose.model<ICategoryParticipantsNumber>(
-  "CategoryParticipantsNumber",
-  ParticipantsNumberSchema
-);
+const CategoryActiveTimeSchema: Schema = new Schema({
+  open: {
+    type: Date,
+    required: false,
+  },
+  close: {
+    type: Date,
+    required: false,
+    validate: {
+      validator(this: ICategoryActiveTime, value: Date) {
+        return value >= this.open;
+      },
+      message: () => "Category close time must be later or equal to open time",
+    },
+  },
+});
 
 export const CategorySchema: Schema = new Schema(
   {
@@ -78,7 +96,10 @@ export const CategorySchema: Schema = new Schema(
     participantsNumber: {
       type: ParticipantsNumberSchema,
       required: false,
-      default: new ParticipantsNumber(),
+      default: {
+        min: 1,
+        max: 5,
+      },
     },
     minCheckpoints: {
       type: Number,
@@ -100,6 +121,10 @@ export const CategorySchema: Schema = new Schema(
         },
         message: (props) => `${props.value} must not be negative`,
       },
+    },
+    activeTime: {
+      type: CategoryActiveTimeSchema,
+      required: false,
     },
     notes: {
       type: String,

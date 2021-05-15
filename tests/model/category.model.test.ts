@@ -47,6 +47,21 @@ describe("Category model", () => {
     await expect(Category.create(category)).rejects.toThrowError();
   });
 
+  it("Throws an error if category close time is lower than open time", async () => {
+    const category: ICategory = new Category({
+      name: {
+        short: faker.name.firstName(),
+        long: faker.name.lastName(),
+      },
+      activeTime: {
+        open: new Date("Jan 15, 2020 12:15:39"),
+        close: new Date("Jan 15, 2020 12:15:38"),
+      },
+    });
+
+    await expect(Category.create(category)).rejects.toThrowError();
+  });
+
   it("Should create a new category with the name", async () => {
     expect.assertions(7);
 

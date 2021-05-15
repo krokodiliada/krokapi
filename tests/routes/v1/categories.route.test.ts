@@ -55,7 +55,7 @@ describe("Category endpoints", () => {
 
     expect(res.status).toEqual(StatusCodes.OK);
     expect(res.type).toBe("application/json");
-    expect(res.body.length).toBe(13);
+    expect(res.body.length).toBe(15);
     expect(res.body[0]).toMatchObject({
       _id: expect.any(String),
       name: {
@@ -554,6 +554,93 @@ describe("Category endpoints", () => {
       minCheckpoints: expect.any(Number),
       maxTime: expect.any(Number),
       price: 650,
+    });
+  });
+
+  it("Should return 200 if successfully updated category open time", async () => {
+    const res = await request(app)
+      .patch("/v1/categories/5f8d04f7b54764421b7156e9")
+      .send({
+        price: 650,
+      });
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d04f7b54764421b7156e9",
+      name: {
+        short: "U",
+        long: "To Update",
+      },
+      participantsNumber: {
+        min: expect.any(Number),
+        max: expect.any(Number),
+      },
+      minCheckpoints: expect.any(Number),
+      maxTime: expect.any(Number),
+      price: 650,
+    });
+  });
+
+  it("Should return 400 if trying to set close time when open time is not set", async () => {
+    const res = await request(app)
+      .patch("/v1/categories/5f8d04f7b54764421b7156f0")
+      .send({
+        activeTime: {
+          close: new Date("May 25, 2022 12:53:00"),
+        },
+      });
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error:
+        "Category validation failed: activeTime.close: " +
+        "Category close time must be later or equal to open time, " +
+        "activeTime: Validation failed: close: " +
+        "Category close time must be later or equal to open time",
+    });
+  });
+
+  it("Should return 200 if setting active time through the object", async () => {
+    const res = await request(app)
+      .patch("/v1/categories/5f8d04f7b54764421b7156f0")
+      .send({
+        activeTime: {
+          open: new Date("May 25, 2022 12:53:00"),
+          close: new Date("May 25, 2022 12:54:00"),
+        },
+      });
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d04f7b54764421b7156f0",
+      name: {
+        short: "U2",
+        long: "To Update - 2",
+      },
+      activeTime: {
+        open: new Date("May 25, 2022 12:53:00").toISOString(),
+        close: new Date("May 25, 2022 12:54:00").toISOString(),
+      },
+    });
+  });
+
+  it("Should return 200 if setting active time through nested time field", async () => {
+    const res = await request(app)
+      .patch("/v1/categories/5f8d04f7b54764421b7156f1")
+      .send({
+        "activeTime.open": new Date("May 25, 2022 12:53:00"),
+      });
+    expect(res.status).toEqual(StatusCodes.OK);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: "5f8d04f7b54764421b7156f1",
+      name: {
+        short: "U3",
+        long: "To Update - 3",
+      },
+      activeTime: {
+        open: new Date("May 25, 2022 12:53:00").toISOString(),
+      },
     });
   });
 });
