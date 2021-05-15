@@ -108,6 +108,17 @@ describe("Station endpoints", () => {
   });
 
   // PUT /stations/:station
+  it("Should return 201 when creating station with no data", async () => {
+    const res = await request(app).put("/v1/stations/912").send({});
+    expect(res.status).toEqual(StatusCodes.CREATED);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      _id: expect.any(String),
+      number: 912,
+      enabled: true,
+    });
+  });
+
   it("Should return 400 when adding station with invalid number", async () => {
     const res = await request(app).put("/v1/stations/505Aaab");
     expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
@@ -151,6 +162,15 @@ describe("Station endpoints", () => {
     expect(res.type).toBe("application/json");
     expect(res.body).toMatchObject({
       error: "515Aab is not a number",
+    });
+  });
+
+  it("Should return 400 when updating station with no data", async () => {
+    const res = await request(app).patch("/v1/stations/11").send({});
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Empty request body is received",
     });
   });
 

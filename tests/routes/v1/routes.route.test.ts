@@ -222,6 +222,46 @@ describe("Route endpoints", () => {
     });
   });
 
+  it("Should return 400 when updating a route with no data", async () => {
+    const res = await request(app)
+      .patch("/v1/routes/5fd550a7b547649dd7e37820")
+      .send({});
+
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Empty request body is received",
+    });
+  });
+
+  it("Should return 400 when updating a route with invalid tag assignment", async () => {
+    const res = await request(app)
+      .patch("/v1/routes/5fd550a7b547649dd7e37820")
+      .send({
+        tagAssignment: "5fd57b547649dd7e378",
+      });
+
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "'5fd57b547649dd7e378' is not a valid tag assignment id",
+    });
+  });
+
+  it("Should return 400 when updating a route with inexistent tag assignment", async () => {
+    const res = await request(app)
+      .patch("/v1/routes/5fd550a7b547649dd7e37820")
+      .send({
+        tagAssignment: "5fd550a3b547649ad7e37529",
+      });
+
+    expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+    expect(res.type).toBe("application/json");
+    expect(res.body).toMatchObject({
+      error: "Tag assignment with this id does not exist",
+    });
+  });
+
   it("Should return 400 when updating a route with invalid finish timestamp", async () => {
     const res = await request(app)
       .patch("/v1/routes/5fd550a7b547649dd7e37774")

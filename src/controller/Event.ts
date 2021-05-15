@@ -238,9 +238,6 @@ const addCategory: RequestHandler = async (req: Request, res: Response) => {
   const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
-    res.status(StatusCodes.NOT_FOUND).json({
-      error: Errors.Events.DOES_NOT_EXIST,
-    });
     return;
   }
 
@@ -267,9 +264,6 @@ const getLocation: RequestHandler = async (req: Request, res: Response) => {
   const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
-    res.status(StatusCodes.NOT_FOUND).json({
-      error: Errors.Events.DOES_NOT_EXIST,
-    });
     return;
   }
 
@@ -299,9 +293,6 @@ const deleteLocation: RequestHandler = async (req: Request, res: Response) => {
   const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
-    res.status(StatusCodes.NOT_FOUND).json({
-      error: Errors.Events.DOES_NOT_EXIST,
-    });
     return;
   }
 
@@ -334,9 +325,6 @@ const addLocation: RequestHandler = async (req: Request, res: Response) => {
   const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
-    res.status(StatusCodes.NOT_FOUND).json({
-      error: Errors.Events.DOES_NOT_EXIST,
-    });
     return;
   }
 

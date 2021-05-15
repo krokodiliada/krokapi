@@ -2,7 +2,6 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Participant, { IParticipant } from "model/Participant";
-import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 import Errors from "Errors";
 import utils from "utils";
 
@@ -43,30 +42,6 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
   if (participant) {
     res.status(StatusCodes.OK).json(participant);
   }
-};
-
-interface GetByTagAndEventParameters {
-  tag: number;
-  event: string;
-}
-
-const getByTagAndEvent = async ({
-  tag,
-  event,
-}: GetByTagAndEventParameters): Promise<IParticipant | null> => {
-  const tagAssignments: Array<ITagAssignment> = await TagAssignment.find()
-    .where({ tag })
-    .where({ event });
-
-  if (tagAssignments.length === 0) {
-    return null;
-  }
-
-  const participant: IParticipant | null = await Participant.findById(
-    tagAssignments[0].participant
-  );
-
-  return participant;
 };
 
 // PUT /participants/
@@ -137,7 +112,6 @@ export default {
   validateParticipantExists,
   getAll,
   getById,
-  getByTagAndEvent,
   create,
   update,
   deleteById,

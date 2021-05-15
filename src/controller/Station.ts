@@ -45,7 +45,7 @@ const getByNumber: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-// PUT /stations/
+// PUT /stations/:number
 const create: RequestHandler = async (req: Request, res: Response) => {
   const requestedNumber = Number(req.params.number);
   const version = utils.extractVersionFromUrl(req.originalUrl);
