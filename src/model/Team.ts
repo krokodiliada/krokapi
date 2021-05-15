@@ -12,6 +12,11 @@ export interface ITeam extends Document {
   extraMapRequired: boolean;
   amountPaid: number;
   routes: Array<IRoute["_id"]>;
+
+  // team penalty, in seconds. If negative, then works as a time bonus
+  penalty: number;
+
+  notes?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -58,6 +63,15 @@ export const TeamSchema: Schema = new Schema(
         },
         message: (props) => `${props.value} must not be negative`,
       },
+    },
+    penalty: {
+      type: Number,
+      default: 0,
+      required: false,
+    },
+    notes: {
+      type: String,
+      required: false,
     },
   },
   { timestamps: true }
