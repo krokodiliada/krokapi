@@ -34,7 +34,7 @@
  *                         competition. For such locations there is no
  *                         GPS location required to be set and locations are
  *                         rather considered placeholders.
- *          note:
+ *          notes:
  *            type: string
  *            description: A short note for the location
  *          createdAt:
@@ -52,7 +52,7 @@
  *          longitude: 39.212493
  *          description: "Beautiful tree 30 degrees to the right of the road"
  *          water: false
- *          note: "There are two trees, we pick the closest one"
+ *          notes: "There are two trees, we pick the closest one"
  *          createdAt: "2019-09-22T06:00:00.000Z"
  *          updatedAt: "2019-09-22T06:00:00.000Z"
  *    parameters:

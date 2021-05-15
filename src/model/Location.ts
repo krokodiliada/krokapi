@@ -14,7 +14,7 @@ export interface ILocation extends Document {
   /**
    * Organizator's notes about the checkpoint
    */
-  note: string;
+  notes?: string;
 
   createdAt: Date;
   updatedAt: Date;
@@ -56,7 +56,7 @@ export const LocationSchema: Schema = new Schema(
       required: false,
       default: false,
     },
-    note: {
+    notes: {
       type: String,
       required: false,
     },
