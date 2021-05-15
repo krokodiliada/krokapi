@@ -144,7 +144,6 @@ router.get("/:id", TagAssignmentController.getById);
  *              schema:
  *                $ref: '#/components/schemas/TagAssignment'
  *              example:
- *                tag: 13
  *                participant: "5f8d0d55b54764421b715b62"
  *                event: "5f8d04b3b54764421b7156dc"
  *        responses:
