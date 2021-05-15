@@ -11,6 +11,7 @@ export interface IStation extends Document {
   number: number;
   enabled: boolean;
   stationType: StationType;
+  notes?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -32,6 +33,10 @@ export const StationSchema: Schema = new Schema(
       required: false,
       default: StationType.Regular,
       enum: Object.values(StationType),
+    },
+    notes: {
+      type: String,
+      required: false,
     },
   },
   { timestamps: true }

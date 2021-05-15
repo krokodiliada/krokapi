@@ -28,15 +28,26 @@ const validateRouteExists: RequestHandler = async (
 };
 
 const getTagAssignmentById = async (
-  assignmentId: string
+  assignmentId: string,
+  res: Response
 ): Promise<ITagAssignment | null> => {
   if (assignmentId && !GenericController.isValidObjectId(assignmentId)) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: `'${assignmentId}' is not a valid tag assignment id`,
+    });
     return null;
   }
 
   const assignment: ITagAssignment | null = await TagAssignment.findById(
     assignmentId
   );
+
+  if (!assignment) {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      error: Errors.TagAssignments.DOES_NOT_EXIST,
+    });
+    return null;
+  }
 
   return assignment;
 };
@@ -105,21 +116,10 @@ const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
   const version = utils.extractVersionFromUrl(req.originalUrl);
 
-  if ("tagAssignment" in data) {
+  if (data.tagAssignment) {
     const assignmentId: string = data.tagAssignment as string;
-
-    if (assignmentId && !GenericController.isValidObjectId(assignmentId)) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        error: `'${assignmentId}' is not a valid tag assignment id`,
-      });
-      return;
-    }
-
-    const tagAssignment = await getTagAssignmentById(assignmentId);
+    const tagAssignment = await getTagAssignmentById(assignmentId, res);
     if (!tagAssignment) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        error: Errors.TagAssignments.DOES_NOT_EXIST,
-      });
       return;
     }
   }
@@ -134,21 +134,16 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .json(route)
     )
     .catch((error) => {
-      if (error.message) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-      } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: Errors.INTERNAL_SERVER_ERROR,
-        });
-      }
+      res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
     });
 };
 
 // PATCH /routes/:id
 const update: RequestHandler = async (req: Request, res: Response) => {
+  const data = req.body;
   const requestedId = req.params.id;
 
-  if (Object.keys(req.body).length === 0) {
+  if (Object.keys(data).length === 0) {
     res.status(StatusCodes.BAD_REQUEST).json({
       error: Errors.EMPTY_REQUEST_BODY,
     });
@@ -157,30 +152,21 @@ const update: RequestHandler = async (req: Request, res: Response) => {
 
   const route: IRoute | null = await Route.findById(requestedId);
 
-  if ("tagAssignment" in req.body) {
-    const assignmentId: string = req.body.tagAssignment as string;
-    const tagAssignment = await getTagAssignmentById(assignmentId);
+  if (data.tagAssignment) {
+    const assignmentId: string = data.tagAssignment as string;
+    const tagAssignment = await getTagAssignmentById(assignmentId, res);
     if (!tagAssignment) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        error: Errors.TagAssignments.DOES_NOT_EXIST,
-      });
       return;
     }
   }
 
   if (route) {
     route
-      .set(req.body)
+      .set(data)
       .save()
       .then(() => res.status(StatusCodes.OK).json(route))
       .catch((error) => {
-        if (error.message) {
-          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-        } else {
-          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            error: Errors.INTERNAL_SERVER_ERROR,
-          });
-        }
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
       });
   }
 };
@@ -229,15 +215,7 @@ const createActions: RequestHandler = async (req: Request, res: Response) => {
               .json(route)
           )
           .catch((error) => {
-            if (error.message) {
-              res
-                .status(StatusCodes.BAD_REQUEST)
-                .json({ error: error.message });
-            } else {
-              res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-                error: Errors.INTERNAL_SERVER_ERROR,
-              });
-            }
+            res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
           });
       } else {
         res.status(StatusCodes.BAD_REQUEST).json({
@@ -246,13 +224,7 @@ const createActions: RequestHandler = async (req: Request, res: Response) => {
       }
     })
     .catch((error) => {
-      if (error.message) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-      } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: Errors.INTERNAL_SERVER_ERROR,
-        });
-      }
+      res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
     });
 };
 

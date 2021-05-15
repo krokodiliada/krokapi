@@ -2,7 +2,6 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import Participant, { IParticipant } from "model/Participant";
-import TagAssignment, { ITagAssignment } from "model/TagAssignment";
 import Errors from "Errors";
 import utils from "utils";
 
@@ -45,30 +44,6 @@ const getById: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-interface GetByTagAndEventParameters {
-  tag: number;
-  event: string;
-}
-
-const getByTagAndEvent = async ({
-  tag,
-  event,
-}: GetByTagAndEventParameters): Promise<IParticipant | null> => {
-  const tagAssignments: Array<ITagAssignment> = await TagAssignment.find()
-    .where({ tag })
-    .where({ event });
-
-  if (tagAssignments.length === 0) {
-    return null;
-  }
-
-  const participant: IParticipant | null = await Participant.findById(
-    tagAssignments[0].participant
-  );
-
-  return participant;
-};
-
 // PUT /participants/
 const create: RequestHandler = async (req: Request, res: Response) => {
   const data = req.body;
@@ -84,13 +59,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .json(participant)
     )
     .catch((error) => {
-      if (error.message) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-      } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: Errors.INTERNAL_SERVER_ERROR,
-        });
-      }
+      res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
     });
 };
 
@@ -115,13 +84,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .save()
       .then(() => res.status(StatusCodes.OK).json(participant))
       .catch((error) => {
-        if (error.message) {
-          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-        } else {
-          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            error: Errors.INTERNAL_SERVER_ERROR,
-          });
-        }
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
       });
   }
 };
@@ -149,7 +112,6 @@ export default {
   validateParticipantExists,
   getAll,
   getById,
-  getByTagAndEvent,
   create,
   update,
   deleteById,

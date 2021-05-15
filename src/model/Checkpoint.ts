@@ -36,6 +36,7 @@ export interface ICheckpoint extends Document {
    */
   cost: number;
   costMetric: CheckpointCostMetric;
+  notes?: string;
 
   createdAt: Date;
   updatedAt: Date;
@@ -85,6 +86,10 @@ export const CheckpointSchema: Schema = new Schema(
       type: String,
       default: CheckpointCostMetric.Seconds,
       enum: Object.values(CheckpointCostMetric),
+    },
+    notes: {
+      type: String,
+      required: false,
     },
   },
   { timestamps: true }

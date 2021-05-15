@@ -139,13 +139,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .json(event)
     )
     .catch((error) => {
-      if (error.message) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-      } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: Errors.INTERNAL_SERVER_ERROR,
-        });
-      }
+      res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
     });
 };
 
@@ -170,13 +164,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
         res.status(StatusCodes.OK).json(updatedEvent)
       )
       .catch((error) => {
-        if (error.message) {
-          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-        } else {
-          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            error: Errors.INTERNAL_SERVER_ERROR,
-          });
-        }
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
       });
   }
 };
@@ -250,9 +238,6 @@ const addCategory: RequestHandler = async (req: Request, res: Response) => {
   const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
-    res.status(StatusCodes.NOT_FOUND).json({
-      error: Errors.Events.DOES_NOT_EXIST,
-    });
     return;
   }
 
@@ -279,9 +264,6 @@ const getLocation: RequestHandler = async (req: Request, res: Response) => {
   const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
-    res.status(StatusCodes.NOT_FOUND).json({
-      error: Errors.Events.DOES_NOT_EXIST,
-    });
     return;
   }
 
@@ -311,9 +293,6 @@ const deleteLocation: RequestHandler = async (req: Request, res: Response) => {
   const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
-    res.status(StatusCodes.NOT_FOUND).json({
-      error: Errors.Events.DOES_NOT_EXIST,
-    });
     return;
   }
 
@@ -346,9 +325,6 @@ const addLocation: RequestHandler = async (req: Request, res: Response) => {
   const event: IEvent | null = await Event.findById(requestedEventId);
 
   if (!event) {
-    res.status(StatusCodes.NOT_FOUND).json({
-      error: Errors.Events.DOES_NOT_EXIST,
-    });
     return;
   }
 

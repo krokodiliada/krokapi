@@ -142,4 +142,18 @@ export default [
       max: 6,
     },
   },
+  {
+    _id: "5f8d04f7b54764421b7156f0",
+    name: {
+      short: "U2",
+      long: "To Update - 2",
+    },
+  },
+  {
+    _id: "5f8d04f7b54764421b7156f1",
+    name: {
+      short: "U3",
+      long: "To Update - 3",
+    },
+  },
 ];

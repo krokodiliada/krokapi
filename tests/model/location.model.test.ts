@@ -131,6 +131,6 @@ describe("Location model", () => {
 
     expect(savedLocation.description).toBeUndefined();
     expect(savedLocation.water).toBe(false);
-    expect(savedLocation.note).toBeUndefined();
+    expect(savedLocation.notes).toBeUndefined();
   });
 });

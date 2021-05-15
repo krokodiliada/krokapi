@@ -45,7 +45,7 @@ const getByNumber: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-// PUT /stations/
+// PUT /stations/:number
 const create: RequestHandler = async (req: Request, res: Response) => {
   const requestedNumber = Number(req.params.number);
   const version = utils.extractVersionFromUrl(req.originalUrl);
@@ -62,13 +62,7 @@ const create: RequestHandler = async (req: Request, res: Response) => {
         .json(station)
     )
     .catch((error) => {
-      if (error.message) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-      } else {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: Errors.INTERNAL_SERVER_ERROR,
-        });
-      }
+      res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
     });
 };
 
@@ -93,13 +87,7 @@ const update: RequestHandler = async (req: Request, res: Response) => {
       .save()
       .then(() => res.status(StatusCodes.OK).json(station))
       .catch((error) => {
-        if (error.message) {
-          res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
-        } else {
-          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            error: Errors.INTERNAL_SERVER_ERROR,
-          });
-        }
+        res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
       });
   }
 };

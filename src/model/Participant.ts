@@ -12,6 +12,7 @@ export interface IParticipant extends Document {
   birthday: Date;
   phone: string;
   email: string;
+  notes?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -71,6 +72,10 @@ export const ParticipantSchema: Schema = new Schema(
       trim: true,
       lowercase: true,
       validate: [Validator.isEmail, "Invalid email"],
+    },
+    notes: {
+      type: String,
+      required: false,
     },
   },
   { timestamps: true }
